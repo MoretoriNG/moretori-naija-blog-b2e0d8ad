@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Post, PostCategory } from "@/types/blog";
@@ -7,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getPostsByCategory } from "@/lib/blog-data";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { motion } from "@/components/ui/motion";
-import { Hash } from "lucide-react";
+import { Hash, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface CategoryPostsProps {
   initialCategory: PostCategory;
@@ -58,7 +59,7 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
             <div className="mb-4 md:mb-0">
               <div className="flex items-center gap-2 mb-2">
-                <Hash className="h-5 w-5 text-vibehub-purple" />
+                <Hash className="h-5 w-5 text-blue-500" />
                 <h2 className="text-2xl md:text-3xl font-bold">Latest Updates</h2>
               </div>
               <p className="text-muted-foreground max-w-xl">
@@ -76,7 +77,7 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
                   <TabsTrigger 
                     key={category} 
                     value={category} 
-                    className="capitalize data-[state=active]:bg-vibehub-purple data-[state=active]:text-white"
+                    className="capitalize data-[state=active]:bg-blue-500 data-[state=active]:text-white"
                   >
                     {category}
                   </TabsTrigger>
@@ -110,40 +111,36 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
         </div>
         
         {categoryPosts.length > postsPerPage && (
-          <Pagination className="mt-10">
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious 
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
-                  className={currentPage === 1 ? "pointer-events-none opacity-50" : "hover:bg-vibehub-purple/10"}
-                />
-              </PaginationItem>
+          <div className="flex justify-center mt-10">
+            <div className="flex items-center gap-4">
+              <Button 
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+                disabled={currentPage === 1}
+                className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-3 h-12 w-12 flex items-center justify-center shadow-lg"
+              >
+                <ChevronLeft className="h-6 w-6" />
+                <span className="sr-only">Previous page</span>
+              </Button>
               
-              {Array.from({ length: totalPages }).map((_, i) => (
-                <PaginationItem key={i}>
-                  <PaginationLink 
-                    onClick={() => setCurrentPage(i + 1)}
-                    isActive={currentPage === i + 1}
-                    className={currentPage === i + 1 ? "bg-vibehub-purple text-white border-vibehub-purple" : ""}
-                  >
-                    {i + 1}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
+              <span className="text-lg font-medium">
+                Page {currentPage} of {totalPages}
+              </span>
               
-              <PaginationItem>
-                <PaginationNext 
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                  className={currentPage === totalPages ? "pointer-events-none opacity-50" : "hover:bg-vibehub-purple/10"}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+              <Button 
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-3 h-12 w-12 flex items-center justify-center shadow-lg"
+              >
+                <ChevronRight className="h-6 w-6" />
+                <span className="sr-only">Next page</span>
+              </Button>
+            </div>
+          </div>
         )}
         
         {categoryPosts.length > postsPerPage && (
           <div className="mt-10 text-center">
-            <Button variant="outline" size="lg" className="border-vibehub-purple text-vibehub-purple hover:bg-vibehub-purple hover:text-white" asChild>
+            <Button variant="outline" size="lg" className="border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white" asChild>
               <Link to={`/category/${activeCategory}`}>
                 Explore All {getCategoryTitle(activeCategory)}
               </Link>

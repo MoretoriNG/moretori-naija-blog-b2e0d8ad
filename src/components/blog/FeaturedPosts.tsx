@@ -30,20 +30,20 @@ export function FeaturedPosts({ posts }: FeaturedPostsProps) {
       <div className="container relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center mb-10">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-vibehub-purple" />
-            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-vibehub-purple to-vibehub-blue-bright bg-clip-text text-transparent">Featured Stories</h2>
+            <Sparkles className="h-5 w-5 text-blue-500" />
+            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">Featured Stories</h2>
           </div>
           
           <div className="flex gap-2 mt-4 md:mt-0">
-            <Button variant="outline" size="sm" className="hover:bg-vibehub-purple hover:text-white transition-colors" asChild>
+            <Button variant="outline" size="sm" className="border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" asChild>
               <Link to="/featured">View All Featured</Link>
             </Button>
           </div>
         </div>
         
         {/* Diagonal pattern overlay */}
-        <div className="absolute -bottom-10 -right-10 w-72 h-72 bg-gradient-to-br from-vibehub-purple/10 to-vibehub-blue-bright/10 rounded-full blur-3xl"></div>
-        <div className="absolute -top-10 -left-10 w-72 h-72 bg-gradient-to-br from-vibehub-blue-bright/10 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-10 -right-10 w-72 h-72 bg-gradient-to-br from-blue-500/10 to-green-400/10 rounded-full blur-3xl"></div>
+        <div className="absolute -top-10 -left-10 w-72 h-72 bg-gradient-to-br from-green-400/10 to-transparent rounded-full blur-3xl"></div>
         
         <Carousel
           opts={{ 
@@ -61,9 +61,29 @@ export function FeaturedPosts({ posts }: FeaturedPostsProps) {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="flex justify-center mt-8 gap-2">
-            <CarouselPrevious className="static translate-y-0 h-9 w-9 rounded-full border-vibehub-purple/30 hover:bg-vibehub-purple hover:text-white" />
-            <CarouselNext className="static translate-y-0 h-9 w-9 rounded-full border-vibehub-purple/30 hover:bg-vibehub-purple hover:text-white" />
+          <div className="flex justify-center mt-8 gap-4">
+            <Button 
+              variant="outline" 
+              size="icon" 
+              className="rounded-full border-blue-500 hover:bg-blue-500 hover:text-white h-12 w-12 transform transition-all hover:scale-110"
+              onClick={() => document.querySelector('.embla__prev')?.dispatchEvent(new MouseEvent('click'))}
+            >
+              <ChevronLeft className="h-6 w-6" />
+              <span className="sr-only">Previous slides</span>
+            </Button>
+            <Button 
+              variant="outline" 
+              size="icon" 
+              className="rounded-full border-blue-500 hover:bg-blue-500 hover:text-white h-12 w-12 transform transition-all hover:scale-110"
+              onClick={() => document.querySelector('.embla__next')?.dispatchEvent(new MouseEvent('click'))}
+            >
+              <ChevronRight className="h-6 w-6" />
+              <span className="sr-only">Next slides</span>
+            </Button>
+          </div>
+          <div className="hidden">
+            <CarouselPrevious className="embla__prev" />
+            <CarouselNext className="embla__next" />
           </div>
         </Carousel>
       </div>

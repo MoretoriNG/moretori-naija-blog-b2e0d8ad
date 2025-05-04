@@ -2,7 +2,6 @@
 import { HeroSlider } from "@/components/blog/HeroSlider";
 import { FeaturedPosts } from "@/components/blog/FeaturedPosts";
 import { CategoryPosts } from "@/components/blog/CategoryPosts";
-import { Newsletter } from "@/components/blog/Newsletter";
 import { TrendingTopics } from "@/components/blog/TrendingTopics";
 import { getFeaturedPosts, getAllPosts, getRecentPosts } from "@/lib/blog-data";
 
@@ -24,9 +23,6 @@ export default function HomePage() {
       
       {/* Category Posts with Tabs */}
       <CategoryPosts initialCategory="tech" />
-      
-      {/* Newsletter Section */}
-      <Newsletter />
     </div>
   );
 }
