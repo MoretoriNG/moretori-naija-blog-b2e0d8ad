@@ -125,7 +125,17 @@ export default {
 				sans: ['Inter', 'sans-serif'],
 				heading: ['Montserrat', 'sans-serif'],
 			},
+			typography: {
+				DEFAULT: {
+					css: {
+						maxWidth: 'none',
+					},
+				},
+			},
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		require("@tailwindcss/typography")
+	],
 } satisfies Config;
