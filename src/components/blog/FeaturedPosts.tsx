@@ -31,12 +31,12 @@ export function FeaturedPosts({ posts }: FeaturedPostsProps) {
         <div className="flex flex-col md:flex-row justify-between items-center mb-10">
           <div className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-blue-500" />
-            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">Featured Stories</h2>
+            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 via-green-500 to-orange-500 bg-clip-text text-transparent">Latest Updates</h2>
           </div>
           
           <div className="flex gap-2 mt-4 md:mt-0">
             <Button variant="outline" size="sm" className="border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" asChild>
-              <Link to="/featured">View All Featured</Link>
+              <Link to="/featured">View All Updates</Link>
             </Button>
           </div>
         </div>
@@ -53,8 +53,8 @@ export function FeaturedPosts({ posts }: FeaturedPostsProps) {
           className="w-full"
         >
           <CarouselContent className="-ml-2 md:-ml-4">
-            {posts.map((post) => (
-              <CarouselItem key={post.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+            {posts.slice(0, 6).map((post) => (
+              <CarouselItem key={post.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3">
                 <div className="h-full">
                   <PostCard post={post} />
                 </div>
