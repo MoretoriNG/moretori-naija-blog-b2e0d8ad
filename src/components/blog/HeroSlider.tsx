@@ -38,20 +38,33 @@ export function HeroSlider({ posts }: HeroSliderProps) {
   const currentPost = posts[currentIndex];
   
   return (
-    <section className="relative h-[450px] md:h-[550px] overflow-hidden">
-      {/* Image and overlay */}
-      <div className="absolute inset-0">
-        <img
-          src={currentPost.coverImage}
-          alt={currentPost.title}
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 hero-gradient-overlay" />
+    <section className="relative h-[500px] md:h-[600px] overflow-hidden bg-black">
+      {/* Gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-vibehub-purple/80 to-vibehub-blue-bright/80 z-10 opacity-30"></div>
+      
+      {/* Images with parallax effect */}
+      <div className="absolute inset-0 transition-transform duration-700 ease-in-out">
+        {posts.map((post, index) => (
+          <div 
+            key={post.id}
+            className={`absolute inset-0 transition-opacity duration-700 ${currentIndex === index ? 'opacity-100' : 'opacity-0'}`}
+          >
+            <img
+              src={post.coverImage}
+              alt={post.title}
+              className="h-full w-full object-cover scale-110"
+              style={{transform: `scale(${currentIndex === index ? 1.05 : 1.2})`}}
+            />
+          </div>
+        ))}
+        <div className="absolute inset-0 bg-black/50 z-10"></div>
       </div>
       
       {/* Content */}
-      <div className="container relative h-full flex flex-col justify-end pb-12 md:pb-16">
-        <div className="max-w-3xl animate-fade-in">
+      <div className="container relative z-20 h-full flex flex-col justify-center">
+        <div className="max-w-3xl animate-fade-in text-white">
+          <h1 className="font-heading text-white/90 mb-3 text-xl md:text-2xl">Moretori Naija</h1>
+          
           <div className="flex items-center gap-3 mb-3">
             <CategoryBadge category={currentPost.category} />
             <time className="text-sm text-white/80" dateTime={currentPost.publishedAt}>
@@ -69,19 +82,19 @@ export function HeroSlider({ posts }: HeroSliderProps) {
             {currentPost.excerpt}
           </p>
           
-          <Button asChild size="lg">
+          <Button asChild size="lg" className="bg-vibehub-purple hover:bg-vibehub-purple-dark">
             <Link to={`/post/${currentPost.slug}`}>Read More</Link>
           </Button>
         </div>
       </div>
       
       {/* Navigation arrows */}
-      <div className="absolute bottom-6 right-6 md:bottom-12 md:right-12 flex gap-2">
+      <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 flex gap-2 z-30">
         <Button
           variant="outline"
           size="icon"
           onClick={prevSlide}
-          className="bg-black/40 border-white/20 hover:bg-black/60 text-white"
+          className="bg-black/30 border-white/20 hover:bg-black/60 text-white h-10 w-10 rounded-full"
         >
           <ChevronLeft className="h-5 w-5" />
         </Button>
@@ -89,19 +102,19 @@ export function HeroSlider({ posts }: HeroSliderProps) {
           variant="outline"
           size="icon"
           onClick={nextSlide}
-          className="bg-black/40 border-white/20 hover:bg-black/60 text-white"
+          className="bg-black/30 border-white/20 hover:bg-black/60 text-white h-10 w-10 rounded-full"
         >
           <ChevronRight className="h-5 w-5" />
         </Button>
       </div>
       
       {/* Slide indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 z-30">
         {posts.map((_, i) => (
           <button
             key={i}
             className={`h-2 rounded-full transition-all ${
-              i === currentIndex ? "w-6 bg-primary" : "w-2 bg-white/50"
+              i === currentIndex ? "w-8 bg-vibehub-purple" : "w-2 bg-white/50"
             }`}
             onClick={() => setCurrentIndex(i)}
           />
