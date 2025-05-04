@@ -1,14 +1,14 @@
 
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Fire, Zap } from "lucide-react";
+import { TrendingUp, Flame, Zap } from "lucide-react";
 
 export function TrendingTopics() {
   const trendingTopics = [
     { name: "Politics", slug: "politics", icon: <TrendingUp className="h-3 w-3" /> },
-    { name: "Music", slug: "music", icon: <Fire className="h-3 w-3" /> },
+    { name: "Music", slug: "music", icon: <Flame className="h-3 w-3" /> },
     { name: "Fashion", slug: "fashion", icon: <Zap className="h-3 w-3" /> },
-    { name: "Sports", slug: "sports", icon: <Fire className="h-3 w-3" /> },
+    { name: "Sports", slug: "sports", icon: <Flame className="h-3 w-3" /> },
     { name: "Afrobeats", slug: "afrobeats", icon: <TrendingUp className="h-3 w-3" /> },
     { name: "Nollywood", slug: "nollywood", icon: <Zap className="h-3 w-3" /> }
   ];
