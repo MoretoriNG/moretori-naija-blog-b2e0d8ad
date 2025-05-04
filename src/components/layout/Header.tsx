@@ -21,7 +21,9 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold bg-gradient-to-r from-vibehub-purple to-vibehub-blue-bright bg-clip-text text-transparent">VibeHub</span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-vibehub-purple to-vibehub-blue-bright bg-clip-text text-transparent">
+              Moretori Naija
+            </span>
           </Link>
           
           <nav className="hidden md:flex items-center gap-6">
@@ -29,7 +31,7 @@ export function Header() {
               <Link
                 key={category.slug}
                 to={`/category/${category.slug}`}
-                className="text-sm font-medium transition-colors hover:text-primary"
+                className="text-sm font-medium transition-colors hover:text-vibehub-purple relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-vibehub-purple after:transition-all hover:after:w-full"
               >
                 {category.name}
               </Link>
@@ -38,16 +40,16 @@ export function Header() {
         </div>
         
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="hidden md:flex">
+          <Button variant="ghost" size="icon" className="hidden md:flex hover:bg-vibehub-purple/10">
             <Search className="h-4 w-4" />
             <span className="sr-only">Search</span>
           </Button>
           
-          <Button asChild variant="ghost" className="hidden md:flex">
+          <Button asChild variant="ghost" className="hidden md:flex hover:text-vibehub-purple">
             <Link to="/about">About</Link>
           </Button>
           
-          <Button asChild>
+          <Button asChild className="bg-vibehub-purple hover:bg-vibehub-purple-dark">
             <Link to="/admin">Admin</Link>
           </Button>
           
@@ -74,7 +76,7 @@ export function Header() {
             <Link
               key={category.slug}
               to={`/category/${category.slug}`}
-              className="text-sm font-medium transition-colors hover:text-primary"
+              className="text-sm font-medium transition-colors hover:text-vibehub-purple"
               onClick={() => setIsOpen(false)}
             >
               {category.name}
@@ -82,7 +84,7 @@ export function Header() {
           ))}
           <Link 
             to="/about" 
-            className="text-sm font-medium transition-colors hover:text-primary"
+            className="text-sm font-medium transition-colors hover:text-vibehub-purple"
             onClick={() => setIsOpen(false)}
           >
             About
