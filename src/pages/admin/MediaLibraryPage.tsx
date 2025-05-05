@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { Button } from "@/components/ui/button";
@@ -7,62 +6,63 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Image, Video, Trash2, Upload, Search } from "lucide-react";
 import { toast } from "sonner";
 
+// Define MediaItem type
+type MediaItem = {
+  id: string;
+  url: string;
+  name: string;
+  type: "image" | "video";  // This enforces that type must be either "image" or "video"
+  uploadedAt: string;
+};
+
 // Sample media items for demonstration
-const sampleImages = [
+const sampleImages: MediaItem[] = [
   {
     id: "img1",
     url: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=500&q=80",
     name: "laptop-coding.jpg",
-    type: "image",
+    type: "image", // Now explicitly typed as "image"
     uploadedAt: new Date("2025-04-30").toISOString(),
   },
   {
     id: "img2",
     url: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=500&q=80",
     name: "developer-desk.jpg",
-    type: "image",
+    type: "image", // Now explicitly typed as "image"
     uploadedAt: new Date("2025-05-01").toISOString(),
   },
   {
     id: "img3",
     url: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=500&q=80",
     name: "code-screen.jpg",
-    type: "image",
+    type: "image", // Now explicitly typed as "image"
     uploadedAt: new Date("2025-05-02").toISOString(),
   },
   {
     id: "img4",
     url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80",
     name: "landscape.jpg",
-    type: "image",
+    type: "image", // Now explicitly typed as "image"
     uploadedAt: new Date("2025-05-03").toISOString(),
   },
 ];
 
-const sampleVideos = [
+const sampleVideos: MediaItem[] = [
   {
     id: "vid1",
     url: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
     name: "sample-video-1.mp4",
-    type: "video",
+    type: "video", // Now explicitly typed as "video"
     uploadedAt: new Date("2025-05-01").toISOString(),
   },
   {
     id: "vid2",
     url: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_2mb.mp4",
     name: "sample-video-2.mp4",
-    type: "video",
+    type: "video", // Now explicitly typed as "video"
     uploadedAt: new Date("2025-05-03").toISOString(),
   },
 ];
-
-type MediaItem = {
-  id: string;
-  url: string;
-  name: string;
-  type: "image" | "video";
-  uploadedAt: string;
-};
 
 export default function MediaLibraryPage() {
   const [mediaItems, setMediaItems] = useState<MediaItem[]>([...sampleImages, ...sampleVideos]);
@@ -91,7 +91,7 @@ export default function MediaLibraryPage() {
           id: `new-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
           url,
           name: file.name,
-          type: isVideo ? "video" : "image",
+          type: isVideo ? "video" : "image", // Now correctly typed as either "video" or "image"
           uploadedAt: new Date().toISOString(),
         };
         
