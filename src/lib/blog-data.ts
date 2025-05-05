@@ -307,3 +307,12 @@ export const posts: Post[] = [
     <p>Most concerning is how sarcopenia impacts quality of life in later years. Muscle weakness contributes to falls, fractures, and loss of independence. Individuals with the lowest muscle mass face significantly higher mortality rates than their stronger counterparts.</p>
     <h2>Resistance Training Benefits</h2>
     <p>Research has demonstrated that regular strength training can effectively combat these changes at any age. Even individuals in their 90s show remarkable adaptability, gaining muscle mass and strength when implementing appropriate resistance protocols.</p>
+    <p>Beyond preserving muscle, strength training increases bone density (reducing fracture risk), improves glucose metabolism, enhances cardiovascular function, and reduces chronic inflammation - addressing multiple aspects of age-related decline simultaneously.</p>
+    <p>Importantly, strength doesn't require intensive bodybuilding-style workouts. Even modest resistance programs performed 2-3 times weekly can yield significant benefits. For aging adults, functional movements that mimic daily activities - squats, deadlifts, push and pull exercises - provide the most practical benefits for maintaining independence and quality of life.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=1200&q=80',
+    category: 'health',
+    author: 'Sarah Johnson',
+    publishedAt: '2023-02-20T11:25:00Z',
+    featured: true
+  },
+];
