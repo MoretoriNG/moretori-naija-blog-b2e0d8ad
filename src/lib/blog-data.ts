@@ -316,6 +316,283 @@ export const posts: Post[] = [
     publishedAt: '2023-02-20T11:25:00Z',
     featured: true
   },
+  {
+    id: '19',
+    title: 'Gut Health: The Second Brain Connection',
+    slug: 'gut-health-second-brain-connection',
+    excerpt: 'Exploring the fascinating relationship between intestinal microbiota and mental wellbeing.',
+    content: `<p>The human digestive tract hosts trillions of microorganisms collectively known as the gut microbiome. Far from being passive inhabitants, these bacteria, fungi, and other microbes influence our health in profound ways - including our mental and emotional states.</p>
+    <h2>The Gut-Brain Axis</h2>
+    <p>Scientists have identified a bidirectional communication network between the gut and brain, dubbed the gut-brain axis. This connection operates through multiple pathways: the vagus nerve provides direct communication, immune cells transmit inflammatory signals, and gut bacteria produce neuroactive compounds that influence brain function.</p>
+    <p>Perhaps most surprisingly, gut microbes produce approximately 90% of the body's serotonin - a neurotransmitter heavily involved in mood regulation. Disturbances in this system have been linked to various psychiatric and neurological conditions, including depression, anxiety, and autism spectrum disorders.</p>
+    <h2>Nurturing Gut Health</h2>
+    <p>Diet plays a central role in shaping the gut microbiome. Diverse plant foods provide fiber that feeds beneficial bacteria, while fermented foods like yogurt, kimchi, and sauerkraut can introduce helpful probiotic species. Conversely, diets high in ultra-processed foods, artificial sweeteners, and certain food additives may disrupt microbial balance.</p>
+    <p>Beyond diet, stress management appears crucial for gut health. The stress response can alter gut permeability and bacterial composition, potentially creating a negative feedback loop between psychological stress and intestinal inflammation.</p>
+    <p>As research in this field advances, it's becoming clear that caring for our digestive health represents an important component of holistic mental wellbeing - a perspective that integrates traditional wisdom about the connection between diet and mind with cutting-edge microbiological science.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1589839987532-183db318c2bd?auto=format&fit=crop&w=1200&q=80',
+    category: 'health',
+    author: 'Rachel Garcia',
+    publishedAt: '2023-05-18T14:50:00Z',
+    featured: false
+  },
+  {
+    id: '20',
+    title: 'Holistic Approaches to Chronic Pain Management',
+    slug: 'holistic-approaches-chronic-pain-management',
+    excerpt: 'Exploring evidence-based complementary approaches to managing persistent pain beyond medication.',
+    content: `<p>Chronic pain affects approximately 20% of adults worldwide, imposing tremendous personal and economic costs. While conventional medical treatments remain important, integrative approaches that address the multidimensional nature of pain are gaining recognition for their effectiveness.</p>
+    <h2>Understanding Pain's Complexity</h2>
+    <p>Modern pain science reveals that pain isn't simply a sensation but a complex experience influenced by biological, psychological, and social factors. Chronic pain often involves central sensitization - changes in the nervous system that amplify pain signals even after the original tissue damage has healed.</p>
+    <p>This understanding has led to multimodal approaches that target different aspects of the pain experience, often yielding better outcomes than single-modality treatments.</p>
+    <h2>Evidence-Based Complementary Approaches</h2>
+    <p>Movement therapies show particular promise for many pain conditions. Tailored exercise programs can reduce pain intensity while improving function, partly by reducing inflammation and modulating pain perception. Mind-body practices like yoga and tai chi combine movement with breathing and mindfulness, addressing both physical and psychological aspects of pain.</p>
+    <p>Psychological approaches have demonstrated effectiveness across various pain conditions. Cognitive-behavioral therapy helps patients identify and modify unhelpful thought patterns and behaviors that intensify pain. Mindfulness-based stress reduction teaches patients to relate differently to pain sensations rather than fighting against them.</p>
+    <p>Other evidence-supported approaches include acupuncture, which appears to activate endogenous pain control systems; manual therapies for certain musculoskeletal conditions; and nutritional interventions targeting inflammation. For many patients, the most effective approach combines conventional medical care with carefully selected complementary modalities - addressing pain as the multifaceted experience that it is.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=80',
+    category: 'health',
+    author: 'Daniel Wilson',
+    publishedAt: '2023-01-30T10:15:00Z',
+    featured: false
+  },
+
+  // Entertainment Category Posts
+  {
+    id: '4',
+    title: 'Streaming Wars: How Platforms Are Fighting for Your Attention',
+    slug: 'streaming-wars-platforms-fighting-attention',
+    excerpt: 'As streaming services multiply, companies are spending billions on original content and exclusive rights to win subscribers.',
+    content: `<p>Remember when Netflix was the only streaming service you needed? Those days are long gone. Today, viewers face an overwhelming array of options: Netflix, Amazon Prime, Disney+, HBO Max, Apple TV+, Paramount+, Peacock, Hulu, and many more niche services vying for a slice of the streaming pie.</p>
+    <h2>Content is King</h2>
+    <p>The battle for subscribers has sparked a content arms race. Netflix alone spent over $17 billion on content in 2021, while Disney pledged to spend $33 billion across its streaming platforms in 2022. This massive investment has led to a golden age of television, with high-quality original programming across genres and formats.</p>
+    <p>Exclusive content has become the primary weapon in this war. Disney+ has the Marvel and Star Wars franchises, HBO Max offers DC movies and HBO's prestigious library, while Netflix continues to fund an enormous range of original shows and films across multiple languages and cultures.</p>
+    <h2>The Subscriber Dilemma</h2>
+    <p>For consumers, this proliferation of services presents a challenge: subscribe to multiple platforms at considerable cumulative cost, strategically rotate subscriptions, or miss out on must-see content. This has led to subscription fatigue, with some viewers returning to piracy as a way to access content spread across too many paywalls.</p>
+    <p>Industry analysts predict that consolidation is inevitable. Not all current streaming services will survive as standalone offerings, and we may see more bundling options emerge, similar to traditional cable packages but with more flexibility.</p>
+    <h2>The Future of Streaming</h2>
+    <p>As competition intensifies, streaming platforms are exploring new ways to differentiate themselves beyond content. Interactive experiences, gaming integration, virtual reality, and innovative release strategies are all being tested. The lines between different forms of media and entertainment continue to blur.</p>
+    <p>One thing is certain: the streaming landscape of five years from now will look very different from today's. The winners in this war will be those who can not only produce compelling content but also create an overall experience that viewers find indispensable.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?auto=format&fit=crop&w=1200&q=80',
+    category: 'entertainment',
+    author: 'Sarah Chen',
+    publishedAt: '2023-03-28T16:15:00Z',
+    featured: false
+  },
+  {
+    id: '21',
+    title: 'The Rise of Global Entertainment',
+    slug: 'rise-global-entertainment',
+    excerpt: 'How international content is breaking language barriers and transforming the entertainment industry.',
+    content: `<p>For decades, Hollywood dominated global entertainment, exporting American culture while rarely importing content from abroad. That paradigm has shifted dramatically, with international productions finding enthusiastic audiences worldwide and forever changing how content is created and consumed.</p>
+    <h2>Breaking Language Barriers</h2>
+    <p>Korean dramas, Spanish crime thrillers, and Japanese anime have demonstrated that compelling storytelling transcends linguistic boundaries. Netflix's "Squid Game" became a global phenomenon despite being entirely in Korean, while films like "Parasite" and "RRR" achieved critical and commercial success far beyond their countries of origin.</p>
+    <p>Improved subtitling and dubbing technologies have helped remove barriers, but the fundamental shift is in audience openness to diverse storytelling traditions. Viewers increasingly seek authentic voices and fresh perspectives, regardless of origin.</p>
+    <h2>A New Creative Economy</h2>
+    <p>This globalization has transformed production landscapes worldwide. Regional production hubs in places like South Korea, Spain, and Nigeria are creating content with both local specificity and global appeal. Major studios and streaming platforms are investing heavily in international production facilities and talent development.</p>
+    <p>Co-productions between companies from different countries are becoming more common, combining creative approaches and accessing multiple markets simultaneously. Writers and directors are finding opportunities to tell stories that might have been considered "too local" for global distribution in the past.</p>
+    <p>The result is a virtuous cycle: as audiences experience more diverse content, their tastes broaden further, creating demand for even more varied storytelling. This cultural exchange enriches the creative landscape, introducing new narrative structures, visual styles, and thematic concerns to viewers around the world.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=80',
+    category: 'entertainment',
+    author: 'Jamal Washington',
+    publishedAt: '2023-06-02T15:30:00Z',
+    featured: true,
+    video: 'https://www.youtube.com/watch?v=1BNTCBHVkMs'
+  },
+  {
+    id: '22',
+    title: 'Gaming's Cultural Revolution',
+    slug: 'gaming-cultural-revolution',
+    excerpt: 'How video games evolved from niche hobby to dominant cultural force shaping entertainment, technology, and society.',
+    content: `<p>Video games have completed a remarkable journey from arcades and basements to the center of popular culture. Gaming now generates more revenue than the film and music industries combined, while influencing everything from social interaction to educational methods and technological innovation.</p>
+    <h2>Beyond Entertainment</h2>
+    <p>Games have evolved far beyond mere entertainment. Virtual worlds like Fortnite and Roblox function as social platforms where millions gather for concerts, film screenings, and shared experiences. Educational institutions are incorporating game-based learning to boost engagement and retention. Healthcare providers use gaming principles for rehabilitation and pain management.</p>
+    <p>The line between games and other media continues to blur. Franchises like "The Last of Us" and "The Witcher" move seamlessly between games, television, and books. Game engines are now used to create virtual production environments for film and television, as seen in shows like "The Mandalorian."</p>
+    <h2>Cultural Impact</h2>
+    <p>Gaming terminology and aesthetics have permeated mainstream culture. Terms like "level up," "grinding," and "boss fight" are commonly used metaphors outside gaming contexts. Pixel art and game-inspired visuals influence fashion, graphic design, and architecture.</p>
+    <p>Esports has emerged as a global phenomenon, with professional gamers achieving celebrity status and tournaments filling stadiums. Major universities now offer esports scholarships, and the Olympic Committee has discussed including competitive gaming in future Games.</p>
+    <p>Perhaps most significantly, games have pioneered interactive storytelling techniques that give audiences agency in narrative experiences - potentially pointing toward the future of all entertainment as technologies like XR (extended reality) mature. Far from being a subculture, gaming has become a primary cultural force shaping how we play, connect, and create.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=1200&q=80',
+    category: 'entertainment',
+    author: 'Tyler Rodriguez',
+    publishedAt: '2023-04-25T12:45:00Z',
+    featured: false
+  },
+  {
+    id: '23',
+    title: 'The Renaissance of Board Games',
+    slug: 'renaissance-board-games',
+    excerpt: 'How analog gaming has flourished in the digital age, creating community and connection through tabletop experiences.',
+    content: `<p>In an era dominated by digital entertainment, board games have not only survived but thrived. The global board game market has experienced sustained double-digit growth, with thousands of new titles published annually and dedicated board game cafés opening in cities worldwide.</p>
+    <h2>Beyond Monopoly</h2>
+    <p>This renaissance extends far beyond traditional games like Monopoly or Scrabble. Modern board games offer incredible diversity: cooperative games where players work together against the game itself; legacy games that evolve permanently as you play; social deduction games testing psychological insight; and complex strategy games requiring deep tactical thinking.</p>
+    <p>European-style games (often called "Eurogames") like Catan and Ticket to Ride introduced elegant mechanics and accessibility that helped broaden the hobby's appeal beyond hardcore gamers. Meanwhile, crowdfunding platforms like Kickstarter have revolutionized the industry by connecting designers directly with enthusiasts.</p>
+    <h2>The Social Connection</h2>
+    <p>Many attribute board gaming's resurgence to the desire for authentic social connection in an increasingly digital world. Unlike video games, board games naturally facilitate face-to-face interaction, conversation, and shared experiences. They create contexts for multi-generational play, bringing together family members and friends of different ages and interests.</p>
+    <p>The educational value of modern board games has also gained recognition. They develop critical thinking, spatial reasoning, resource management, and social skills in ways that feel engaging rather than instructional.</p>
+    <p>Perhaps most importantly, analog gaming provides a rare opportunity to disconnect from screens while remaining socially engaged - offering a welcome respite from digital saturation. In creating spaces where people gather around tables rather than dispersing into separate digital worlds, board games have found an enduring role in contemporary culture.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?auto=format&fit=crop&w=1200&q=80',
+    category: 'entertainment',
+    author: 'Olivia Johnston',
+    publishedAt: '2023-02-08T11:20:00Z',
+    featured: false
+  },
+  {
+    id: '24',
+    title: 'The Evolution of Music Consumption',
+    slug: 'evolution-music-consumption',
+    excerpt: 'From vinyl to digital and back again: how technology has transformed the way we discover and experience music.',
+    content: `<p>Few cultural products have seen their mode of consumption change as dramatically as music. From physical formats to streaming services, each technological shift has not only changed how we access music but influenced the very nature of the music being created.</p>
+    <h2>The Streaming Revolution</h2>
+    <p>Streaming services have fundamentally altered music economics and listening habits. Algorithms drive discovery, playlists have replaced albums as the dominant curation format, and the "everything available all the time" model has created both opportunities and challenges for artists.</p>
+    <p>This democratized distribution has enabled musicians from around the world to find global audiences without major label backing. Genres like K-pop, Afrobeats, and regional Latin styles have achieved international prominence partly through streaming platforms' borderless nature.</p>
+    <h2>The Analog Countermovement</h2>
+    <p>Paradoxically, as music became increasingly digital, physical formats experienced a surprising revival. Vinyl records have enjoyed sustained growth for over a decade, valued for their tangible connection to music, superior sound quality, and artistic packaging. Even cassettes have made a niche comeback among collectors and indie artists.</p>
+    <p>This revival speaks to a desire for more intentional listening experiences. While streaming facilitates convenience and discovery, vinyl represents commitment - both to the artist and to the act of listening itself.</p>
+    <p>Live music remains irreplaceable, with concert attendance strong despite high ticket prices. The unique experience of sharing physical space with performers and fellow fans provides a communal dimension that technology cannot replicate.</p>
+    <p>Rather than one format replacing another, we've arrived at an ecosystem where multiple modes of music consumption coexist, each serving different needs and contexts - from the convenience of streaming to the ceremony of vinyl to the community of live performance.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1511735111819-9a3f7709049c?auto=format&fit=crop&w=1200&q=80',
+    category: 'entertainment',
+    author: 'Marcus Lee',
+    publishedAt: '2023-05-22T14:10:00Z',
+    featured: true
+  },
+  {
+    id: '25',
+    title: 'Comedy in the Age of Social Media',
+    slug: 'comedy-age-social-media',
+    excerpt: 'How platforms like TikTok, YouTube, and podcasts are reshaping humor and launching new comedy stars.',
+    content: `<p>The path to comedy stardom once ran exclusively through comedy clubs, late-night TV, and if you were lucky, a sitcom or film career. Today, social media has created entirely new comedy ecosystems with their own stars, formats, and languages of humor.</p>
+    <h2>New Platforms, New Formats</h2>
+    <p>Each platform has fostered distinctive comedy styles. Twitter rewards concise wit and observational humor. TikTok has revitalized sketch comedy and physical comedy in short, visual bursts. YouTube supports longer formats from elaborately produced sketches to personality-driven vlogs. Podcasting has created space for conversational, long-form comedy.</p>
+    <p>These platforms offer direct audience connection without traditional gatekeepers, allowing comedians to build loyal followings based on authentic voice rather than broad appeal. Niche humor that might never reach television thrives in online spaces where audiences self-select.</p>
+    <h2>Democratized Comedy</h2>
+    <p>The democratizing effect of social media has diversified comedy voices, bringing perspectives previously marginalized in mainstream entertainment to large audiences. Comedians from different backgrounds, regions, and experiences find communities that appreciate their specific viewpoints.</p>
+    <p>The economics have shifted as well. While social platforms themselves rarely provide sustainable income directly, they serve as launching pads for merchandising, live performances, and sponsorships. Many successful comedians now operate as independent businesses rather than talent contracted to networks or studios.</p>
+    <p>Traditional comedy hasn't disappeared - stand-up specials remain popular on streaming services, and late-night shows have adapted by incorporating viral-friendly segments. But the center of gravity has shifted, with many mainstream comedy stars now beginning their careers on social platforms rather than traditional venues.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1527224857830-43a7acc85260?auto=format&fit=crop&w=1200&q=80',
+    category: 'entertainment',
+    author: 'Aisha Patel',
+    publishedAt: '2023-03-15T13:35:00Z',
+    featured: false
+  },
+
+  // News Category Posts
+  {
+    id: '5',
+    title: 'Climate Change: Latest Findings and What They Mean',
+    slug: 'climate-change-latest-findings',
+    excerpt: 'New research reveals accelerating climate impacts and highlights the urgent need for global action.',
+    content: `<p>The latest scientific reports on climate change paint a sobering picture: global temperatures continue to rise, extreme weather events are becoming more frequent and severe, and the window for avoiding the worst impacts is rapidly closing.</p>
+    <h2>Accelerating Impacts</h2>
+    <p>Recent findings show that many climate impacts are occurring faster than previously predicted. Arctic sea ice is disappearing at rates not expected until mid-century. Sea levels are rising more quickly than forecast models suggested. And extreme weather events—from devastating wildfires to record-breaking floods—are increasing in both frequency and intensity.</p>
+    <p>Scientists have also identified concerning feedback loops and tipping points in the climate system. For example, as permafrost thaws in Arctic regions, it releases methane, a potent greenhouse gas, which in turn accelerates warming—a vicious cycle that could lead to runaway climate change.</p>
+    <h2>The Path Forward</h2>
+    <p>Despite these alarming trends, researchers emphasize that it's not too late to avoid the worst-case scenarios. Rapid reductions in greenhouse gas emissions could still limit global warming to levels that, while challenging, would be more manageable than the catastrophic outcomes of unchecked climate change.</p>
+    <p>The transition to renewable energy is happening faster than many expected, with solar and wind power now cheaper than fossil fuels in many regions. Electric vehicles are gaining market share rapidly. And new technologies for reducing emissions in hard-to-decarbonize sectors like steel and cement production are showing promise.</p>
+    <h2>Individual and Collective Action</h2>
+    <p>Addressing climate change requires action at all levels—from individual choices about consumption and transportation to national policies and international agreements. The latest research suggests that both systemic change and personal responsibility have important roles to play.</p>
+    <p>While the challenge is immense, there is also reason for hope. The growing awareness of climate change has sparked a global movement for action, with young people leading the charge. As more people, companies, and governments commit to addressing this existential threat, the possibility of creating a sustainable future remains within reach—but time is of the essence.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80',
+    category: 'news',
+    author: 'Michael Thompson',
+    publishedAt: '2023-03-22T11:20:00Z',
+    featured: true
+  },
+  {
+    id: '26',
+    title: 'The Changing Landscape of Global Trade',
+    slug: 'changing-landscape-global-trade',
+    excerpt: 'How geopolitical tensions, pandemic disruptions, and sustainability concerns are reshaping international commerce.',
+    content: `<p>Global trade patterns are undergoing their most significant transformation in decades. After a long period of increasing integration and supply chain optimization based primarily on cost efficiency, multiple forces are now driving a fundamental restructuring of how goods move around the world.</p>
+    <h2>From Globalization to Regionalization</h2>
+    <p>The pandemic exposed vulnerabilities in extended supply chains optimized for efficiency rather than resilience. Shortages of critical goods from semiconductors to medical supplies led governments and corporations to reconsider dependencies on distant suppliers.</p>
+    <p>Geopolitical tensions between major economic powers, particularly the US and China, have accelerated this shift. "Friend-shoring" or "ally-shoring" - relocating supply chains to politically aligned countries - has emerged as a strategy to reduce vulnerability to diplomatic disruptions while maintaining some cost advantages of international production.</p>
+    <h2>Sustainability Considerations</h2>
+    <p>Environmental concerns are also influencing trade patterns. Carbon border adjustment mechanisms being implemented in regions like the European Union effectively tax imports based on their carbon footprint, potentially reshaping competitive dynamics for carbon-intensive industries.</p>
+    <p>Meanwhile, companies seeking to reduce their environmental impact are considering not just production emissions but also transportation footprints. This sometimes favors regionally sourced goods over those shipped across oceans, particularly for industries where shipping represents a significant portion of total emissions.</p>
+    <p>Rather than a complete reversal of globalization, these forces are creating a more nuanced landscape - with strategic industries seeing more localization while other sectors maintain global supply chains with greater emphasis on diversification and redundancy. The result is a trading system that may sacrifice some economic efficiency in pursuit of resilience, sustainability, and alignment with broader strategic objectives.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1494961104209-3c223057bd26?auto=format&fit=crop&w=1200&q=80',
+    category: 'news',
+    author: 'Lin Zhao',
+    publishedAt: '2023-07-10T08:15:00Z',
+    featured: false,
+    video: 'https://www.youtube.com/watch?v=2Vm5QU5_r6c'
+  },
+  {
+    id: '27',
+    title: 'The Future of Work: Beyond Remote vs. Office',
+    slug: 'future-work-beyond-remote-office',
+    excerpt: 'How the workplace is evolving with hybrid models, flexible arrangements, and technological integration.',
+    content: `<p>The debate between remote and office work that dominated pandemic-era employment discussions is evolving into something more nuanced. Organizations are moving beyond binary thinking to reimagine work arrangements that capture benefits from both approaches while addressing their limitations.</p>
+    <h2>The Hybrid Equilibrium</h2>
+    <p>Data from major employers shows that hybrid models - where employees split time between remote and in-person work - are becoming the dominant arrangement for knowledge workers. This approach aims to combine the flexibility and focus benefits of remote work with the collaboration and culture-building advantages of in-person interaction.</p>
+    <p>However, implementation varies widely. Some companies mandate specific in-office days for all employees, while others allow team-level decision-making or individual flexibility within broader parameters. The most successful approaches align in-person time with collaborative activities that benefit from physical presence rather than arbitrary scheduling.</p>
+    <h2>Beyond Location: Rethinking Work Structure</h2>
+    <p>The location discussion has sparked broader reconsideration of work structures. Asynchronous communication methods are allowing teams distributed across time zones to collaborate effectively. Four-day workweek pilots are showing promising results for both productivity and employee satisfaction in various industries.</p>
+    <p>Technology continues to reshape work processes, with AI tools automating routine tasks and augmenting human capabilities in more complex ones. Virtual reality and metaverse technologies are beginning to offer new approaches to remote collaboration that go beyond video conferencing.</p>
+    <p>As these experiments continue, organizations are increasingly recognizing that optimal work arrangements vary by function, team context, and individual preferences. The future workplace likely won't follow a single model but will feature unprecedented variety in when, where, and how work happens - with implications for everything from office design to management practices to social safety nets.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=80',
+    category: 'news',
+    author: 'Sophia Mendes',
+    publishedAt: '2023-01-25T09:30:00Z',
+    featured: true
+  },
+  {
+    id: '28',
+    title: 'Digital Privacy in the Age of AI',
+    slug: 'digital-privacy-age-ai',
+    excerpt: 'Navigating the evolving landscape of data protection as artificial intelligence becomes ubiquitous.',
+    content: `<p>As artificial intelligence systems become more sophisticated and pervasive, they're transforming the nature of digital privacy concerns. Traditional concepts of data protection are being challenged by technologies that can derive intimate insights from seemingly innocuous information and generate realistic content mimicking real individuals.</p>
+    <h2>AI's Privacy Paradox</h2>
+    <p>Modern AI systems require enormous datasets for training, creating demand for ever more personal information. Simultaneously, these systems can infer sensitive details about individuals that were never explicitly shared. Facial recognition can identify people in public spaces, voice analysis can detect health conditions, and browsing behavior can reveal psychological traits.</p>
+    <p>This creates a fundamental tension: the same AI technologies that offer powerful personalization and convenience also enable unprecedented surveillance and profiling capacities. Limiting data collection hampers beneficial AI development, while unrestrained data gathering threatens fundamental privacy rights.</p>
+    <h2>Regulatory Responses</h2>
+    <p>Governments worldwide are updating legal frameworks to address these challenges. The EU's AI Act proposes risk-based regulations with stricter rules for high-risk applications. Several jurisdictions have enacted specific restrictions on facial recognition in public spaces. In the US, a patchwork of state laws addresses specific AI applications while federal legislation remains under debate.</p>
+    <p>Technologists are developing "privacy-preserving AI" approaches like federated learning (where models are trained on distributed data without centrally collecting it) and differential privacy (adding noise to data to protect individual records while maintaining overall patterns).</p>
+    <p>As generative AI creates new capabilities to produce synthetic media like deepfakes, additional questions emerge about consent, reputation, and identity. Finding the balance between innovation and protection remains a central challenge for policymakers, technology companies, and society as a whole.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80',
+    category: 'news',
+    author: 'Maxwell Kumar',
+    publishedAt: '2023-06-05T15:45:00Z',
+    featured: false
+  },
+  {
+    id: '29',
+    title: 'The Evolution of Digital Currencies',
+    slug: 'evolution-digital-currencies',
+    excerpt: 'How cryptocurrencies, stablecoins, and central bank digital currencies are reshaping financial systems.',
+    content: `<p>Digital currencies have moved from speculative experiments to serious financial instruments with potential to transform payment systems, monetary policy, and financial inclusion worldwide. The landscape has diversified significantly beyond early cryptocurrencies like Bitcoin to include multiple forms with different purposes and governance structures.</p>
+    <h2>Beyond Speculation</h2>
+    <p>While price volatility remains a defining feature of many cryptocurrencies, the ecosystem has evolved to include much more than speculative assets. Stablecoins pegged to traditional currencies have grown rapidly, addressing volatility concerns while providing digital transaction capabilities. These have found practical applications in cross-border payments, reducing friction in international money transfers.</p>
+    <p>Meanwhile, blockchain technologies underlying many digital currencies have enabled decentralized finance (DeFi) applications that recreate traditional financial services like lending and trading without intermediaries. While still relatively small compared to traditional finance, these systems have demonstrated potential for increased efficiency and access.</p>
+    <h2>Official Sector Engagement</h2>
+    <p>Perhaps most significantly, central banks around the world are actively exploring or implementing central bank digital currencies (CBDCs). Unlike private cryptocurrencies, these represent direct claims on the central bank, similar to digital versions of physical cash but with programmable features.</p>
+    <p>China has advanced furthest among major economies with its digital yuan already in widespread trials. The European Central Bank is developing a digital euro, while the Federal Reserve continues research on a potential digital dollar. Over 130 countries representing 98% of global GDP are currently exploring CBDCs.</p>
+    <p>These developments raise fundamental questions about financial privacy, monetary sovereignty, and the role of private financial institutions. As digital currencies mature, they may fundamentally alter how money moves through economies - potentially increasing financial inclusion and efficiency while creating new challenges for monetary policy and financial stability.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1620778186108-936f6365411d?auto=format&fit=crop&w=1200&q=80',
+    category: 'news',
+    author: 'Amara Jackson',
+    publishedAt: '2023-04-30T10:20:00Z',
+    featured: false
+  },
+  {
+    id: '30',
+    title: 'The New Space Economy',
+    slug: 'new-space-economy',
+    excerpt: 'How commercial ventures are transforming access to space and creating new industries beyond Earth.',
+    content: `<p>The space sector has undergone a remarkable transformation from being primarily government-driven to increasingly commercial. Private companies now dominate launch services, satellite manufacturing and operation, and are pioneering new business models that may eventually extend human economic activity beyond Earth.</p>
+    <h2>Launch Revolution</h2>
+    <p>The dramatic reduction in launch costs has been foundational to this new space economy. Reusable rocket technology pioneered by companies like SpaceX has reduced the cost of accessing orbit by approximately 90% over the past decade. This cost reduction has enabled the deployment of vast satellite constellations that would have been economically unfeasible previously.</p>
+    <p>These satellite networks are providing global broadband internet to underserved regions, capturing daily imagery of the entire Earth's surface for applications from crop monitoring to climate research, and enabling precise navigation systems that underpin modern logistics and transportation.</p>
+    <h2>Beyond Earth Orbit</h2>
+    <p>Commercial activities are increasingly extending beyond Earth orbit. Private companies are developing spacecraft for lunar missions with NASA's Artemis program utilizing commercial landers for cargo and eventually crew transport. Asteroid mining companies are advancing technologies to eventually harvest resources from near-Earth objects.</p>
+    <p>Space tourism has moved from concept to reality, with suborbital flights operational and orbital hotels in development. Though currently accessible only to the wealthy, these ventures establish proof-of-concept for larger-scale space visitor facilities in the future.</p>
+    <p>Government agencies remain crucial partners in this ecosystem, providing fundamental research, regulatory frameworks, and anchor customer contracts. This public-private partnership model has accelerated innovation while reducing costs to taxpayers - potentially opening a new chapter in humanity's relationship with space that combines scientific exploration with economic development.</p>`,
+    coverImage: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=80',
+    category: 'news',
+    author: 'Harrison Reid',
+    publishedAt: '2023-02-03T12:50:00Z',
+    featured: true
+  }
 ];
 
 // Helper functions
@@ -373,3 +650,4 @@ export const formatDate = (dateString: string): string => {
     day: 'numeric' 
   }).format(date);
 };
+
