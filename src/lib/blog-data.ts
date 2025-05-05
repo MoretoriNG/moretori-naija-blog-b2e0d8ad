@@ -1,3 +1,4 @@
+
 import { Post, PostCategory } from "@/types/blog";
 
 // Sample post data
@@ -316,3 +317,59 @@ export const posts: Post[] = [
     featured: true
   },
 ];
+
+// Helper functions
+export const getAllPosts = (): Post[] => {
+  return [...posts].sort((a, b) => 
+    new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  );
+};
+
+export const getPostBySlug = (slug: string): Post | undefined => {
+  return posts.find(post => post.slug === slug);
+};
+
+export const getPostsByCategory = (category: PostCategory): Post[] => {
+  return posts
+    .filter(post => post.category === category)
+    .sort((a, b) => 
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
+};
+
+export const getFeaturedPosts = (): Post[] => {
+  return posts
+    .filter(post => post.featured)
+    .sort((a, b) => 
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
+};
+
+export const getRecentPosts = (limit: number = 3): Post[] => {
+  return [...posts]
+    .sort((a, b) => 
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    )
+    .slice(0, limit);
+};
+
+export const getCategoryColor = (category: PostCategory): string => {
+  const colors: Record<PostCategory, string> = {
+    tech: 'bg-blue-100 text-blue-800',
+    auto: 'bg-red-100 text-red-800',
+    health: 'bg-green-100 text-green-800',
+    entertainment: 'bg-purple-100 text-purple-800',
+    news: 'bg-amber-100 text-amber-800'
+  };
+  
+  return colors[category] || 'bg-gray-100 text-gray-800';
+};
+
+export const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  }).format(date);
+};

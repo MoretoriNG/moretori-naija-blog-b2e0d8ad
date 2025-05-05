@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
@@ -212,7 +211,7 @@ export function HeroSlider({ posts }: HeroSliderProps) {
       </div>
       
       {/* CSS for progress animation */}
-      <style jsx>{`
+      <style>{`
         @keyframes progress {
           from { transform: scaleX(0); }
           to { transform: scaleX(1); }
