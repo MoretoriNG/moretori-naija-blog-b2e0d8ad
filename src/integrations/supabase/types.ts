@@ -11,22 +11,31 @@ export type Database = {
     Tables: {
       posts: {
         Row: {
-          content: string | null
+          content: string
           created_at: string | null
           id: number
-          title: string | null
+          image_url: string | null
+          summary: string | null
+          title: string
+          user_id: string
         }
         Insert: {
-          content?: string | null
+          content: string
           created_at?: string | null
           id?: never
-          title?: string | null
+          image_url?: string | null
+          summary?: string | null
+          title: string
+          user_id: string
         }
         Update: {
-          content?: string | null
+          content?: string
           created_at?: string | null
           id?: never
-          title?: string | null
+          image_url?: string | null
+          summary?: string | null
+          title?: string
+          user_id?: string
         }
         Relationships: []
       }

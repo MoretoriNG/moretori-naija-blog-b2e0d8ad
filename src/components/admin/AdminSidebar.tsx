@@ -4,9 +4,11 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/compone
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, FileText, FilePlus, Upload, Settings, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function AdminSidebar() {
   const location = useLocation();
+  const { signOut } = useAuth();
   
   // Menu items for the sidebar
   const menuItems = [
@@ -37,9 +39,8 @@ export function AdminSidebar() {
     },
   ];
 
-  const handleLogout = () => {
-    localStorage.removeItem("admin_authenticated");
-    window.location.href = "/admin/login";
+  const handleLogout = async () => {
+    await signOut();
   };
 
   return (

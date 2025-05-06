@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,34 +7,46 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertCircle, LogIn } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { signIn, user, isLoading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [loginInProgress, setLoginInProgress] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (event: React.FormEvent) => {
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (user && !isLoading) {
+      navigate("/admin");
+    }
+  }, [user, isLoading, navigate]);
+
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setIsLoading(true);
+    setLoginInProgress(true);
     setError("");
 
-    // For demo purposes, we'll use a simple authentication
-    // In a real app, this would be an API call to your backend
-    setTimeout(() => {
-      // Demo credentials: admin@example.com / password
-      if (email === "admin@example.com" && password === "password") {
-        localStorage.setItem("admin_authenticated", "true");
-        toast.success("Login successful");
-        navigate("/admin");
-      } else {
-        setError("Invalid email or password");
-        toast.error("Login failed");
-      }
-      setIsLoading(false);
-    }, 1000);
+    try {
+      await signIn(email, password);
+      // Redirect is handled by the useEffect above
+    } catch (error: any) {
+      setError(error.message || "Invalid email or password");
+      toast.error("Login failed");
+    } finally {
+      setLoginInProgress(false);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-600/10 to-green-600/5 p-4">
+        <div className="animate-pulse text-blue-600">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-600/10 to-green-600/5 p-4">
@@ -88,9 +100,9 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700"
-                disabled={isLoading}
+                disabled={loginInProgress}
               >
-                {isLoading ? (
+                {loginInProgress ? (
                   <>
                     <span className="animate-pulse mr-2">•••</span>
                     Signing In

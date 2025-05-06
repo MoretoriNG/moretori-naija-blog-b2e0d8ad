@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, Bell, Settings, Search, ChevronDown, LogOut, FilePlus, LayoutDashboard, FileText, Upload } from "lucide-react";
+import { Menu, Bell, Settings, Search, LogOut, FilePlus, LayoutDashboard, FileText, Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -13,14 +13,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function AdminNav() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const { signOut, user } = useAuth();
 
-  const handleLogout = () => {
-    localStorage.removeItem("admin_authenticated");
-    window.location.href = "/admin/login";
+  const handleLogout = async () => {
+    await signOut();
   };
+
+  const userInitials = user?.email ? user.email.substring(0, 2).toUpperCase() : "AD";
 
   return (
     <header className="sticky top-0 z-30 w-full border-b bg-card">
@@ -59,13 +62,13 @@ export function AdminNav() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src="https://github.com/shadcn.png" alt="Admin" />
-                  <AvatarFallback>AD</AvatarFallback>
+                  <AvatarImage src={user?.user_metadata?.avatar_url} alt={user?.email || "User"} />
+                  <AvatarFallback>{userInitials}</AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <Link to="/admin/settings">

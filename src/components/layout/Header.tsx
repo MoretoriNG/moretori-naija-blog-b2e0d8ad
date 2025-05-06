@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Menu, X, Search, Facebook, Instagram, Twitter, Calendar, Mail, LogIn, UserPlus } from 'lucide-react';
-import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink } from "@/components/ui/navigation-menu";
+import { Menu, X, Search, Facebook, Instagram, Twitter, Calendar, Mail, LogIn, UserPlus, User } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 const categories = [
   { name: "Tech", slug: "tech" },
@@ -19,6 +19,7 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const { user, signOut } = useAuth();
   
   // Update date every minute
   useEffect(() => {
@@ -127,19 +128,34 @@ export function Header() {
           </div>
           
           <div className="hidden md:flex items-center gap-2">
-            <Button variant="outline" size="sm" className="text-blue-600 border-blue-600/30 hover:bg-blue-600 hover:text-white">
-              <LogIn className="h-4 w-4 mr-2" />
-              Log In
-            </Button>
-            <Button size="sm" className="bg-green-600 hover:bg-green-700">
-              <UserPlus className="h-4 w-4 mr-2" />
-              Sign Up
-            </Button>
+            {user ? (
+              <Button variant="outline" size="sm" className="text-blue-600 border-blue-600/30 hover:bg-blue-600 hover:text-white" onClick={() => signOut()}>
+                <User className="h-4 w-4 mr-2" />
+                {user.email?.split('@')[0]}
+              </Button>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" className="text-blue-600 border-blue-600/30 hover:bg-blue-600 hover:text-white" asChild>
+                  <Link to="/auth?tab=login">
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Log In
+                  </Link>
+                </Button>
+                <Button size="sm" className="bg-green-600 hover:bg-green-700" asChild>
+                  <Link to="/auth?tab=register">
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Sign Up
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
           
-          <Button asChild className="hidden md:flex bg-orange-500 hover:bg-orange-600 ml-1">
-            <Link to="/admin">Admin</Link>
-          </Button>
+          {user && (
+            <Button asChild className="hidden md:flex bg-orange-500 hover:bg-orange-600 ml-1">
+              <Link to="/admin">Admin</Link>
+            </Button>
+          )}
           
           <Button
             variant="ghost"
@@ -178,18 +194,38 @@ export function Header() {
             About
           </Link>
           <div className="pt-2 flex gap-2">
-            <Button variant="outline" size="sm" className="flex-1 text-blue-600">
-              <LogIn className="h-4 w-4 mr-2" />
-              Log In
-            </Button>
-            <Button size="sm" className="flex-1 bg-green-600 hover:bg-green-700">
-              <UserPlus className="h-4 w-4 mr-2" />
-              Sign Up
-            </Button>
+            {user ? (
+              <>
+                <Button variant="outline" size="sm" className="flex-1 text-blue-600" onClick={() => {
+                  signOut();
+                  setIsOpen(false);
+                }}>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Log Out
+                </Button>
+                <Button asChild size="sm" className="flex-1 bg-orange-500 hover:bg-orange-600">
+                  <Link to="/admin" onClick={() => setIsOpen(false)}>
+                    Admin Portal
+                  </Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button asChild variant="outline" size="sm" className="flex-1 text-blue-600">
+                  <Link to="/auth?tab=login" onClick={() => setIsOpen(false)}>
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Log In
+                  </Link>
+                </Button>
+                <Button asChild size="sm" className="flex-1 bg-green-600 hover:bg-green-700">
+                  <Link to="/auth?tab=register" onClick={() => setIsOpen(false)}>
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Sign Up
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
-          <Button asChild size="sm" className="w-full bg-orange-500 hover:bg-orange-600">
-            <Link to="/admin" onClick={() => setIsOpen(false)}>Admin Portal</Link>
-          </Button>
         </nav>
       </div>
     </header>

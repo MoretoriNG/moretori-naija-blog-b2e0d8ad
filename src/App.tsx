@@ -16,8 +16,11 @@ import NewPostPage from "./pages/admin/NewPostPage";
 import EditPostPage from "./pages/admin/EditPostPage";
 import MediaLibraryPage from "./pages/admin/MediaLibraryPage";
 import SettingsPage from "./pages/admin/SettingsPage";
+import AuthPage from "./pages/auth/AuthPage";
 import NotFound from "./pages/NotFound";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -26,34 +29,39 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <SidebarProvider>
-        <BrowserRouter>
-          <Routes>
-            {/* Public routes */}
-            <Route element={<MainLayout />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/post/:slug" element={<PostPage />} />
-              <Route path="/category/:slug" element={<CategoryPage />} />
-              <Route path="/about" element={<AboutPage />} />
-            </Route>
-            
-            {/* Admin login route */}
-            <Route path="/admin/login" element={<LoginPage />} />
-            
-            {/* Protected admin routes */}
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route index element={<AdminDashboard />} />
-              <Route path="posts/new" element={<NewPostPage />} />
-              <Route path="posts/edit/:id" element={<EditPostPage />} />
-              <Route path="media" element={<MediaLibraryPage />} />
-              <Route path="settings" element={<SettingsPage />} />
-            </Route>
-            
-            {/* 404 route */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </SidebarProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <SidebarProvider>
+            <Routes>
+              {/* Public routes */}
+              <Route element={<MainLayout />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/post/:slug" element={<PostPage />} />
+                <Route path="/category/:slug" element={<CategoryPage />} />
+                <Route path="/about" element={<AboutPage />} />
+              </Route>
+              
+              {/* Auth routes */}
+              <Route path="/auth" element={<AuthPage />} />
+              <Route path="/admin/login" element={<LoginPage />} />
+              
+              {/* Protected admin routes */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="posts/new" element={<NewPostPage />} />
+                  <Route path="posts/edit/:id" element={<EditPostPage />} />
+                  <Route path="media" element={<MediaLibraryPage />} />
+                  <Route path="settings" element={<SettingsPage />} />
+                </Route>
+              </Route>
+              
+              {/* 404 route */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </SidebarProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );
