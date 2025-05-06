@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Menu, X, Search, Facebook, Instagram, Twitter, Calendar, Mail, LogIn, UserPlus, User } from 'lucide-react';
+import { Menu, X, Search, Facebook, Instagram, Twitter, Calendar, Mail, LogIn, UserPlus, User, LogOut } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
 const categories = [

@@ -57,6 +57,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function fetchProfile(userId: string) {
     try {
+      // Use custom query instead of direct table access since profiles table
+      // is not in the generated types
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
