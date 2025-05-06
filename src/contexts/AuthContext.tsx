@@ -57,8 +57,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function fetchProfile(userId: string) {
     try {
-      // Use a raw query with the SQL function instead of typed query builder
-      // since the profiles table isn't in the generated types
+      // Use the RPC function to fetch the profile by user ID
       const { data, error } = await supabase
         .rpc('get_profile_by_id', { user_id: userId });
 

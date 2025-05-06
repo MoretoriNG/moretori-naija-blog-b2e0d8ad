@@ -1,153 +1,151 @@
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Post } from "@/types/blog";
-import { PostCard } from "./PostCard";
-import { ChevronLeft, ChevronRight, Sparkles, Filter, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { 
-  Carousel,
-  CarouselContent,
-  CarouselItem, 
-  CarouselPrevious,
-  CarouselNext,
-} from "@/components/ui/carousel";
-import { PostCategory } from "@/types/blog";
+import { useState, useEffect } from 'react';
+import { getRecentPosts } from '@/lib/blog-data';
+import { Card, CardContent } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
-interface FeaturedPostsProps {
-  posts: Post[];
-}
+export default function FeaturedPosts() {
+  const [visiblePosts, setVisiblePosts] = useState(4);
+  const [currentPage, setCurrentPage] = useState(0);
+  const recentPosts = getRecentPosts(12); // Get more posts for pagination
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-export function FeaturedPosts({ posts }: FeaturedPostsProps) {
-  const [filter, setFilter] = useState<PostCategory | 'all'>('all');
-  
-  if (posts.length === 0) {
-    return null;
-  }
-  
-  const categories: Array<PostCategory | 'all'> = ['all', 'tech', 'auto', 'health', 'entertainment', 'news'];
-  
-  const filteredPosts = filter === 'all' 
-    ? posts 
-    : posts.filter(post => post.category === filter);
-  
-  const getCategoryColor = (category: PostCategory | 'all'): string => {
-    const colors: Record<string, string> = {
-      'all': 'border-gray-300 text-gray-700 hover:border-gray-500',
-      'tech': 'border-cyan-300 text-cyan-700 hover:border-cyan-500',
-      'auto': 'border-orange-300 text-orange-700 hover:border-orange-500',
-      'health': 'border-green-300 text-green-700 hover:border-green-500',
-      'entertainment': 'border-purple-300 text-purple-700 hover:border-purple-500',
-      'news': 'border-amber-300 text-amber-700 hover:border-amber-500'
+  // Determine how many posts to show based on screen size
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      setVisiblePosts(mobile ? 1 : 4);
     };
-    return colors[category] || 'border-gray-300';
+    
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Set initial state
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(recentPosts.length / visiblePosts);
+  
+  // Get current visible posts
+  const currentPosts = recentPosts.slice(
+    currentPage * visiblePosts, 
+    (currentPage + 1) * visiblePosts
+  );
+  
+  const nextPage = () => {
+    setCurrentPage((prev) => (prev + 1) % totalPages);
   };
   
+  const prevPage = () => {
+    setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
+  };
+
   return (
-    <section className="py-16 relative overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzMjMyMzIiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PHBhdGggZD0iTTM2IDM0djZoLTZWMzRoLTZ2LTZoNnYtNmg2djZoNnY2aC02eiIvPjwvZz48L2c+PC9zdmc+')] opacity-50"></div>
-      
-      <div className="container relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-10">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-cyan-500" />
-            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-500 via-purple-500 to-orange-500 bg-clip-text text-transparent">Latest Updates</h2>
+    <div className="container py-12 md:py-16">
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold">
+          <span className="bg-gradient-to-r from-cyan-500 to-orange-500 bg-clip-text text-transparent">
+            Latest Updates
+          </span>
+        </h2>
+        
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={prevPage}
+            className="rounded-full border-cyan-200 hover:bg-cyan-50 hover:border-cyan-500"
+          >
+            <ChevronLeft size={18} className="text-cyan-600" />
+          </Button>
+          
+          <div className="hidden md:flex items-center space-x-1">
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <Button
+                key={index}
+                variant="ghost"
+                size="sm"
+                onClick={() => setCurrentPage(index)}
+                className={cn(
+                  "w-8 h-8 p-0 rounded-full",
+                  currentPage === index 
+                    ? "bg-orange-500 text-white hover:bg-orange-600" 
+                    : "text-muted-foreground hover:bg-orange-100"
+                )}
+              >
+                {index + 1}
+              </Button>
+            ))}
           </div>
           
-          <div className="flex items-center gap-3 mt-4 md:mt-0">
-            <Filter className="h-4 w-4 text-gray-500" />
-            <div className="flex flex-wrap gap-2">
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setFilter(cat)}
-                  className={`px-3 py-1 text-xs font-medium rounded-full border ${
-                    filter === cat 
-                      ? `bg-gradient-to-r from-cyan-500 to-orange-500 border-transparent text-white`
-                      : getCategoryColor(cat)
-                  }`}
-                >
-                  {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1)}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-        
-        {/* Diagonal pattern overlay */}
-        <div className="absolute -bottom-10 -right-10 w-72 h-72 bg-gradient-to-br from-cyan-500/10 to-orange-400/10 rounded-full blur-3xl"></div>
-        <div className="absolute -top-10 -left-10 w-72 h-72 bg-gradient-to-br from-cyan-400/10 to-transparent rounded-full blur-3xl"></div>
-        
-        {filteredPosts.length === 0 ? (
-          <div className="text-center py-20 bg-gray-50 rounded-lg">
-            <p className="text-gray-500">No posts available for this category.</p>
-            <Button 
-              variant="link" 
-              onClick={() => setFilter('all')}
-              className="mt-2 text-cyan-600"
-            >
-              View all categories instead
-            </Button>
-          </div>
-        ) : (
-          <Carousel
-            opts={{ 
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={nextPage}
+            className="rounded-full border-cyan-200 hover:bg-cyan-50 hover:border-cyan-500"
           >
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {filteredPosts.slice(0, 6).map((post) => (
-                <CarouselItem key={post.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3">
-                  <div className="h-full">
-                    <PostCard post={post} />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="flex justify-center mt-8 gap-4">
-              <Button 
-                variant="outline" 
-                size="icon" 
-                className="rounded-full border-cyan-500 hover:bg-cyan-500 hover:text-white h-12 w-12 transform transition-all hover:scale-110"
-                onClick={() => document.querySelector('.embla__prev')?.dispatchEvent(new MouseEvent('click'))}
-              >
-                <ChevronLeft className="h-6 w-6" />
-                <span className="sr-only">Previous slides</span>
-              </Button>
-              <Button 
-                variant="outline" 
-                size="icon" 
-                className="rounded-full border-orange-500 hover:bg-orange-500 hover:text-white h-12 w-12 transform transition-all hover:scale-110"
-                onClick={() => document.querySelector('.embla__next')?.dispatchEvent(new MouseEvent('click'))}
-              >
-                <ChevronRight className="h-6 w-6" />
-                <span className="sr-only">Next slides</span>
-              </Button>
-            </div>
-            <div className="hidden">
-              <CarouselPrevious className="embla__prev" />
-              <CarouselNext className="embla__next" />
-            </div>
-          </Carousel>
-        )}
-        
-        {/* View All link */}
-        <div className="mt-10 text-center">
-          <Button 
-            asChild
-            variant="outline" 
-            className="group border-cyan-500 text-cyan-600 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-orange-500 hover:text-white hover:border-transparent"
-          >
-            <Link to="/featured" className="flex items-center">
-              View All Latest Updates 
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            <ChevronRight size={18} className="text-cyan-600" />
           </Button>
         </div>
       </div>
-    </section>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in">
+        {currentPosts.map((post) => (
+          <Card key={post.id} className="post-card overflow-hidden h-full flex flex-col border-none shadow-lg">
+            <div className="relative aspect-video overflow-hidden">
+              <img
+                src={post.image_url || "/placeholder.svg"}
+                alt={post.title}
+                className="w-full h-full object-cover transition-transform hover:scale-105"
+              />
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-70"></div>
+            </div>
+            
+            <CardContent className="pt-4 flex-grow flex flex-col">
+              <span className="text-xs text-muted-foreground mb-2">
+                {new Date(post.published_at).toLocaleDateString()}
+              </span>
+              
+              <Link to={`/post/${post.slug}`} className="group">
+                <h3 className="text-lg font-bold mb-2 group-hover:text-cyan-600 transition-colors line-clamp-2">
+                  {post.title}
+                </h3>
+              </Link>
+              
+              <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                {post.excerpt}
+              </p>
+              
+              <Link 
+                to={`/post/${post.slug}`} 
+                className="mt-auto text-sm font-semibold text-orange-500 hover:text-orange-600 flex items-center"
+              >
+                Read More <ChevronRight size={16} className="ml-1" />
+              </Link>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      
+      {/* Mobile pagination indicator */}
+      <div className="flex justify-center mt-6 md:hidden">
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <div
+            key={index}
+            className={cn(
+              "w-2 h-2 rounded-full mx-1",
+              currentPage === index ? "bg-orange-500" : "bg-gray-300"
+            )}
+            onClick={() => setCurrentPage(index)}
+          ></div>
+        ))}
+      </div>
+    </div>
   );
 }
