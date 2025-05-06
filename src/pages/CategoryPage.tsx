@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { PostCard } from "@/components/blog/PostCard";
 import { getPostsByCategory, getCategoryBySlug } from "@/lib/blog-data";
-import { PostCategory } from "@/types/blog";
+import { PostCategory, Post } from "@/types/blog";
 
 export default function CategoryPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   
-  const validCategories: PostCategory[] = ['tech', 'health', 'entertainment', 'business', 'sports', 'lifestyle'];
+  const validCategories: PostCategory[] = ['tech', 'health', 'entertainment', 'business', 'sports', 'lifestyle', 'news', 'auto'];
   const isValidCategory = slug && validCategories.includes(slug as PostCategory);
   
   useEffect(() => {
@@ -34,10 +34,11 @@ export default function CategoryPage() {
   // Map posts to the expected Post type
   const mappedPosts = categoryPosts.map(post => ({
     ...post,
+    id: String(post.id),
     category: slug as PostCategory,
     coverImage: post.image_url,
     publishedAt: post.published_at
-  }));
+  })) as Post[];
   
   return (
     <div className="container py-8 md:py-12">

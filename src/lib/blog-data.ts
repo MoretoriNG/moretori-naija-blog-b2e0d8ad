@@ -11,7 +11,7 @@ export const categories = [
 // Helper function to generate a unique ID
 const generateId = (() => {
   let id = 30; // Start from a high number to avoid conflicts with existing posts
-  return () => ++id;
+  return () => String(++id); // Convert to string to match Post interface
 })();
 
 export const posts = [
@@ -773,10 +773,11 @@ export const getCategoryColor = (category) => {
   return categoryMap[category] || 'bg-gray-100 text-gray-800';
 };
 
-// Helper to get all posts
+// Helper to get all posts with properly mapped types
 export const getAllPosts = () => {
   return posts.map(post => ({
     ...post,
+    id: String(post.id), // Convert numeric ID to string
     category: getCategoryById(post.category_id)?.slug || 'uncategorized',
     coverImage: post.image_url,
     publishedAt: post.published_at

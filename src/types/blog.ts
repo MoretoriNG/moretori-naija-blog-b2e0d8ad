@@ -1,16 +1,20 @@
 
-export type PostCategory = 'tech' | 'auto' | 'health' | 'entertainment' | 'news';
+export type PostCategory = 'tech' | 'auto' | 'health' | 'entertainment' | 'news' | 'business' | 'sports' | 'lifestyle';
 
 export interface Post {
-  id: string;
+  id: string | number;
   title: string;
   slug: string;
   excerpt: string;
   content: string;
-  coverImage: string;
-  category: PostCategory;
+  coverImage?: string;
+  image_url?: string; // Support both formats
+  category?: PostCategory;
+  category_id?: number; // Support both formats
   author: string;
-  publishedAt: string;
+  publishedAt?: string;
+  published_at?: string; // Support both formats
   featured?: boolean;
   video?: string;
+  tags?: string[];
 }

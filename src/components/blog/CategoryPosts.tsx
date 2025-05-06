@@ -5,7 +5,7 @@ import { Post, PostCategory } from "@/types/blog";
 import { PostCard } from "./PostCard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getPostsByCategory } from "@/lib/blog-data";
+import { getPostsByCategory, getCategoryById } from "@/lib/blog-data";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { motion } from "@/components/ui/motion";
 import { Hash, ChevronLeft, ChevronRight } from "lucide-react";
@@ -19,8 +19,17 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
   
-  const categories: PostCategory[] = ['tech', 'auto', 'health', 'entertainment', 'news'];
-  const categoryPosts = getPostsByCategory(activeCategory);
+  const categories: PostCategory[] = ['tech', 'auto', 'health', 'entertainment', 'news', 'business', 'sports', 'lifestyle'];
+  const rawCategoryPosts = getPostsByCategory(activeCategory);
+  
+  // Convert posts to the expected Post type
+  const categoryPosts = rawCategoryPosts.map(post => ({
+    ...post,
+    id: String(post.id),
+    category: getCategoryById(post.category_id)?.slug as PostCategory || 'uncategorized',
+    coverImage: post.image_url,
+    publishedAt: post.published_at
+  })) as Post[];
   
   // Calculate pagination
   const indexOfLastPost = currentPage * postsPerPage;
@@ -43,7 +52,10 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
       auto: "Automotive",
       health: "Health & Wellness",
       entertainment: "Entertainment",
-      news: "Current News"
+      news: "Current News",
+      business: "Business",
+      sports: "Sports",
+      lifestyle: "Lifestyle"
     };
     return titles[category] || category.charAt(0).toUpperCase() + category.slice(1);
   };

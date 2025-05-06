@@ -1,4 +1,3 @@
-
 import { useParams, Link } from 'react-router-dom';
 import { getPostBySlug, getCategoryById, getRelatedPosts } from '@/lib/blog-data';
 import { CalendarIcon, User2Icon, TagIcon, ClockIcon, ShareIcon } from 'lucide-react';
@@ -7,6 +6,7 @@ import { PostCard } from '@/components/blog/PostCard';
 import { Button } from '@/components/ui/button';
 import { formatDistanceToNow } from 'date-fns';
 import { toast } from 'sonner';
+import { Post, PostCategory } from '@/types/blog';
 
 export default function PostPage() {
   const { slug } = useParams();
@@ -25,6 +25,7 @@ export default function PostPage() {
   }
   
   const category = getCategoryById(post.category_id);
+  const categorySlug = category?.slug || 'uncategorized';
   const relatedPosts = getRelatedPosts(post.id, post.category_id, 3);
   const readingTimeMinutes = Math.ceil(post.content.split(' ').length / 200); // Estimate reading time
   
@@ -52,10 +53,11 @@ export default function PostPage() {
   // Map old data structure to match the Post type expected by PostCard
   const mappedRelatedPosts = relatedPosts.map(relatedPost => ({
     ...relatedPost,
-    category: getCategoryById(relatedPost.category_id)?.slug || 'uncategorized',
+    id: String(relatedPost.id),
+    category: getCategoryById(relatedPost.category_id)?.slug as PostCategory || 'uncategorized',
     coverImage: relatedPost.image_url,
     publishedAt: relatedPost.published_at
-  }));
+  })) as Post[];
 
   return (
     <div className="container py-8 md:py-12 max-w-5xl">
@@ -78,7 +80,7 @@ export default function PostPage() {
       <div className="mb-8">
         {category && (
           <div className="mb-3">
-            <CategoryBadge category={category.slug} />
+            <CategoryBadge category={categorySlug as PostCategory} />
           </div>
         )}
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">{post.title}</h1>
