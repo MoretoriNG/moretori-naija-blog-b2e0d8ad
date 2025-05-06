@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState } from "react";
 import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
@@ -57,13 +56,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function fetchProfile(userId: string) {
     try {
-      // Use custom query instead of direct table access since profiles table
-      // is not in the generated types
+      // Use a raw query with the SQL function instead of typed query builder
+      // since the profiles table isn't in the generated types
       const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .maybeSingle();
+        .rpc('get_profile_by_id', { user_id: userId });
 
       if (error) {
         console.error('Error fetching profile:', error);
