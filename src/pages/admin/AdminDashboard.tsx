@@ -5,11 +5,12 @@ import { PostList } from "@/components/admin/PostList";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
-import { getAllPosts } from "@/lib/blog-data";
+import { getAllPosts } from "@/lib/blog";
 import { toast } from "sonner";
+import { Post } from "@/types/blog";
 
 export default function AdminDashboard() {
-  const [posts, setPosts] = useState(getAllPosts());
+  const [posts, setPosts] = useState<Post[]>(getAllPosts());
   
   const handleDeletePost = (id: string) => {
     // In a real app, this would be an API call
