@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pencil, Trash, Plus, Search } from "lucide-react";
 import { Post } from "@/types/blog";
-import { formatDate, getCategoryColor } from "@/lib/blog-data";
+import { getCategoryColor } from "@/lib/blog-data";
 
 interface PostListProps {
   posts: Post[];
@@ -21,6 +21,16 @@ export function PostList({ posts, onDelete }: PostListProps) {
     post.category.toLowerCase().includes(search.toLowerCase()) ||
     post.author.toLowerCase().includes(search.toLowerCase())
   );
+  
+  // Helper function to format date
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    });
+  };
   
   return (
     <div className="space-y-4">

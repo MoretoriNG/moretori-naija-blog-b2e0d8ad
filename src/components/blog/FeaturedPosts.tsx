@@ -1,17 +1,23 @@
 
 import { useState, useEffect } from 'react';
-import { getRecentPosts } from '@/lib/blog-data';
+import { Post } from '@/types/blog';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-export default function FeaturedPosts() {
+interface FeaturedPostsProps {
+  posts?: Post[];
+}
+
+export function FeaturedPosts({ posts = [] }: FeaturedPostsProps) {
   const [visiblePosts, setVisiblePosts] = useState(4);
   const [currentPage, setCurrentPage] = useState(0);
-  const recentPosts = getRecentPosts(12); // Get more posts for pagination
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  
+  // If no posts are provided, use an empty array
+  const displayPosts = posts.length > 0 ? posts : [];
 
   // Determine how many posts to show based on screen size
   useEffect(() => {
@@ -30,10 +36,10 @@ export default function FeaturedPosts() {
   }, []);
 
   // Calculate total pages
-  const totalPages = Math.ceil(recentPosts.length / visiblePosts);
+  const totalPages = Math.max(1, Math.ceil(displayPosts.length / visiblePosts));
   
   // Get current visible posts
-  const currentPosts = recentPosts.slice(
+  const currentPosts = displayPosts.slice(
     currentPage * visiblePosts, 
     (currentPage + 1) * visiblePosts
   );
@@ -61,6 +67,7 @@ export default function FeaturedPosts() {
             size="icon"
             onClick={prevPage}
             className="rounded-full border-cyan-200 hover:bg-cyan-50 hover:border-cyan-500"
+            disabled={displayPosts.length <= visiblePosts}
           >
             <ChevronLeft size={18} className="text-cyan-600" />
           </Button>
@@ -89,6 +96,7 @@ export default function FeaturedPosts() {
             size="icon"
             onClick={nextPage}
             className="rounded-full border-cyan-200 hover:bg-cyan-50 hover:border-cyan-500"
+            disabled={displayPosts.length <= visiblePosts}
           >
             <ChevronRight size={18} className="text-cyan-600" />
           </Button>
@@ -100,7 +108,7 @@ export default function FeaturedPosts() {
           <Card key={post.id} className="post-card overflow-hidden h-full flex flex-col border-none shadow-lg">
             <div className="relative aspect-video overflow-hidden">
               <img
-                src={post.image_url || "/placeholder.svg"}
+                src={post.coverImage || post.image_url || "/placeholder.svg"}
                 alt={post.title}
                 className="w-full h-full object-cover transition-transform hover:scale-105"
               />
@@ -109,7 +117,7 @@ export default function FeaturedPosts() {
             
             <CardContent className="pt-4 flex-grow flex flex-col">
               <span className="text-xs text-muted-foreground mb-2">
-                {new Date(post.published_at).toLocaleDateString()}
+                {new Date(post.publishedAt || post.published_at).toLocaleDateString()}
               </span>
               
               <Link to={`/post/${post.slug}`} className="group">
@@ -149,3 +157,5 @@ export default function FeaturedPosts() {
     </div>
   );
 }
+
+export default FeaturedPosts;

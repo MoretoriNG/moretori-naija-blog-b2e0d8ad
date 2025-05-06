@@ -1,4 +1,3 @@
-
 // Mock data for blog posts
 export const categories = [
   { id: 1, name: 'Technology', slug: 'tech', description: 'Latest in tech and innovation' },
@@ -690,8 +689,9 @@ export const posts = [
   }
 ];
 
-export const getPostsByCategory = (categoryId) => {
-  return posts.filter(post => post.category_id === categoryId);
+export const getPostsByCategory = (categorySlug) => {
+  const category = getCategoryBySlug(categorySlug);
+  return category ? posts.filter(post => post.category_id === category.id) : [];
 };
 
 export const getPostBySlug = (slug) => {
@@ -745,4 +745,40 @@ export const getAllTags = () => {
 
 export const getPostsByTag = (tag) => {
   return posts.filter(post => post.tags && post.tags.includes(tag));
+};
+
+// Adding missing utility functions
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'short', 
+    day: 'numeric' 
+  });
+};
+
+// Helper function to get category color
+export const getCategoryColor = (category) => {
+  const categoryMap = {
+    tech: 'bg-cyan-100 text-cyan-800',
+    health: 'bg-green-100 text-green-800',
+    entertainment: 'bg-purple-100 text-purple-800',
+    business: 'bg-blue-100 text-blue-800',
+    sports: 'bg-orange-100 text-orange-800',
+    lifestyle: 'bg-pink-100 text-pink-800',
+    news: 'bg-yellow-100 text-yellow-800',
+    auto: 'bg-red-100 text-red-800'
+  };
+  
+  return categoryMap[category] || 'bg-gray-100 text-gray-800';
+};
+
+// Helper to get all posts
+export const getAllPosts = () => {
+  return posts.map(post => ({
+    ...post,
+    category: getCategoryById(post.category_id)?.slug || 'uncategorized',
+    coverImage: post.image_url,
+    publishedAt: post.published_at
+  }));
 };

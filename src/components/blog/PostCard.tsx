@@ -12,7 +12,21 @@ interface PostCardProps {
 }
 
 export function PostCard({ post, featured = false }: PostCardProps) {
-  const { title, slug, excerpt, coverImage, category, author, publishedAt, video } = post;
+  // Handle both old and new data structure
+  const {
+    title, 
+    slug, 
+    excerpt, 
+    category,
+    author,
+    video
+  } = post;
+  
+  // Handle both old and new image paths
+  const coverImage = post.coverImage || post.image_url || "/placeholder.svg";
+  
+  // Handle both old and new date formats
+  const publishedAt = post.publishedAt || post.published_at;
 
   return (
     <article className={`post-card overflow-hidden rounded-lg border bg-card shadow ${featured ? 'md:grid md:grid-cols-2 gap-6' : ''}`}>
@@ -56,3 +70,5 @@ export function PostCard({ post, featured = false }: PostCardProps) {
     </article>
   );
 }
+
+export default PostCard;

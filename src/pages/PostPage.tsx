@@ -2,8 +2,8 @@
 import { useParams, Link } from 'react-router-dom';
 import { getPostBySlug, getCategoryById, getRelatedPosts } from '@/lib/blog-data';
 import { CalendarIcon, User2Icon, TagIcon, ClockIcon, ShareIcon } from 'lucide-react';
-import CategoryBadge from '@/components/blog/CategoryBadge';
-import PostCard from '@/components/blog/PostCard';
+import { CategoryBadge } from '@/components/blog/CategoryBadge';
+import { PostCard } from '@/components/blog/PostCard';
 import { Button } from '@/components/ui/button';
 import { formatDistanceToNow } from 'date-fns';
 import { toast } from 'sonner';
@@ -49,6 +49,14 @@ export default function PostPage() {
     toast.success('Link copied to clipboard!');
   };
 
+  // Map old data structure to match the Post type expected by PostCard
+  const mappedRelatedPosts = relatedPosts.map(relatedPost => ({
+    ...relatedPost,
+    category: getCategoryById(relatedPost.category_id)?.slug || 'uncategorized',
+    coverImage: relatedPost.image_url,
+    publishedAt: relatedPost.published_at
+  }));
+
   return (
     <div className="container py-8 md:py-12 max-w-5xl">
       {/* Breadcrumb */}
@@ -70,7 +78,7 @@ export default function PostPage() {
       <div className="mb-8">
         {category && (
           <div className="mb-3">
-            <CategoryBadge category={category} />
+            <CategoryBadge category={category.slug} />
           </div>
         )}
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">{post.title}</h1>
@@ -154,11 +162,11 @@ export default function PostPage() {
       </div>
       
       {/* Related Posts */}
-      {relatedPosts.length > 0 && (
+      {mappedRelatedPosts.length > 0 && (
         <div className="mb-12">
           <h3 className="text-2xl font-bold mb-6 border-l-4 border-orange-500 pl-4">Related Articles</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {relatedPosts.map(relatedPost => (
+            {mappedRelatedPosts.map(relatedPost => (
               <PostCard key={relatedPost.id} post={relatedPost} />
             ))}
           </div>

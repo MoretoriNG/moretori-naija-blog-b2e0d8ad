@@ -4,14 +4,14 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { PostCard } from "@/components/blog/PostCard";
-import { getPostsByCategory } from "@/lib/blog-data";
+import { getPostsByCategory, getCategoryBySlug } from "@/lib/blog-data";
 import { PostCategory } from "@/types/blog";
 
 export default function CategoryPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   
-  const validCategories: PostCategory[] = ['tech', 'auto', 'health', 'entertainment', 'news'];
+  const validCategories: PostCategory[] = ['tech', 'health', 'entertainment', 'business', 'sports', 'lifestyle'];
   const isValidCategory = slug && validCategories.includes(slug as PostCategory);
   
   useEffect(() => {
@@ -28,7 +28,16 @@ export default function CategoryPage() {
   }
   
   const categoryPosts = getPostsByCategory(slug as PostCategory);
-  const categoryName = slug!.charAt(0).toUpperCase() + slug!.slice(1);
+  const category = getCategoryBySlug(slug as string);
+  const categoryName = category ? category.name : slug!.charAt(0).toUpperCase() + slug!.slice(1);
+  
+  // Map posts to the expected Post type
+  const mappedPosts = categoryPosts.map(post => ({
+    ...post,
+    category: slug as PostCategory,
+    coverImage: post.image_url,
+    publishedAt: post.published_at
+  }));
   
   return (
     <div className="container py-8 md:py-12">
@@ -42,8 +51,8 @@ export default function CategoryPage() {
       <h1 className="text-3xl md:text-4xl font-bold mb-8">{categoryName}</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categoryPosts.length > 0 ? (
-          categoryPosts.map((post) => (
+        {mappedPosts.length > 0 ? (
+          mappedPosts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))
         ) : (
