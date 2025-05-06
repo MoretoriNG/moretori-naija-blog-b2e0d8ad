@@ -70,6 +70,8 @@ export default {
 					pink: '#FFDEE2',
 					blue: '#D3E4FD',
 					'blue-bright': '#1EAEDB',
+					'cyan': '#00BCD4', // Added Cyan
+					'orange': '#F97316', // Added Orange
 				}
 			},
 			borderRadius: {
