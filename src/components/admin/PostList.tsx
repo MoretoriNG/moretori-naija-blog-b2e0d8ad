@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pencil, Trash, Plus, Search } from "lucide-react";
 import { Post } from "@/types/blog";
-import { getCategoryColor } from "@/lib/blog-data";
+import { getCategoryColor } from "@/lib/blog";
 
 interface PostListProps {
   posts: Post[];
@@ -124,3 +124,4 @@ export function PostList({ posts, onDelete }: PostListProps) {
     </div>
   );
 }
+

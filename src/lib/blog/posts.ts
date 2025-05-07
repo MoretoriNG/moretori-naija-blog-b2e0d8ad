@@ -1,9 +1,8 @@
-
 import { Post, PostCategory } from "@/types/blog";
 import { getCategoryById, getCategoryBySlug } from "./categories";
 import { posts } from "./posts-data";
 
-// Post related functions
+// Post related functions - these remain unchanged but now import from modular structure
 export const getPostsByCategory = (categorySlug: PostCategory | string) => {
   const category = getCategoryBySlug(categorySlug as string);
   return category ? posts.filter(post => post.category_id === category.id) : [];
