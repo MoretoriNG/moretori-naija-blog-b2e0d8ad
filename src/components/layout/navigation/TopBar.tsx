@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, Mail, Facebook, Instagram, Twitter } from 'lucide-react';
 
 export function TopBar() {
