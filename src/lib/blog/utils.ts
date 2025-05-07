@@ -1,14 +1,13 @@
 
-// Utility functions for blog posts
+// Utility functions for blog
 
-// Helper function to generate a unique ID
-export const generateId = (() => {
-  let id = 30; // Start from a high number to avoid conflicts with existing posts
-  return () => String(++id); // Convert to string to match Post interface
-})();
+// Function to generate a unique ID
+export const generateId = () => {
+  return Math.random().toString(36).substr(2, 9);
+};
 
-// Format date for display
-export const formatDate = (dateString: string | undefined): string => {
+// Function to format dates consistently
+export const formatDate = (dateString: string) => {
   if (!dateString) return '';
   
   const date = new Date(dateString);

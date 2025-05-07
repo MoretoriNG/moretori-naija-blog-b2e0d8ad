@@ -1,7 +1,6 @@
-
 import { Link } from "react-router-dom";
 import { Post } from "@/types/blog";
-import { formatDate } from "@/lib/blog-data";
+import { formatDate } from "@/lib/blog/utils";
 import { CategoryBadge } from "./CategoryBadge";
 import { Video } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";

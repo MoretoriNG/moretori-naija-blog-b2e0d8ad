@@ -101,14 +101,14 @@ export function PostList({ posts, onDelete }: PostListProps) {
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-2">
                       <Button variant="ghost" size="icon" asChild>
-                        <Link to={`/admin/posts/edit/${post.id}`}>
+                        <Link to={`/admin/posts/edit/${String(post.id)}`}>
                           <Pencil className="h-4 w-4" />
                         </Link>
                       </Button>
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => onDelete(post.id)}
+                        onClick={() => onDelete(String(post.id))}
                         className="text-destructive hover:text-destructive"
                       >
                         <Trash className="h-4 w-4" />
@@ -124,4 +124,3 @@ export function PostList({ posts, onDelete }: PostListProps) {
     </div>
   );
 }
-
