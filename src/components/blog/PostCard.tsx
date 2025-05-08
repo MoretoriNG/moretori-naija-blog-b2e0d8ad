@@ -3,15 +3,22 @@ import { Link } from "react-router-dom";
 import { Post } from "@/types/blog";
 import { formatDate } from "@/lib/blog/utils";
 import { CategoryBadge } from "./CategoryBadge";
-import { Video, Clock, User } from "lucide-react";
+import { Video, Clock, User, BookmarkPlus, Share2, Heart } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { useState } from "react";
 
 interface PostCardProps {
   post: Post;
   featured?: boolean;
+  onSave?: () => void;
+  saved?: boolean;
 }
 
-export function PostCard({ post, featured = false }: PostCardProps) {
+export function PostCard({ post, featured = false, onSave, saved = false }: PostCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
   // Handle both old and new data structure
   const {
     title, 
@@ -30,8 +37,39 @@ export function PostCard({ post, featured = false }: PostCardProps) {
   // Handle both old and new date formats
   const publishedAt = post.publishedAt || post.published_at;
 
+  const handleShare = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (navigator.share) {
+      navigator.share({
+        title: title,
+        url: window.location.origin + `/post/${slug}`,
+      }).catch(() => {
+        navigator.clipboard.writeText(window.location.origin + `/post/${slug}`);
+        toast.success('Link copied to clipboard!');
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.origin + `/post/${slug}`);
+      toast.success('Link copied to clipboard!');
+    }
+  };
+  
+  const handleSaveClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (onSave) {
+      onSave();
+    }
+  };
+
   return (
-    <article className={`post-card overflow-hidden rounded-lg border bg-card shadow-md hover:shadow-lg transition-all duration-300 ${featured ? 'md:grid md:grid-cols-2 gap-6' : ''}`}>
+    <article 
+      className={`post-card overflow-hidden rounded-lg border bg-card shadow-md hover:shadow-lg transition-all duration-300 ${featured ? 'md:grid md:grid-cols-2 gap-6' : ''}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <Link to={`/post/${slug}`} className="block relative overflow-hidden">
         <AspectRatio ratio={16 / 9} className="bg-muted">
           <img 
@@ -59,20 +97,49 @@ export function PostCard({ post, featured = false }: PostCardProps) {
               <CategoryBadge category={category} />
             </div>
           )}
+          
+          {/* Action buttons */}
+          <div className={`absolute top-3 right-3 flex space-x-1 transition-opacity duration-200 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-8 rounded-full bg-white/80 text-gray-700 hover:bg-white"
+              onClick={handleSaveClick}
+            >
+              <BookmarkPlus className={saved ? "h-4 w-4 fill-yellow-500 text-yellow-500" : "h-4 w-4"} />
+            </Button>
+            
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-8 rounded-full bg-white/80 text-gray-700 hover:bg-white"
+              onClick={handleShare}
+            >
+              <Share2 className="h-4 w-4" />
+            </Button>
+          </div>
         </AspectRatio>
       </Link>
       
       <div className="p-4 md:p-6">
-        <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2">
-          <time className="flex items-center" dateTime={publishedAt}>
-            <Clock className="mr-1 h-3 w-3" />
-            {formatDate(publishedAt)}
-          </time>
+        <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground mb-2">
+          <div className="flex items-center gap-3">
+            <time className="flex items-center" dateTime={publishedAt}>
+              <Clock className="mr-1 h-3 w-3" />
+              {formatDate(publishedAt)}
+            </time>
+            
+            <span className="flex items-center">
+              <User className="mr-1 h-3 w-3" />
+              {author}
+            </span>
+          </div>
           
-          <span className="flex items-center">
-            <User className="mr-1 h-3 w-3" />
-            {author}
-          </span>
+          {/* Like indicator */}
+          <div className="flex items-center">
+            <Heart className="h-3 w-3 mr-1 text-red-400" />
+            <span>{Math.floor(Math.random() * 30) + 5}</span>
+          </div>
         </div>
         
         <Link to={`/post/${slug}`}>

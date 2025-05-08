@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, Clock, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Post } from "@/types/blog";
 import { CategoryBadge } from "./CategoryBadge";
@@ -31,6 +31,8 @@ const heroBackgroundImages = [
 export function HeroSlider({ posts }: HeroSliderProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [autoplayEnabled, setAutoplayEnabled] = useState(true);
+  const [autoplayInterval, setAutoplayInterval] = useState<NodeJS.Timeout | null>(null);
   
   const enhancedPosts = posts.map((post, index) => ({
     ...post,
@@ -39,10 +41,40 @@ export function HeroSlider({ posts }: HeroSliderProps) {
   
   useEffect(() => {
     setIsLoaded(true);
-  }, []);
+    
+    // Start autoplay
+    if (autoplayEnabled) {
+      const interval = setInterval(() => {
+        setActiveIndex(prev => (prev + 1) % enhancedPosts.length);
+      }, 5000);
+      setAutoplayInterval(interval);
+      
+      return () => {
+        if (autoplayInterval) clearInterval(autoplayInterval);
+      };
+    }
+  }, [autoplayEnabled, enhancedPosts.length]);
+  
+  // Pause autoplay when user interacts
+  const pauseAutoplay = () => {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+      setAutoplayInterval(null);
+    }
+    // Restart after 10 seconds of inactivity
+    setTimeout(() => {
+      if (autoplayEnabled) {
+        const interval = setInterval(() => {
+          setActiveIndex(prev => (prev + 1) % enhancedPosts.length);
+        }, 5000);
+        setAutoplayInterval(interval);
+      }
+    }, 10000);
+  };
   
   const handleDotClick = (index: number) => {
     setActiveIndex(index);
+    pauseAutoplay();
   };
   
   if (enhancedPosts.length === 0) {
@@ -53,7 +85,7 @@ export function HeroSlider({ posts }: HeroSliderProps) {
   
   return (
     <section className="relative bg-black overflow-hidden">
-      <div className="h-[500px] md:h-[600px] relative">
+      <div className="h-[400px] md:h-[500px] relative">
         {/* Images carousel */}
         <Carousel
           opts={{
@@ -61,6 +93,17 @@ export function HeroSlider({ posts }: HeroSliderProps) {
             startIndex: activeIndex
           }}
           className="w-full h-full"
+          onMouseEnter={() => {
+            setAutoplayEnabled(false);
+            if (autoplayInterval) clearInterval(autoplayInterval);
+          }}
+          onMouseLeave={() => {
+            setAutoplayEnabled(true);
+            const interval = setInterval(() => {
+              setActiveIndex(prev => (prev + 1) % enhancedPosts.length);
+            }, 5000);
+            setAutoplayInterval(interval);
+          }}
         >
           <CarouselContent className="h-full">
             {enhancedPosts.map((post, index) => (
@@ -76,8 +119,9 @@ export function HeroSlider({ posts }: HeroSliderProps) {
                     }}
                   />
                   
-                  {/* Gradient overlay */}
+                  {/* Modern gradient overlay with mesh pattern */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"></div>
+                  <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgMkgyMFYyMEgyVjIiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIwLjUiIGZpbGw9Im5vbmUiLz4KPC9zdmc+')]"></div>
                   
                   {/* Content */}
                   <div className="absolute inset-0 flex items-end z-10">
@@ -85,18 +129,27 @@ export function HeroSlider({ posts }: HeroSliderProps) {
                       <div className="max-w-2xl text-white">
                         <div className="flex items-center gap-3 mb-3">
                           <CategoryBadge category={post.category} />
-                          <time className="text-sm text-white/80" dateTime={post.publishedAt || post.published_at}>
-                            {formatDate(post.publishedAt || post.published_at)}
-                          </time>
+                          
+                          <div className="flex items-center text-white/70 text-xs">
+                            <Clock className="mr-1 h-3 w-3" />
+                            <time dateTime={post.publishedAt || post.published_at}>
+                              {formatDate(post.publishedAt || post.published_at)}
+                            </time>
+                          </div>
+                          
+                          <div className="flex items-center text-white/70 text-xs">
+                            <User className="mr-1 h-3 w-3" />
+                            <span>{post.author}</span>
+                          </div>
                         </div>
                         
                         <Link to={`/post/${post.slug}`}>
-                          <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 hover:text-blue-300 transition-colors">
+                          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 hover:text-blue-300 transition-colors">
                             {post.title}
                           </h2>
                         </Link>
                         
-                        <p className="text-white/80 mb-6 text-base max-w-xl line-clamp-2 md:line-clamp-3">
+                        <p className="text-white/80 mb-5 text-base max-w-xl line-clamp-2">
                           {post.excerpt}
                         </p>
                         
@@ -129,9 +182,43 @@ export function HeroSlider({ posts }: HeroSliderProps) {
             ))}
           </div>
           
-          <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-10 w-10 rounded-full transition-colors" />
-          <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-10 w-10 rounded-full transition-colors" />
+          <CarouselPrevious 
+            onClick={pauseAutoplay}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-10 w-10 rounded-full transition-colors" 
+          />
+          <CarouselNext 
+            onClick={pauseAutoplay}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-10 w-10 rounded-full transition-colors" 
+          />
         </Carousel>
+        
+        {/* Autoplay indicator */}
+        <div className="absolute bottom-6 right-6 z-20 flex items-center gap-2">
+          <div className="w-16 h-1 bg-white/20 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-blue-500 transition-all duration-200" 
+              style={{ 
+                width: autoplayEnabled ? '100%' : '0%',
+                animation: autoplayEnabled ? 'progress 5s linear infinite' : 'none'
+              }}
+            ></div>
+          </div>
+          <button 
+            className="text-white/70 hover:text-white text-xs flex items-center"
+            onClick={() => setAutoplayEnabled(!autoplayEnabled)}
+          >
+            {autoplayEnabled ? 'Pause' : 'Play'}
+          </button>
+        </div>
+        
+        <style>
+          {`
+            @keyframes progress {
+              0% { width: 0%; }
+              100% { width: 100%; }
+            }
+          `}
+        </style>
       </div>
     </section>
   );

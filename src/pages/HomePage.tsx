@@ -3,10 +3,17 @@ import { HeroSlider } from "@/components/blog/HeroSlider";
 import FeaturedPosts from "@/components/blog/FeaturedPosts";
 import { CategoryPosts } from "@/components/blog/CategoryPosts";
 import { TrendingTopics } from "@/components/blog/TrendingTopics";
+import { Newsletter } from "@/components/blog/Newsletter";
 import { getFeaturedPosts, getRecentPosts, getAllPosts, getCategoryById } from "@/lib/blog";
 import { Post, PostCategory } from "@/types/blog";
+import { useEffect } from "react";
 
 export default function HomePage() {
+  useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   // Convert posts to proper Post type
   const recentPosts = getRecentPosts(4).map(post => ({
     ...post,
@@ -24,7 +31,7 @@ export default function HomePage() {
     publishedAt: post.published_at
   })) as Post[];
   
-  const allPosts = getAllPosts().slice(0, 6); // Get 6 posts for the featured carousel
+  const allPosts = getAllPosts().slice(0, 12); // Get 12 posts for the featured carousel
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
@@ -39,6 +46,9 @@ export default function HomePage() {
       
       {/* Category Posts with Tabs */}
       <CategoryPosts initialCategory="tech" />
+      
+      {/* Newsletter */}
+      <Newsletter />
     </div>
   );
 }
