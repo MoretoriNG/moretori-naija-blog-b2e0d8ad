@@ -1,6 +1,8 @@
+
 // This file now re-exports from the new modular structure
 // This maintains backward compatibility with existing imports
 
+import { getCategoryBySlug, getPostsByCategory, getCategoryById } from './blog/categories';
 export * from './blog';
 
 // Add this new function to get recent posts by category

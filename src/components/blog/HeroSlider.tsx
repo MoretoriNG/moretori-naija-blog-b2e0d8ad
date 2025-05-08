@@ -60,12 +60,12 @@ export function HeroSlider({ posts }: HeroSliderProps) {
             loop: true,
           }}
           className="w-full h-full"
-          onSlideChange={(index) => setActiveIndex(index)}
+          // Remove the invalid onSlideChange prop
           defaultIndex={activeIndex}
         >
           <CarouselContent className="h-full">
             {enhancedPosts.map((post, index) => (
-              <CarouselItem key={post.id} className="h-full">
+              <CarouselItem key={post.id} className="h-full" onClick={() => setActiveIndex(index)}>
                 <div className="relative w-full h-full">
                   <img
                     src={post.coverImage}
