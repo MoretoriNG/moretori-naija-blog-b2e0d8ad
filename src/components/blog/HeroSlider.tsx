@@ -58,10 +58,9 @@ export function HeroSlider({ posts }: HeroSliderProps) {
         <Carousel
           opts={{
             loop: true,
+            startIndex: activeIndex
           }}
           className="w-full h-full"
-          // Remove the invalid onSlideChange prop
-          defaultIndex={activeIndex}
         >
           <CarouselContent className="h-full">
             {enhancedPosts.map((post, index) => (
