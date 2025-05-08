@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from "react";
-import { HeroSlider } from "@/components/blog/HeroSlider";
+import { HeroSlider } from "@/components/blog/hero";
 import FeaturedPosts from "@/components/blog/FeaturedPosts";
 import { CategoryPosts } from "@/components/blog/CategoryPosts";
 import { TrendingTopics } from "@/components/blog/TrendingTopics";

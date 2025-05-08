@@ -1,139 +1,99 @@
 
-import { generateId } from "../utils";
+import { BlogPost } from '../types';
 
-// Lifestyle posts
-export const lifestylePosts = [
+export const lifestylePosts: BlogPost[] = [
   {
-    id: 4,
-    title: 'Sustainable Fashion in Nigeria',
-    slug: 'sustainable-fashion-nigeria',
-    excerpt: 'Nigerian designers pioneering eco-friendly fashion',
-    content: `<p>A new generation of Nigerian fashion designers is embracing sustainability, using locally-sourced materials, traditional techniques, and ethical production processes while gaining international recognition.</p>
-    <h2>Reviving Traditional Crafts</h2>
-    <p>Many sustainable brands are revitalizing traditional textile techniques like adire and aso-oke, creating contemporary designs while preserving cultural heritage.</p>
-    <h2>Environmental Innovation</h2>
-    <p>From fabric recycling to plant-based dyes, Nigerian designers are finding creative ways to reduce the environmental impact of fashion production.</p>
-    <h2>Challenging Fast Fashion</h2>
-    <p>These sustainable brands are offering alternatives to imported fast fashion, educating consumers about the environmental and economic benefits of supporting local, ethical fashion.</p>`,
+    id: 601,
     category_id: 6,
-    image_url: 'https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=1486&q=80',
-    author: 'Folake Adeola',
-    published_at: '2023-06-10',
-    featured: false,
-    tags: ['Fashion', 'Sustainability', 'Design', 'Culture']
-  },
-  {
-    id: generateId(),
     title: 'Modern Nigerian Home Design Trends',
     slug: 'modern-nigerian-home-design',
-    excerpt: 'Architects blend traditional elements with contemporary functionality in Nigeria's evolving residential design landscape.',
+    excerpt: "Architects blend traditional elements with contemporary functionality in Nigeria's evolving residential design landscape.",
     content: `<p>Nigeria's residential architecture is experiencing an exciting evolution as designers create homes that respond to local climate and cultural contexts while embracing modern aesthetics and functionality.</p>
     <h2>Climate-Responsive Design</h2>
-    <p>Contemporary Nigerian homes increasingly incorporate passive cooling techniques, including strategic orientation, cross-ventilation, and shade elements that reduce energy consumption while maintaining comfort in hot climates.</p>
-    <h2>Cultural Integration</h2>
-    <p>Traditional Nigerian architectural elements from various regions are being reinterpreted in modern contexts, with designers incorporating courtyard concepts, decorative screening patterns, and indoor-outdoor living spaces that reflect cultural heritage.</p>
-    <h2>Material Innovation</h2>
-    <p>Local materials like compressed earth blocks, bamboo, and reclaimed wood are finding new applications in high-end residential construction, offering sustainability benefits while creating distinctive aesthetic qualities.</p>`,
-    category_id: 6,
-    image_url: 'https://images.unsplash.com/photo-1613545325278-f24b0cae1224?auto=format&fit=crop&w=1470&q=80',
-    author: 'Tunde Adewale',
-    published_at: '2023-09-15',
+    <p>Contemporary Nigerian homes increasingly incorporate passive cooling features like strategic cross-ventilation, thermal mass, and deep verandas that shield interiors from direct sunlight while allowing for outdoor living.</p>
+    <h2>Cultural Expression</h2>
+    <p>Architects are finding innovative ways to incorporate traditional patterns, materials, and spatial arrangements that honor cultural heritage while meeting contemporary lifestyle needs.</p>
+    <h2>Sustainable Materials</h2>
+    <p>There's a growing movement toward using locally-sourced, sustainable building materials including compressed earth blocks, bamboo, and reclaimed wood that reduce environmental impact while supporting local economies.</p>`,
     featured: true,
-    tags: ['Architecture', 'Design', 'Home', 'Sustainability']
+    published_at: '2025-01-12T09:15:00Z',
+    image_url: 'https://images.unsplash.com/photo-1600607687644-c7171b46a429?auto=format&fit=crop&w=800&q=80',
+    author: 'Chioma Eze',
+    tags: ['interior design', 'architecture', 'Nigerian culture', 'sustainable living']
   },
   {
-    id: generateId(),
-    title: 'The Rise of Wellness Tourism in Nigeria',
-    slug: 'wellness-tourism-nigeria',
-    excerpt: 'Nigeria's natural hot springs and traditional healing practices attract health-conscious travelers seeking unique wellness experiences.',
-    content: `<p>Nigeria is emerging as a destination for wellness tourism, with resorts and retreats highlighting the country's natural healing resources and traditional wellness practices.</p>
-    <h2>Thermal Springs Experiences</h2>
-    <p>Facilities developed around natural hot springs in Wikki (Bauchi State) and Ikogosi (Ekiti State) offer therapeutic bathing experiences combined with massage and physiotherapy treatments drawing on both local and international techniques.</p>
-    <h2>Traditional Medicine Retreats</h2>
-    <p>Several wellness centers are now offering programs that incorporate traditional Nigerian healing practices, including herbal medicine, spiritual counseling, and cultural immersion experiences guided by certified practitioners.</p>
-    <h2>Nature-Based Recovery</h2>
-    <p>Eco-resorts in Nigeria's diverse landscapes, from rainforest to savanna, provide peaceful environments for stress recovery programs combining nature experiences with nutrition and mindfulness coaching.</p>`,
+    id: 602,
     category_id: 6,
-    image_url: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1470&q=80',
-    author: 'Ngozi Okafor',
-    published_at: '2023-11-28',
+    title: 'Traditional Healing Practices in Modern Wellness',
+    slug: 'traditional-healing-modern-wellness',
+    excerpt: "How ancient African healing traditions are finding new appreciation in contemporary wellness practices.",
+    content: `<p>Traditional African healing practices that have been preserved for generations are experiencing a renaissance as people seek more holistic approaches to health and wellness.</p>
+    <p>From herbal remedies to mindfulness techniques, these ancient approaches are being validated by modern science while maintaining their cultural significance and spiritual dimensions.</p>
+    <p>Practitioners are finding ways to make these traditions accessible to wider audiences while respecting their origins and ensuring authentic knowledge transfer.</p>`,
     featured: false,
-    tags: ['Wellness', 'Tourism', 'Health', 'Traditional Medicine']
+    published_at: '2025-02-03T14:30:00Z',
+    image_url: 'https://images.unsplash.com/photo-1536303158031-c868b371399f?auto=format&fit=crop&w=800&q=80',
+    author: 'Kwame Mensah',
+    tags: ['wellness', 'traditional medicine', 'holistic health', 'cultural heritage']
   },
   {
-    id: generateId(),
-    title: 'Nigerian Food Bloggers Transforming Culinary Scene',
-    slug: 'nigerian-food-bloggers',
-    excerpt: 'Digital content creators are documenting, preserving and innovating Nigerian cuisine for local and international audiences.',
-    content: `<p>A vibrant community of Nigerian food bloggers and content creators is reshaping the culinary landscape by documenting traditional recipes, creating modern adaptations, and sharing Nigerian food culture with global audiences.</p>
-    <h2>Preserving Culinary Heritage</h2>
-    <p>Many food bloggers are documenting regional recipes and cooking techniques that might otherwise be lost, interviewing elderly family members and traveling to remote communities to learn authentic preparation methods.</p>
-    <h2>Modern Adaptations</h2>
-    <p>Creative recipe developers are reimagining Nigerian classics with health-conscious twists, international fusion elements, and adaptations that make traditional dishes accessible to diaspora audiences without traditional ingredients.</p>
-    <h2>Global Influence</h2>
-    <p>Nigerian food content is gaining international attention, with several bloggers securing cookbook deals, television appearances, and brand partnerships that are introducing Nigerian flavors to new audiences worldwide.</p>`,
+    id: 603,
     category_id: 6,
-    image_url: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1480&q=80',
-    author: 'Chioma Okoli',
-    published_at: '2024-01-07',
-    featured: false,
-    tags: ['Food', 'Culinary Arts', 'Digital Content', 'Culture']
-  },
-  {
-    id: generateId(),
-    title: 'Urban Gardening Movement Takes Root in Nigerian Cities',
-    slug: 'urban-gardening-nigerian-cities',
-    excerpt: 'City dwellers transform balconies, rooftops and community spaces into productive green oases.',
-    content: `<p>Amid rising food prices and growing environmental awareness, urban gardening is flourishing across Nigeria's major cities as residents convert available spaces into productive gardens for food, beauty, and wellbeing.</p>
-    <h2>Vertical Solutions</h2>
-    <p>Innovative vertical gardening techniques are enabling apartment dwellers to grow significant amounts of vegetables in limited balcony spaces using recycled containers, hanging systems, and space-efficient trellises.</p>
-    <h2>Community Initiatives</h2>
-    <p>Neighborhood garden projects are transforming vacant lots into productive community spaces where residents share gardening knowledge, distribute harvests, and build stronger social connections.</p>
-    <h2>Tech-Enabled Growing</h2>
-    <p>Young urban farmers are incorporating simple hydroponic and aquaponic systems to maximize production in small spaces, often sharing their setups and results through social media communities focused on self-sufficiency.</p>`,
-    category_id: 6,
-    image_url: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1632&q=80',
-    author: 'Adebayo Johnson',
-    published_at: '2024-02-12',
-    featured: false,
-    tags: ['Gardening', 'Urban Living', 'Sustainability', 'Food Security']
-  },
-  {
-    id: generateId(),
-    title: 'Traditional Nigerian Games Find New Life in Digital Age',
-    slug: 'traditional-nigerian-games-digital',
-    excerpt: 'Classic cultural pastimes are being preserved and reimagined through mobile apps and community events.',
-    content: `<p>Nigeria's rich heritage of traditional games is experiencing a revival through both digital adaptations and renewed interest in physical gameplay among younger generations seeking connection to cultural roots.</p>
-    <h2>Digital Preservation</h2>
-    <p>Mobile app developers have created digital versions of traditional Nigerian games like Ayo (mancala), Ludo, and Whot, making them accessible to new generations while preserving their rules and cultural significance.</p>
-    <h2>Community Play Events</h2>
-    <p>Urban community centers and cultural organizations are hosting regular game nights featuring traditional Nigerian games, creating intergenerational spaces where elders teach younger participants while sharing cultural stories and wisdom.</p>
-    <h2>Educational Integration</h2>
-    <p>Several schools have incorporated traditional games into their physical education and cultural curriculum, recognizing their value for cognitive development, mathematical thinking, and cultural education.</p>`,
-    category_id: 6,
-    image_url: 'https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=1470&q=80',
-    author: 'Emmanuel Oladele',
-    published_at: '2024-03-25',
-    featured: false,
-    tags: ['Games', 'Cultural Heritage', 'Technology', 'Education']
-  },
-  {
-    id: generateId(),
-    title: 'Nigeria's New Wave of Boutique Hotels',
-    slug: 'nigeria-boutique-hotels',
-    excerpt: 'Distinctive accommodations offer travelers authentic experiences beyond standard international chains.',
-    content: `<p>A growing number of unique, locally-owned boutique hotels is transforming Nigeria's accommodation landscape, offering travelers distinctive experiences that highlight local culture, design, and hospitality.</p>
-    <h2>Architectural Statement Properties</h2>
-    <p>Several standout boutique hotels showcase contemporary Nigerian architecture and design, incorporating local materials, art installations by Nigerian creators, and spatial concepts drawn from traditional building practices.</p>
-    <h2>Culinary Focus</h2>
-    <p>Farm-to-table dining featuring refined interpretations of regional Nigerian cuisines has become a hallmark of the boutique hotel movement, with some properties developing on-site gardens and partnerships with local farmers.</p>
-    <h2>Cultural Programming</h2>
-    <p>Many boutique establishments differentiate themselves through cultural experiences including art exhibitions, live music showcasing local talent, craft workshops, and guided community explorations that connect guests with authentic Nigerian culture.</p>`,
-    category_id: 6,
-    image_url: 'https://images.unsplash.com/photo-1445991842772-097fea258e7b?auto=format&fit=crop&w=1470&q=80',
-    author: 'Zainab Ibrahim',
-    published_at: '2024-04-08',
+    title: 'Sustainable Fashion from African Designers',
+    slug: 'sustainable-fashion-african-designers',
+    excerpt: "How African fashion houses are leading the way in ethical and environmentally conscious clothing production.",
+    content: `<p>A new generation of African fashion designers is gaining international recognition for creating sustainable, ethical clothing that honors traditional techniques while breaking new aesthetic ground.</p>
+    <p>These designers are utilizing organic cotton, natural dyes, and zero-waste pattern cutting while ensuring fair compensation for artisans and revitalizing traditional textile arts.</p>
+    <p>The movement is changing perceptions of African fashion globally while creating economic opportunities and preserving cultural heritage through innovation.</p>`,
     featured: true,
-    tags: ['Travel', 'Hospitality', 'Design', 'Tourism']
+    published_at: '2025-02-28T11:45:00Z',
+    image_url: 'https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&w=800&q=80',
+    author: 'Aisha Diallo',
+    tags: ['fashion', 'sustainability', 'textiles', 'artisans']
+  },
+  {
+    id: 604,
+    category_id: 6,
+    title: 'Modern African Cuisine Reimagined',
+    slug: 'modern-african-cuisine-reimagined',
+    excerpt: "Chefs across the continent are elevating traditional ingredients and techniques for a new culinary renaissance.",
+    content: `<p>Innovative chefs across Africa are creating a new culinary movement that celebrates indigenous ingredients and traditional cooking methods while incorporating contemporary techniques and presentations.</p>
+    <p>From fine dining establishments to casual eateries, these culinary artists are documenting forgotten recipes, working directly with small-scale farmers, and creating sustainable food systems.</p>
+    <p>The movement is changing international perceptions of African cuisines while fostering pride in local food cultures and creating new economic opportunities throughout the food supply chain.</p>`,
+    featured: false,
+    published_at: '2025-03-17T16:20:00Z',
+    image_url: 'https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?auto=format&fit=crop&w=800&q=80',
+    author: 'Jean-Pierre Mukendi',
+    tags: ['cuisine', 'food culture', 'chefs', 'ingredients']
+  },
+  {
+    id: 605,
+    category_id: 6,
+    title: 'Digital Nomad Communities in Eastern Africa',
+    slug: 'digital-nomad-communities-eastern-africa',
+    excerpt: "How Rwanda, Kenya and Tanzania are becoming hubs for remote workers seeking community and adventure.",
+    content: `<p>Eastern African nations are emerging as popular destinations for digital nomads seeking meaningful community connections along with adventure, affordability, and reliable infrastructure.</p>
+    <p>Countries like Rwanda and Kenya are creating specific visa programs and infrastructure to attract remote workers, with co-living/co-working spaces that blend local culture with global connectivity.</p>
+    <p>These growing expatriate communities are fostering cultural exchange, economic opportunities, and innovative collaborations between local and international entrepreneurs.</p>`,
+    featured: false,
+    published_at: '2025-04-05T08:45:00Z',
+    image_url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
+    author: 'Sarah Kamau',
+    tags: ['digital nomads', 'remote work', 'community', 'travel']
+  },
+  {
+    id: 606,
+    category_id: 6,
+    title: 'Mindfulness Retreats in West African Coastal Villages',
+    slug: 'mindfulness-retreats-west-africa',
+    excerpt: "Wellness tourism blossoms as peaceful coastal communities host retreats combining local wisdom with global practices.",
+    content: `<p>Quiet fishing villages along West Africa's coast are being thoughtfully transformed into destinations for mindfulness and wellness retreats that blend local spiritual traditions with global contemplative practices.</p>
+    <p>These retreats emphasize authentic cultural exchange, environmental sustainability, and direct economic benefits for host communities while offering visitors meaningful experiences away from overwrought tourist destinations.</p>
+    <p>Local guides share traditional knowledge about medicinal plants, ocean ecology, and cultural practices that have sustained communities for generations.</p>`,
+    featured: true,
+    published_at: '2025-05-01T13:10:00Z',
+    image_url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80',
+    author: 'Fatou Sow',
+    tags: ['mindfulness', 'wellness tourism', 'retreats', 'cultural exchange']
   }
 ];
