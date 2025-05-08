@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react';
 import { Post } from '@/types/blog';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Clock, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { formatDate } from "@/lib/blog/utils";
+import { CategoryBadge } from './CategoryBadge';
 
 interface FeaturedPostsProps {
   posts?: Post[];
@@ -53,12 +55,10 @@ export function FeaturedPosts({ posts = [] }: FeaturedPostsProps) {
   };
 
   return (
-    <div className="container py-12 md:py-16">
-      <div className="flex justify-between items-center mb-8">
+    <div className="container py-12">
+      <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl md:text-3xl font-bold">
-          <span className="bg-gradient-to-r from-cyan-500 to-orange-500 bg-clip-text text-transparent">
-            Latest Updates
-          </span>
+          Latest Updates
         </h2>
         
         <div className="flex items-center space-x-2">
@@ -66,73 +66,66 @@ export function FeaturedPosts({ posts = [] }: FeaturedPostsProps) {
             variant="outline"
             size="icon"
             onClick={prevPage}
-            className="rounded-full border-cyan-200 hover:bg-cyan-50 hover:border-cyan-500"
+            className="rounded-full border-blue-200 hover:bg-blue-50"
             disabled={displayPosts.length <= visiblePosts}
           >
-            <ChevronLeft size={18} className="text-cyan-600" />
+            <ChevronLeft size={18} />
           </Button>
-          
-          <div className="hidden md:flex items-center space-x-1">
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <Button
-                key={index}
-                variant="ghost"
-                size="sm"
-                onClick={() => setCurrentPage(index)}
-                className={cn(
-                  "w-8 h-8 p-0 rounded-full",
-                  currentPage === index 
-                    ? "bg-orange-500 text-white hover:bg-orange-600" 
-                    : "text-muted-foreground hover:bg-orange-100"
-                )}
-              >
-                {index + 1}
-              </Button>
-            ))}
-          </div>
           
           <Button
             variant="outline"
             size="icon"
             onClick={nextPage}
-            className="rounded-full border-cyan-200 hover:bg-cyan-50 hover:border-cyan-500"
+            className="rounded-full border-blue-200 hover:bg-blue-50"
             disabled={displayPosts.length <= visiblePosts}
           >
-            <ChevronRight size={18} className="text-cyan-600" />
+            <ChevronRight size={18} />
           </Button>
         </div>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in">
         {currentPosts.map((post) => (
-          <Card key={post.id} className="post-card overflow-hidden h-full flex flex-col border-none shadow-lg">
-            <div className="relative aspect-video overflow-hidden">
-              <img
-                src={post.coverImage || post.image_url || "/placeholder.svg"}
-                alt={post.title}
-                className="w-full h-full object-cover transition-transform hover:scale-105"
-              />
-              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-70"></div>
-            </div>
+          <Card key={post.id} className="overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow">
+            <Link to={`/post/${post.slug}`} className="block relative">
+              <div className="aspect-[4/3] overflow-hidden bg-muted">
+                <img
+                  src={post.coverImage || post.image_url || `https://images.unsplash.com/photo-${Math.floor(Math.random() * (599999999 - 500000000) + 500000000)}?auto=format&fit=crop&w=800&q=80`}
+                  alt={post.title}
+                  className="h-full w-full object-cover transition-transform hover:scale-110 duration-500"
+                />
+              </div>
+              <div className="absolute top-3 left-3">
+                <CategoryBadge category={post.category} />
+              </div>
+            </Link>
             
-            <CardContent className="pt-4 flex-grow flex flex-col">
-              <span className="text-xs text-muted-foreground mb-2">
-                {new Date(post.publishedAt || post.published_at).toLocaleDateString()}
-              </span>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2">
+                <time className="flex items-center" dateTime={post.publishedAt || post.published_at}>
+                  <Clock className="mr-1 h-3 w-3" />
+                  {formatDate(post.publishedAt || post.published_at)}
+                </time>
+                
+                <span className="flex items-center">
+                  <User className="mr-1 h-3 w-3" />
+                  {post.author}
+                </span>
+              </div>
               
-              <Link to={`/post/${post.slug}`} className="group">
-                <h3 className="text-lg font-bold mb-2 group-hover:text-cyan-600 transition-colors line-clamp-2">
+              <Link to={`/post/${post.slug}`}>
+                <h3 className="text-lg font-bold mb-2 hover:text-blue-600 transition-colors line-clamp-2">
                   {post.title}
                 </h3>
               </Link>
               
-              <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+              <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
                 {post.excerpt}
               </p>
               
               <Link 
                 to={`/post/${post.slug}`} 
-                className="mt-auto text-sm font-semibold text-orange-500 hover:text-orange-600 flex items-center"
+                className="text-sm font-semibold text-blue-600 hover:text-blue-800 flex items-center"
               >
                 Read More <ChevronRight size={16} className="ml-1" />
               </Link>
@@ -148,7 +141,7 @@ export function FeaturedPosts({ posts = [] }: FeaturedPostsProps) {
             key={index}
             className={cn(
               "w-2 h-2 rounded-full mx-1",
-              currentPage === index ? "bg-orange-500" : "bg-gray-300"
+              currentPage === index ? "bg-blue-500" : "bg-gray-300"
             )}
             onClick={() => setCurrentPage(index)}
           ></div>

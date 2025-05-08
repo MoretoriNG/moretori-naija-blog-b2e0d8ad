@@ -3,8 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Menu, X } from 'lucide-react';
-import { CategoryMenu, MobileCategoryMenu } from './navigation/CategoryMenu';
+import { Menu, X, Facebook, Twitter, Instagram } from 'lucide-react';
 import { SearchBar } from './navigation/SearchBar';
 import { UserMenu, MobileUserMenu } from './navigation/UserMenu';
 import { TopBar } from './navigation/TopBar';
@@ -12,6 +11,7 @@ import { TopBar } from './navigation/TopBar';
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const categories = ["Tech", "Auto", "Health", "Entertainment", "News"];
   
   // Reset mobile menu state on route change
   useEffect(() => {
@@ -36,11 +36,34 @@ export function Header() {
             </span>
           </Link>
           
-          {/* Desktop Navigation with Dropdowns */}
-          <CategoryMenu onCategoryClick={handleMenuClose} />
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-4">
+            {categories.map((category) => (
+              <Link
+                key={category}
+                to={`/category/${category.toLowerCase()}`}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {category}
+              </Link>
+            ))}
+          </nav>
         </div>
         
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
+          {/* Social Links */}
+          <div className="hidden md:flex items-center gap-3">
+            <a href="https://facebook.com" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-blue-600 transition-colors">
+              <Facebook className="h-4 w-4" />
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-sky-500 transition-colors">
+              <Twitter className="h-4 w-4" />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-pink-600 transition-colors">
+              <Instagram className="h-4 w-4" />
+            </a>
+          </div>
+          
           {/* Search component */}
           <SearchBar />
           
@@ -66,7 +89,18 @@ export function Header() {
           isOpen ? "max-h-[500px] py-4" : "max-h-0"
         )}
       >
-        <MobileCategoryMenu onCategoryClick={handleMenuClose} />
+        <nav className="flex flex-col space-y-3 mb-4">
+          {categories.map((category) => (
+            <Link
+              key={category}
+              to={`/category/${category.toLowerCase()}`}
+              className="text-sm font-medium transition-colors hover:text-blue-600"
+              onClick={handleMenuClose}
+            >
+              {category}
+            </Link>
+          ))}
+        </nav>
         <MobileUserMenu onMenuItemClick={handleMenuClose} />
       </div>
     </header>
