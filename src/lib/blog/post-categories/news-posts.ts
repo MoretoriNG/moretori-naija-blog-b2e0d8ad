@@ -1,99 +1,78 @@
 
-import { BlogPost } from '../types';
-
-export const newsPosts: BlogPost[] = [
+export const newsPosts = [
   {
-    id: 801,
-    category_id: 8,
-    title: 'Pan-African Space Agency Launches First Satellite',
-    slug: 'pan-african-space-agency-satellite',
-    excerpt: 'Historic collaboration between African nations puts first monitoring satellite into orbit.',
-    content: `<p>The newly formed Pan-African Space Agency successfully launched its first satellite yesterday, marking a historic moment of scientific collaboration across the continent.</p>
-    <h2>Multinational Effort</h2>
-    <p>The satellite, named "Ubuntu-1," represents contributions from engineers and scientists from twelve African nations, with mission control facilities in South Africa and data processing centers in Rwanda and Egypt.</p>
-    <h2>Environmental Monitoring</h2>
-    <p>Equipped with advanced imaging systems, Ubuntu-1 will monitor climate change impacts, agricultural conditions, and natural resources across the continent, providing critical data to support sustainable development.</p>
-    <h2>Building Local Expertise</h2>
-    <p>Beyond the immediate scientific benefits, the project has created educational opportunities and technology transfer that will support growing space and technology sectors across participating countries.</p>`,
-    featured: true,
-    published_at: '2025-01-15T14:30:00Z',
-    image_url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
-    author: 'Nadia Osman',
-    tags: ['space', 'technology', 'climate', 'collaboration']
+    id: 41,
+    title: 'Global Climate Agreement Achieves Major Milestone',
+    slug: 'climate-agreement-milestone',
+    excerpt: 'Historic climate deal marks turning point as 190 nations commit to accelerated carbon reduction goals.',
+    content: `<p>In a landmark development for global climate action, 190 nations have formally committed to an accelerated timeline for carbon neutrality, moving the collective target from 2050 to 2040.</p>
+    <p>"This represents the most significant leap forward in international climate cooperation since the Paris Agreement," said UN Secretary-General António Guterres. "The science is clear that we must act more boldly and swiftly than previously thought."</p>
+    <p>The new agreement includes substantially increased funding for climate adaptation in developing nations, with a particular focus on small island states and drought-prone regions in Africa and the Middle East.</p>
+    <p>Financial commitments have reached $500 billion annually, more than double the previous target, with strict accountability mechanisms to ensure funds reach their intended recipients and achieve measurable outcomes.</p>`,
+    image_url: 'https://images.unsplash.com/photo-1569163139599-0f4517e36f31?auto=format&fit=crop&w=800&q=80',
+    category_id: 7,
+    author: 'Elena Gonzalez',
+    published_at: '2025-04-01T09:15:00Z',
+    tags: ['climate', 'environment', 'international', 'policy']
   },
   {
-    id: 802,
-    category_id: 8,
-    title: 'Breakthrough in Malaria Prevention Shows 85% Reduction in New Cases',
-    slug: 'malaria-prevention-breakthrough',
-    excerpt: 'New combination of preventative measures dramatically reduces infection rates in large-scale trial.',
-    content: `<p>A comprehensive approach to malaria prevention implemented across several West African communities has reduced new infections by 85% according to research published today.</p>
-    <p>The program combines next-generation mosquito nets, environmental management techniques, and community health workers using mobile diagnostic tools to identify and treat cases rapidly.</p>
-    <p>Public health experts are already planning to scale the approach to additional regions based on these promising results.</p>`,
-    featured: false,
-    published_at: '2025-02-10T09:45:00Z',
-    image_url: 'https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=800&q=80',
-    author: 'Dr. Emmanuel Kwame',
-    tags: ['health', 'malaria', 'medicine', 'prevention']
+    id: 42,
+    title: 'Quantum Computing Breakthrough Promises New Era in Medicine',
+    slug: 'quantum-computing-medicine-breakthrough',
+    excerpt: 'Researchers achieve stable quantum processing at scale, enabling complex protein modeling for drug discovery.',
+    content: `<p>A collaboration between IBM, Oxford University, and the Beijing Institute of Quantum Information Sciences has achieved what many experts are calling the "holy grail" of quantum computing: stable quantum processing at scale with minimal error correction overhead.</p>
+    <p>The breakthrough, published simultaneously in Nature and Science, demonstrates the first practical application of quantum advantage in the modeling of complex protein folding—a critical process in drug discovery and disease research.</p>
+    <p>"We can now simulate molecular interactions that would have taken traditional supercomputers centuries to calculate," said Dr. Michio Chang, lead researcher on the project. "This opens up entirely new frontiers in personalized medicine and disease treatment."</p>
+    <p>Initial applications have focused on neurodegenerative diseases like Alzheimer's and Parkinson's, with several promising drug candidates already identified for further testing.</p>`,
+    image_url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+    category_id: 7,
+    author: 'Robert Chen',
+    published_at: '2025-03-28T11:30:00Z',
+    tags: ['technology', 'medicine', 'research', 'science']
   },
   {
-    id: 803,
-    category_id: 8,
+    id: 43,
+    title: 'Historic Peace Agreement Ends Decades-Long Conflict',
+    slug: 'historic-peace-agreement',
+    excerpt: 'After 30 years of hostilities, rival factions sign comprehensive peace deal to rebuild war-torn region.',
+    content: `<p>Representatives from opposing factions in the long-running Eastern Mediterranean conflict have signed a comprehensive peace agreement, ending three decades of hostilities that claimed more than 120,000 lives.</p>
+    <p>The deal, brokered through two years of secret negotiations facilitated by Norway and Qatar, establishes a power-sharing government, demilitarized zones, and an international oversight committee to monitor implementation.</p>
+    <p>"Today marks not just the end of a conflict, but the beginning of a shared future," said mediator and Nobel Peace Prize laureate Maria Karlsson. "The real work of reconciliation and rebuilding now begins."</p>
+    <p>An initial reconstruction fund of $15 billion has been established with contributions from the European Union, United States, China, and regional partners to rebuild infrastructure destroyed during the conflict.</p>`,
+    image_url: 'https://images.unsplash.com/photo-1469571486292-b84468e7b036?auto=format&fit=crop&w=800&q=80',
+    category_id: 7,
+    author: 'Jonathan Perez',
+    published_at: '2025-03-25T13:45:00Z',
+    tags: ['peace', 'international', 'politics', 'conflict resolution']
+  },
+  {
+    id: 44,
     title: 'African Continental Free Trade Area Reaches Full Implementation',
     slug: 'afcfta-full-implementation',
-    excerpt: 'Historic trade agreement now operational across all 54 signatory nations, creating world's largest free trade area.',
+    excerpt: 'Historic trade agreement now operational across all 54 signatory nations, creating worlds largest free trade area.',
     content: `<p>The African Continental Free Trade Area (AfCFTA) has reached full implementation across all 54 signatory nations, creating the world's largest free trade zone by number of participating countries.</p>
     <p>Early data shows significant increases in intra-African trade, with small and medium enterprises particularly benefiting from simplified cross-border procedures and reduced tariffs.</p>
-    <p>Economic analysts project that the agreement could lift 30 million people out of extreme poverty while particularly benefiting women who make up a large percentage of small-scale cross-border traders.</p>`,
-    featured: true,
-    published_at: '2025-03-01T11:20:00Z',
-    image_url: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80',
-    author: 'Amina Dembele',
-    tags: ['trade', 'economy', 'development', 'AfCFTA']
+    <p>"This is Africa's economic coming of age," said AfCFTA Secretary-General Wamkele Mene. "We are witnessing the birth of a truly integrated African economy that will transform the continent's development trajectory."</p>
+    <p>Economic analysts project the agreement will boost intra-African exports by over 80% by 2035, creating millions of jobs and lifting an estimated 30 million people out of extreme poverty.</p>`,
+    image_url: 'https://images.unsplash.com/photo-1488187800362-5a8f2832d65e?auto=format&fit=crop&w=800&q=80',
+    category_id: 7,
+    author: 'Tendai Mwangi',
+    published_at: '2025-03-21T08:00:00Z',
+    tags: ['economics', 'trade', 'africa', 'development']
   },
   {
-    id: 804,
-    category_id: 8,
-    title: 'International Court Issues Landmark Climate Justice Ruling',
-    slug: 'climate-justice-landmark-ruling',
-    excerpt: 'Court holds multiple nations responsible for climate impacts affecting vulnerable communities.',
-    content: `<p>In a decision with far-reaching implications, the International Court of Justice has ruled that industrialized nations bear legal responsibility for climate change damages experienced by vulnerable communities.</p>
-    <p>The case, brought by a coalition of Small Island Developing States and African nations, establishes legal precedent for climate justice claims and compensation mechanisms for loss and damage.</p>
-    <p>Legal experts describe the ruling as a watershed moment in international environmental law that could reshape global climate negotiations and accountability frameworks.</p>`,
-    featured: false,
-    published_at: '2025-04-05T13:15:00Z',
-    image_url: 'https://images.unsplash.com/photo-1582559937783-468d89c701ca?auto=format&fit=crop&w=800&q=80',
-    author: 'Ahmed Mahmoud',
-    tags: ['climate change', 'justice', 'international law', 'environmental law']
-  },
-  {
-    id: 805,
-    category_id: 8,
-    title: 'Major Archaeological Discovery Reveals Ancient Urban Center',
-    slug: 'archaeological-discovery-ancient-urban-center',
-    excerpt: 'Groundbreaking finds in Tanzania rewrite understanding of early East African civilizations.',
-    content: `<p>Archaeologists have uncovered an extensive urban settlement in Tanzania dating back to the 8th century, challenging previous understandings of early civilization in East Africa.</p>
-    <p>The site includes sophisticated water management systems, metalworking facilities, and evidence of long-distance trade networks extending to Asia and the Middle East.</p>
-    <p>Researchers are working with local communities to develop preservation plans and educational resources highlighting this important historical heritage.</p>`,
-    featured: false,
-    published_at: '2025-04-22T10:05:00Z',
-    image_url: 'https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?auto=format&fit=crop&w=800&q=80',
-    author: 'Dr. Fatima Njeri',
-    tags: ['archaeology', 'history', 'heritage', 'Tanzania']
-  },
-  {
-    id: 806,
-    category_id: 8,
-    title: 'New Alliance for Renewable Energy Announces Major Solar Project',
-    slug: 'renewable-energy-alliance-solar-project',
-    excerpt: 'Consortium of African nations and international partners launches continent's largest solar initiative.',
-    content: `<p>A coalition of five African nations and international partners has announced plans for the continent's largest solar energy project, with capacity to power over 30 million homes.</p>
-    <p>The distributed network will include both utility-scale installations and community microgrids, with manufacturing facilities being established to produce components locally and create thousands of jobs.</p>
-    <p>The initiative represents a major step toward energy independence and climate resilience while addressing energy poverty across participating regions.</p>`,
-    featured: false,
-    published_at: '2025-05-12T16:40:00Z',
-    image_url: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80',
-    author: 'Jean Bosco',
-    tags: ['renewable energy', 'solar power', 'development', 'climate action']
+    id: 45,
+    title: 'Global Minimum Corporate Tax Takes Effect',
+    slug: 'global-minimum-corporate-tax',
+    excerpt: 'Unprecedented international tax agreement implemented by 136 nations to end tax havens and corporate avoidance.',
+    content: `<p>After years of preparation, the global minimum corporate tax rate of 15% has taken effect across 136 nations, representing the most significant redesign of international tax rules in over a century.</p>
+    <p>The agreement, first negotiated through the OECD in 2023, aims to eliminate tax havens and prevent multinational corporations from shifting profits to low-tax jurisdictions.</p>
+    <p>"This marks the beginning of a fairer era in global taxation," said OECD Secretary-General Mathias Cormann. "For too long, multinational corporations have exploited gaps in international tax rules. That era is now over."</p>
+    <p>Initial estimates suggest the agreement will generate over $150 billion in additional global tax revenue annually, with funds earmarked for infrastructure development, education, and healthcare in participating nations.</p>`,
+    image_url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80',
+    category_id: 7,
+    author: 'Caroline Wong',
+    published_at: '2025-03-15T14:30:00Z',
+    tags: ['economics', 'tax', 'global', 'policy']
   }
 ];
