@@ -1,9 +1,20 @@
 
-// Re-export all post categories
-export * from './tech-posts';
-export * from './health-posts';
-export * from './entertainment-posts';
-export * from './business-posts';
-export * from './sports-posts';
-export * from './lifestyle-posts';
+import { techPosts } from './tech-posts';
+import { healthPosts } from './health-posts';
+import { entertainmentPosts } from './entertainment-posts';
+import { businessPosts } from './business-posts';
+import { sportsPosts } from './sports-posts';
+import { lifestylePosts } from './lifestyle-posts';
+import { autoPosts } from './auto-posts';
+import { newsPosts } from './news-posts';
 
+export {
+  techPosts,
+  healthPosts,
+  entertainmentPosts,
+  businessPosts,
+  sportsPosts,
+  lifestylePosts,
+  autoPosts,
+  newsPosts
+};

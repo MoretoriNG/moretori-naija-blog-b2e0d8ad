@@ -34,7 +34,31 @@ export function HeroSlider({ posts }: HeroSliderProps) {
   const [autoplayEnabled, setAutoplayEnabled] = useState(true);
   const [autoplayInterval, setAutoplayInterval] = useState<NodeJS.Timeout | null>(null);
   
-  const enhancedPosts = posts.map((post, index) => ({
+  // Add some randomization to ensure we have different categories represented
+  const shufflePosts = (posts: Post[]): Post[] => {
+    if (posts.length <= 4) return posts;
+    
+    // Extract one post from each category if available
+    const categories = new Set(posts.map(p => p.category));
+    const selectedPosts: Post[] = [];
+    
+    // Try to get one post from each category
+    categories.forEach(category => {
+      const post = posts.find(p => p.category === category && !selectedPosts.includes(p));
+      if (post) selectedPosts.push(post);
+    });
+    
+    // Fill remaining slots with random posts
+    while (selectedPosts.length < 4 && posts.length > selectedPosts.length) {
+      const remainingPosts = posts.filter(p => !selectedPosts.includes(p));
+      const randomPost = remainingPosts[Math.floor(Math.random() * remainingPosts.length)];
+      if (randomPost) selectedPosts.push(randomPost);
+    }
+    
+    return selectedPosts;
+  };
+  
+  const enhancedPosts = shufflePosts(posts).map((post, index) => ({
     ...post,
     coverImage: post.coverImage || post.image_url || heroBackgroundImages[index % heroBackgroundImages.length]
   }));
@@ -85,12 +109,11 @@ export function HeroSlider({ posts }: HeroSliderProps) {
   
   return (
     <section className="relative bg-black overflow-hidden">
-      <div className="h-[400px] md:h-[500px] relative">
+      <div className="h-[350px] md:h-[450px] relative">
         {/* Images carousel */}
         <Carousel
           opts={{
             loop: true,
-            startIndex: activeIndex
           }}
           className="w-full h-full"
           onMouseEnter={() => {
@@ -125,9 +148,9 @@ export function HeroSlider({ posts }: HeroSliderProps) {
                   
                   {/* Content */}
                   <div className="absolute inset-0 flex items-end z-10">
-                    <div className="container pb-16 md:pb-20 animate-fade-in">
+                    <div className="container px-4 sm:px-6 pb-12 md:pb-16 animate-fade-in">
                       <div className="max-w-2xl text-white">
-                        <div className="flex items-center gap-3 mb-3">
+                        <div className="flex flex-wrap items-center gap-2 mb-3">
                           <CategoryBadge category={post.category} />
                           
                           <div className="flex items-center text-white/70 text-xs">
@@ -144,18 +167,19 @@ export function HeroSlider({ posts }: HeroSliderProps) {
                         </div>
                         
                         <Link to={`/post/${post.slug}`}>
-                          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 hover:text-blue-300 transition-colors">
+                          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 hover:text-blue-300 transition-colors">
                             {post.title}
                           </h2>
                         </Link>
                         
-                        <p className="text-white/80 mb-5 text-base max-w-xl line-clamp-2">
+                        <p className="text-white/80 mb-4 text-sm md:text-base max-w-xl line-clamp-2 hidden sm:block">
                           {post.excerpt}
                         </p>
                         
                         <Button 
                           asChild 
                           className="bg-blue-600 hover:bg-blue-700 transition-colors"
+                          size="sm"
                         >
                           <Link to={`/post/${post.slug}`}>
                             Read Article
@@ -170,7 +194,7 @@ export function HeroSlider({ posts }: HeroSliderProps) {
             ))}
           </CarouselContent>
           
-          <div className="absolute z-20 bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5">
+          <div className="absolute z-20 bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
             {enhancedPosts.map((_, i) => (
               <button
                 key={i}
@@ -184,17 +208,17 @@ export function HeroSlider({ posts }: HeroSliderProps) {
           
           <CarouselPrevious 
             onClick={pauseAutoplay}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-10 w-10 rounded-full transition-colors" 
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-8 w-8 rounded-full transition-colors" 
           />
           <CarouselNext 
             onClick={pauseAutoplay}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-10 w-10 rounded-full transition-colors" 
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-8 w-8 rounded-full transition-colors" 
           />
         </Carousel>
         
         {/* Autoplay indicator */}
-        <div className="absolute bottom-6 right-6 z-20 flex items-center gap-2">
-          <div className="w-16 h-1 bg-white/20 rounded-full overflow-hidden">
+        <div className="absolute bottom-4 right-5 z-20 flex items-center gap-2">
+          <div className="w-12 h-1 bg-white/20 rounded-full overflow-hidden">
             <div 
               className="h-full bg-blue-500 transition-all duration-200" 
               style={{ 
@@ -204,7 +228,7 @@ export function HeroSlider({ posts }: HeroSliderProps) {
             ></div>
           </div>
           <button 
-            className="text-white/70 hover:text-white text-xs flex items-center"
+            className="text-white/70 hover:text-white text-[10px] flex items-center"
             onClick={() => setAutoplayEnabled(!autoplayEnabled)}
           >
             {autoplayEnabled ? 'Pause' : 'Play'}

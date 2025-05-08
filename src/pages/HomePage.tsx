@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from "react";
 import { HeroSlider } from "@/components/blog/HeroSlider";
 import FeaturedPosts from "@/components/blog/FeaturedPosts";
 import { CategoryPosts } from "@/components/blog/CategoryPosts";
@@ -6,12 +7,14 @@ import { TrendingTopics } from "@/components/blog/TrendingTopics";
 import { Newsletter } from "@/components/blog/Newsletter";
 import { getFeaturedPosts, getRecentPosts, getAllPosts, getCategoryById } from "@/lib/blog";
 import { Post, PostCategory } from "@/types/blog";
-import { useEffect } from "react";
 
 export default function HomePage() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
   useEffect(() => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
+    setIsLoaded(true);
   }, []);
 
   // Convert posts to proper Post type
@@ -38,11 +41,11 @@ export default function HomePage() {
       {/* Hero Section */}
       <HeroSlider posts={recentPosts} />
       
-      {/* Trending Topics */}
-      <TrendingTopics />
-      
       {/* Featured Posts Carousel */}
       <FeaturedPosts posts={allPosts} />
+      
+      {/* Trending Topics */}
+      <TrendingTopics />
       
       {/* Category Posts with Tabs */}
       <CategoryPosts initialCategory="tech" />

@@ -30,11 +30,11 @@ export const getRecentPostsByCategory = (categorySlug: string, limit = 6) => {
 export const getCategoryColor = (category: string): string => {
   const colors: Record<string, string> = {
     tech: "bg-blue-100 text-blue-800",
-    auto: "bg-gray-100 text-gray-800",
+    auto: "bg-amber-100 text-amber-800",
     health: "bg-green-100 text-green-800",
     entertainment: "bg-purple-100 text-purple-800",
     news: "bg-red-100 text-red-800",
-    business: "bg-amber-100 text-amber-800",
+    business: "bg-indigo-100 text-indigo-800",
     sports: "bg-emerald-100 text-emerald-800",
     lifestyle: "bg-pink-100 text-pink-800"
   };

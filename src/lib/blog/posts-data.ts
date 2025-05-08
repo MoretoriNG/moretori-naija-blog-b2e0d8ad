@@ -6,7 +6,9 @@ import {
   entertainmentPosts,
   businessPosts,
   sportsPosts,
-  lifestylePosts
+  lifestylePosts,
+  autoPosts,
+  newsPosts
 } from './post-categories';
 
 // Combine all post categories into a single array
@@ -16,6 +18,7 @@ export const posts = [
   ...entertainmentPosts,
   ...businessPosts,
   ...sportsPosts,
-  ...lifestylePosts
+  ...lifestylePosts,
+  ...autoPosts,
+  ...newsPosts
 ];
-
