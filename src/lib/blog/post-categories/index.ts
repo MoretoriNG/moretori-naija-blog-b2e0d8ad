@@ -1,20 +1,20 @@
 
-import { techPosts } from './tech-posts';
-import { healthPosts } from './health-posts';
-import { entertainmentPosts } from './entertainment-posts';
-import { businessPosts } from './business-posts';
-import { sportsPosts } from './sports-posts';
-import { lifestylePosts } from './lifestyle-posts';
 import { autoPosts } from './auto-posts';
+import { businessPosts } from './business-posts';
+import { entertainmentPosts } from './entertainment-posts';
+import { healthPosts } from './health-posts';
+import { lifestylePosts } from './lifestyle-posts';
 import { newsPosts } from './news-posts';
+import { sportsPosts } from './sports-posts';
+import { techPosts } from './tech-posts';
 
 export {
-  techPosts,
-  healthPosts,
-  entertainmentPosts,
-  businessPosts,
-  sportsPosts,
-  lifestylePosts,
   autoPosts,
-  newsPosts
+  businessPosts,
+  entertainmentPosts,
+  healthPosts,
+  lifestylePosts,
+  newsPosts,
+  sportsPosts,
+  techPosts
 };

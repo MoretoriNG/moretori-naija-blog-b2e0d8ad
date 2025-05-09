@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Post } from "@/types/blog";
 import { formatDate } from "@/lib/blog/utils";
 import { CategoryBadge } from "./CategoryBadge";
-import { Video, Clock, User, BookmarkPlus, Share2, Heart } from "lucide-react";
+import { Video, Clock, User, BookmarkPlus, Share2, Heart, ArrowRight } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -12,11 +12,12 @@ import { useState } from "react";
 interface PostCardProps {
   post: Post;
   featured?: boolean;
+  heroMode?: boolean;
   onSave?: () => void;
   saved?: boolean;
 }
 
-export function PostCard({ post, featured = false, onSave, saved = false }: PostCardProps) {
+export function PostCard({ post, featured = false, heroMode = false, onSave, saved = false }: PostCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   // Handle both old and new data structure
@@ -63,6 +64,92 @@ export function PostCard({ post, featured = false, onSave, saved = false }: Post
       onSave();
     }
   };
+
+  // Special rendering for hero mode
+  if (heroMode) {
+    return (
+      <div className="relative w-full h-full">
+        <img
+          src={coverImage}
+          alt={title}
+          className="h-full w-full object-cover"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1920&q=80";
+          }}
+        />
+        
+        {/* Modern gradient overlay with mesh pattern */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"></div>
+        <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgMkgyMFYyMEgyVjIiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIwLjUiIGZpbGw9Im5vbmUiLz4KPC9zdmc+')]"></div>
+        
+        {/* Content */}
+        <div className="absolute inset-0 flex items-end z-10">
+          <div className="container px-4 sm:px-6 pb-12 md:pb-16 animate-fade-in">
+            <div className="max-w-2xl text-white">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <CategoryBadge category={category} />
+                
+                <div className="flex items-center text-white/70 text-xs">
+                  <Clock className="mr-1 h-3 w-3" />
+                  <time dateTime={publishedAt}>
+                    {formatDate(publishedAt)}
+                  </time>
+                </div>
+                
+                <div className="flex items-center text-white/70 text-xs">
+                  <User className="mr-1 h-3 w-3" />
+                  <span>{author}</span>
+                </div>
+              </div>
+              
+              <Link to={`/post/${slug}`}>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 hover:text-blue-300 transition-colors">
+                  {title}
+                </h2>
+              </Link>
+              
+              <p className="text-white/80 mb-4 text-sm md:text-base max-w-xl line-clamp-2 hidden sm:block">
+                {excerpt}
+              </p>
+              
+              <Button 
+                asChild 
+                className="bg-blue-600 hover:bg-blue-700 transition-colors"
+                size="sm"
+              >
+                <Link to={`/post/${slug}`}>
+                  Read Article
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Action buttons for hero */}
+        <div className={`absolute top-3 right-3 flex space-x-1 transition-opacity duration-200 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-8 w-8 rounded-full bg-white/80 text-gray-700 hover:bg-white"
+            onClick={handleSaveClick}
+          >
+            <BookmarkPlus className={saved ? "h-4 w-4 fill-yellow-500 text-yellow-500" : "h-4 w-4"} />
+          </Button>
+          
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-8 w-8 rounded-full bg-white/80 text-gray-700 hover:bg-white"
+            onClick={handleShare}
+          >
+            <Share2 className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <article 

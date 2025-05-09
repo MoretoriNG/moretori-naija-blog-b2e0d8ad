@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Post, PostCategory } from "@/types/blog";
@@ -15,6 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { CategoryBadge } from "./CategoryBadge";
 import { toast } from "sonner";
+import AdBanner from "./advertising/AdBanner";
 
 interface CategoryPostsProps {
   initialCategory: PostCategory;
@@ -47,8 +49,8 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
     return () => clearTimeout(timer);
   }, [activeCategory]);
   
-  // Get recent posts for the active category (top 6)
-  const rawCategoryPosts = getRecentPostsByCategory(activeCategory, 6);
+  // Get recent posts for the active category (top 8 instead of 6)
+  const rawCategoryPosts = getRecentPostsByCategory(activeCategory, 8);
   
   // Convert posts to the expected Post type
   const categoryPosts = rawCategoryPosts.map(post => ({
@@ -218,9 +220,15 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
           {sortedPosts.length > 0 ? (
             <>
               {viewMode === 'grid' ? (
-                <div className={`grid grid-cols-1 ${compactView ? 'sm:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-3'} gap-4`}>
-                  {sortedPosts.map((post) => (
+                <div className={`grid grid-cols-1 ${compactView ? 'sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-4'} gap-4`}>
+                  {sortedPosts.map((post, index) => (
                     <div key={post.id} className={compactView ? 'mb-0' : 'mb-0'}>
+                      {/* Insert an ad after the first 4 posts */}
+                      {index === 4 && (
+                        <div className="col-span-full mb-4">
+                          <AdBanner size="medium" id="category-feed-ad" />
+                        </div>
+                      )}
                       <PostCard 
                         post={post} 
                         onSave={() => handleSavePost(String(post.id))}
@@ -232,54 +240,62 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
               ) : (
                 // List view
                 <div className="space-y-3">
-                  {sortedPosts.map((post) => (
-                    <div key={post.id} className="flex flex-col sm:flex-row gap-4 bg-white p-3 rounded-lg border hover:shadow-md transition-shadow">
-                      <div className="sm:w-1/4">
-                        <Link to={`/post/${post.slug}`} className="block relative aspect-[16/10] overflow-hidden rounded-md">
-                          <img 
-                            src={post.coverImage || post.image_url || `https://images.unsplash.com/photo-${Math.floor(Math.random() * (599999999 - 500000000) + 500000000)}?auto=format&fit=crop&w=800&q=80`}
-                            alt={post.title}
-                            className="w-full h-full object-cover"
-                          />
-                        </Link>
-                      </div>
-                      <div className="sm:w-3/4">
-                        <div className="flex justify-between items-start mb-1">
-                          <CategoryBadge category={post.category} />
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className={`h-6 w-6 rounded-full ${savedPosts.includes(String(post.id)) ? 'text-yellow-500' : ''}`}
-                            onClick={() => handleSavePost(String(post.id))}
-                          >
-                            <BookmarkPlus className={`h-4 w-4 ${savedPosts.includes(String(post.id)) ? 'fill-yellow-500' : ''}`} />
-                          </Button>
+                  {sortedPosts.map((post, index) => (
+                    <>
+                      {/* Insert an ad after the third post in list view */}
+                      {index === 3 && (
+                        <div className="mb-4">
+                          <AdBanner size="medium" id="category-list-ad" />
                         </div>
-                        <Link to={`/post/${post.slug}`}>
-                          <h3 className="text-base font-bold mb-1 hover:text-blue-600 transition-colors line-clamp-2">
-                            {post.title}
-                          </h3>
-                        </Link>
-                        <p className="text-muted-foreground text-xs mb-2 line-clamp-1">
-                          {post.excerpt}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                            <time className="flex items-center" dateTime={post.publishedAt || post.published_at}>
-                              <Clock className="mr-1 h-3 w-3" />
-                              {new Date(post.publishedAt || post.published_at || '').toLocaleDateString()}
-                            </time>
-                            <span className="hidden sm:inline-block">{post.author}</span>
-                          </div>
-                          <Link 
-                            to={`/post/${post.slug}`} 
-                            className="text-xs font-medium text-blue-600 hover:text-blue-800 flex items-center"
-                          >
-                            Read <ChevronRight size={12} className="ml-1" />
+                      )}
+                      <div key={post.id} className="flex flex-col sm:flex-row gap-4 bg-white p-3 rounded-lg border hover:shadow-md transition-shadow">
+                        <div className="sm:w-1/4">
+                          <Link to={`/post/${post.slug}`} className="block relative aspect-[16/10] overflow-hidden rounded-md">
+                            <img 
+                              src={post.coverImage || post.image_url || `https://images.unsplash.com/photo-${Math.floor(Math.random() * (599999999 - 500000000) + 500000000)}?auto=format&fit=crop&w=800&q=80`}
+                              alt={post.title}
+                              className="w-full h-full object-cover"
+                            />
                           </Link>
                         </div>
+                        <div className="sm:w-3/4">
+                          <div className="flex justify-between items-start mb-1">
+                            <CategoryBadge category={post.category} />
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className={`h-6 w-6 rounded-full ${savedPosts.includes(String(post.id)) ? 'text-yellow-500' : ''}`}
+                              onClick={() => handleSavePost(String(post.id))}
+                            >
+                              <BookmarkPlus className={`h-4 w-4 ${savedPosts.includes(String(post.id)) ? 'fill-yellow-500' : ''}`} />
+                            </Button>
+                          </div>
+                          <Link to={`/post/${post.slug}`}>
+                            <h3 className="text-base font-bold mb-1 hover:text-blue-600 transition-colors line-clamp-2">
+                              {post.title}
+                            </h3>
+                          </Link>
+                          <p className="text-muted-foreground text-xs mb-2 line-clamp-1">
+                            {post.excerpt}
+                          </p>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                              <time className="flex items-center" dateTime={post.publishedAt || post.published_at}>
+                                <Clock className="mr-1 h-3 w-3" />
+                                {new Date(post.publishedAt || post.published_at || '').toLocaleDateString()}
+                              </time>
+                              <span className="hidden sm:inline-block">{post.author}</span>
+                            </div>
+                            <Link 
+                              to={`/post/${post.slug}`} 
+                              className="text-xs font-medium text-blue-600 hover:text-blue-800 flex items-center"
+                            >
+                              Read <ChevronRight size={12} className="ml-1" />
+                            </Link>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    </>
                   ))}
                 </div>
               )}

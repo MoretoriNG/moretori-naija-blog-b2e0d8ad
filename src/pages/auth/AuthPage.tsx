@@ -1,18 +1,20 @@
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertCircle, LogIn, UserPlus } from "lucide-react";
+import { AlertCircle, LogIn, UserPlus, Mail, Lock, User } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function AuthPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { signIn, signUp, user } = useAuth();
-  const [activeTab, setActiveTab] = useState<"login" | "register">("login");
+  const initialTab = searchParams.get('tab') === 'register' ? 'register' : 'login';
+  const [activeTab, setActiveTab] = useState<"login" | "register">(initialTab as "login" | "register");
   
   // Login state
   const [loginEmail, setLoginEmail] = useState("");
@@ -24,14 +26,24 @@ export default function AuthPage() {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [registerError, setRegisterError] = useState("");
   const [isRegisterLoading, setIsRegisterLoading] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+
+  // Update URL when tab changes
+  useEffect(() => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('tab', activeTab);
+    window.history.replaceState({}, '', `${window.location.pathname}?${newParams}`);
+  }, [activeTab, searchParams]);
 
   // If user is already logged in, redirect to admin
-  if (user) {
-    navigate("/admin");
-    return null;
-  }
+  useEffect(() => {
+    if (user) {
+      navigate("/admin");
+    }
+  }, [user, navigate]);
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -42,7 +54,7 @@ export default function AuthPage() {
       await signIn(loginEmail, loginPassword);
       // Redirect is handled in AuthContext after successful login
     } catch (error) {
-      setLoginError("Invalid email or password");
+      setLoginError("Login failed. Please check your credentials and try again.");
     } finally {
       setIsLoginLoading(false);
     }
@@ -57,22 +69,36 @@ export default function AuthPage() {
       return;
     }
     
+    if (registerPassword.length < 6) {
+      setRegisterError("Password must be at least 6 characters long");
+      return;
+    }
+    
     setIsRegisterLoading(true);
 
     try {
       await signUp(registerEmail, registerPassword, {
-        full_name: "", // These fields could be added to the form later
-        username: registerEmail.split('@')[0]
+        username: username || registerEmail.split('@')[0],
+        full_name: username || registerEmail.split('@')[0]
       });
       
-      // Switch to login tab after successful registration
-      setActiveTab("login");
+      // Show success message and switch to login tab
+      setRegistrationSuccess(true);
+      setTimeout(() => {
+        setActiveTab("login");
+        setLoginEmail(registerEmail); // Pre-fill the email for convenience
+        setRegistrationSuccess(false);
+      }, 3000);
     } catch (error) {
-      setRegisterError("Registration failed. Please try again.");
+      setRegisterError("Registration failed. The email may already be in use.");
     } finally {
       setIsRegisterLoading(false);
     }
   };
+
+  if (user) {
+    return null; // Handled by useEffect redirect
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-600/10 to-green-600/5 p-4">
@@ -104,14 +130,18 @@ export default function AuthPage() {
                   )}
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="your@email.com"
-                      value={loginEmail}
-                      onChange={(e) => setLoginEmail(e.target.value)}
-                      required
-                    />
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Input
+                        id="email"
+                        type="email"
+                        className="pl-10"
+                        placeholder="your@email.com"
+                        value={loginEmail}
+                        onChange={(e) => setLoginEmail(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
@@ -120,14 +150,18 @@ export default function AuthPage() {
                         Forgot password?
                       </a>
                     </div>
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="••••••••"
-                      value={loginPassword}
-                      onChange={(e) => setLoginPassword(e.target.value)}
-                      required
-                    />
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Input
+                        id="password"
+                        type="password"
+                        className="pl-10"
+                        placeholder="••••••••"
+                        value={loginPassword}
+                        onChange={(e) => setLoginPassword(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
                 </CardContent>
                 <CardFooter>
@@ -161,39 +195,77 @@ export default function AuthPage() {
                       {registerError}
                     </div>
                   )}
+                  
+                  {registrationSuccess && (
+                    <div className="bg-green-50 text-green-700 p-3 rounded-md flex items-center text-sm">
+                      <AlertCircle className="h-4 w-4 mr-2" />
+                      Registration successful! You can now login with your credentials.
+                    </div>
+                  )}
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="username">Username (optional)</Label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Input
+                        id="username"
+                        type="text"
+                        className="pl-10"
+                        placeholder="yourname"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  
                   <div className="space-y-2">
                     <Label htmlFor="register-email">Email</Label>
-                    <Input
-                      id="register-email"
-                      type="email"
-                      placeholder="your@email.com"
-                      value={registerEmail}
-                      onChange={(e) => setRegisterEmail(e.target.value)}
-                      required
-                    />
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Input
+                        id="register-email"
+                        type="email"
+                        className="pl-10"
+                        placeholder="your@email.com"
+                        value={registerEmail}
+                        onChange={(e) => setRegisterEmail(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
+                  
                   <div className="space-y-2">
                     <Label htmlFor="register-password">Password</Label>
-                    <Input
-                      id="register-password"
-                      type="password"
-                      placeholder="••••••••"
-                      value={registerPassword}
-                      onChange={(e) => setRegisterPassword(e.target.value)}
-                      required
-                      minLength={6}
-                    />
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Input
+                        id="register-password"
+                        type="password"
+                        className="pl-10"
+                        placeholder="••••••••"
+                        value={registerPassword}
+                        onChange={(e) => setRegisterPassword(e.target.value)}
+                        required
+                        minLength={6}
+                      />
+                    </div>
+                    <p className="text-xs text-gray-500">Must be at least 6 characters long</p>
                   </div>
+                  
                   <div className="space-y-2">
                     <Label htmlFor="confirm-password">Confirm Password</Label>
-                    <Input
-                      id="confirm-password"
-                      type="password"
-                      placeholder="••••••••"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                    />
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Input
+                        id="confirm-password"
+                        type="password"
+                        className="pl-10"
+                        placeholder="••••••••"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
                 </CardContent>
                 <CardFooter>

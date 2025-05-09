@@ -1,78 +1,84 @@
 
-export const newsPosts = [
+import { Post } from "../types";
+
+// News blog posts
+export const newsPosts: Post[] = [
   {
-    id: 41,
-    title: 'Global Climate Agreement Achieves Major Milestone',
-    slug: 'climate-agreement-milestone',
-    excerpt: 'Historic climate deal marks turning point as 190 nations commit to accelerated carbon reduction goals.',
-    content: `<p>In a landmark development for global climate action, 190 nations have formally committed to an accelerated timeline for carbon neutrality, moving the collective target from 2050 to 2040.</p>
-    <p>"This represents the most significant leap forward in international climate cooperation since the Paris Agreement," said UN Secretary-General António Guterres. "The science is clear that we must act more boldly and swiftly than previously thought."</p>
-    <p>The new agreement includes substantially increased funding for climate adaptation in developing nations, with a particular focus on small island states and drought-prone regions in Africa and the Middle East.</p>
-    <p>Financial commitments have reached $500 billion annually, more than double the previous target, with strict accountability mechanisms to ensure funds reach their intended recipients and achieve measurable outcomes.</p>`,
-    image_url: 'https://images.unsplash.com/photo-1569163139599-0f4517e36f31?auto=format&fit=crop&w=800&q=80',
-    category_id: 7,
-    author: 'Elena Gonzalez',
-    published_at: '2025-04-01T09:15:00Z',
-    tags: ['climate', 'environment', 'international', 'policy']
+    id: 501,
+    title: "Global Climate Summit Reaches Landmark Agreement on Emissions",
+    slug: "global-climate-summit-landmark-agreement",
+    excerpt: "World leaders have committed to more aggressive carbon reduction targets in a historic climate accord.",
+    content: "<p>After two weeks of intense negotiations, the Global Climate Summit concluded with a groundbreaking agreement that commits nearly all countries to more ambitious emissions reduction targets. The accord, which environmental experts are calling a major step forward, aims to limit global warming to 1.5 degrees Celsius above pre-industrial levels by 2050.</p><p>The agreement introduces a progressive carbon pricing framework that will be phased in over the next five years, with higher rates for developed nations and more gradual implementation for emerging economies. This differential approach addresses long-standing concerns about equity in climate action responsibility.</p><p>Financial commitments reached an unprecedented $700 billion in climate finance, to be disbursed over the next decade. These funds will support renewable energy transitions, climate adaptation measures, and loss and damage compensation for vulnerable nations already experiencing severe climate impacts.</p><p>A binding enforcement mechanism represents perhaps the most significant advancement over previous climate agreements. Countries that fail to meet their commitments will face graduated diplomatic and economic consequences, addressing a key weakness of past climate accords.</p><p>Industry response has been cautiously positive, with many large corporations announcing accelerated net-zero timelines in response to the agreement's clarity on future regulatory environments. Renewable energy stocks surged following the announcement, while fossil fuel investments saw modest declines.</p><p>Climate activists have generally welcomed the agreement while emphasizing the need for vigilant monitoring of implementation. \"This is a foundation we can build on, but the real test will be in the action that follows these promises,\" noted prominent environmental advocate Dr. Leila Mbeki.</p><p>The agreement will take effect in January, with the first progress reviews scheduled for 18 months later. A new international climate governance body will be established to oversee implementation and provide technical support to countries struggling to meet their targets.</p>",
+    image_url: "https://images.unsplash.com/photo-1561069934-eee225952461?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-12-10T17:30:00Z",
+    author: "Jonathan Pierce",
+    category_id: 5,
+    featured: true,
+    tags: ["climate change", "global politics", "environment", "international relations"]
   },
   {
-    id: 42,
-    title: 'Quantum Computing Breakthrough Promises New Era in Medicine',
-    slug: 'quantum-computing-medicine-breakthrough',
-    excerpt: 'Researchers achieve stable quantum processing at scale, enabling complex protein modeling for drug discovery.',
-    content: `<p>A collaboration between IBM, Oxford University, and the Beijing Institute of Quantum Information Sciences has achieved what many experts are calling the "holy grail" of quantum computing: stable quantum processing at scale with minimal error correction overhead.</p>
-    <p>The breakthrough, published simultaneously in Nature and Science, demonstrates the first practical application of quantum advantage in the modeling of complex protein folding—a critical process in drug discovery and disease research.</p>
-    <p>"We can now simulate molecular interactions that would have taken traditional supercomputers centuries to calculate," said Dr. Michio Chang, lead researcher on the project. "This opens up entirely new frontiers in personalized medicine and disease treatment."</p>
-    <p>Initial applications have focused on neurodegenerative diseases like Alzheimer's and Parkinson's, with several promising drug candidates already identified for further testing.</p>`,
-    image_url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
-    category_id: 7,
-    author: 'Robert Chen',
-    published_at: '2025-03-28T11:30:00Z',
-    tags: ['technology', 'medicine', 'research', 'science']
+    id: 502,
+    title: "Breakthrough in Quantum Computing Achieves Practical Advantage",
+    slug: "quantum-computing-breakthrough-practical-advantage",
+    excerpt: "Scientists have demonstrated quantum advantage in a commercially viable application for the first time.",
+    content: "<p>In a development that experts are calling a watershed moment for computing, researchers have achieved quantum advantage in a practical, commercially relevant application. The breakthrough, published yesterday in Science, demonstrates a quantum computer solving a complex logistics optimization problem 15,000 times faster than the most advanced classical supercomputer.</p><p>The research team, a collaboration between National Quantum Laboratory and Horizon Quantum Systems, used a 256-qubit machine stabilized through novel error correction techniques. This represents a dramatic improvement over previous quantum systems that could maintain coherence for only brief periods or required impractically cold operating conditions.</p><p>The specific problem solved—optimizing global shipping routes in real-time while accounting for weather, fuel costs, port capacity, and hundreds of other variables—has enormous commercial implications. Shipping industry analysts estimate that such optimization could reduce fuel consumption by 7-11% and cut delays by nearly 30%.</p><p>\"What makes this truly significant is that we've crossed the line from theoretical quantum advantage to practical quantum utility,\" explained Dr. Sarah Chen, lead researcher on the project. \"This isn't just a carefully constructed problem where quantum shows a narrow advantage—this is something businesses can use tomorrow to save money and reduce emissions.\"</p><p>Major technology companies have responded by accelerating their quantum computing initiatives. Three leading cloud computing providers announced expanded access to quantum processing units within hours of the publication.</p><p>Cybersecurity experts note that this milestone also brings quantum computing's potential to break current encryption standards closer to reality, though they emphasize that purpose-built cryptographic systems would require significantly more qubits.</p><p>The research team has made their algorithms open source while protecting certain hardware innovations with patents. They project that scaled versions of their system could be commercially available within 18-24 months.</p>",
+    image_url: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-11-28T09:45:00Z",
+    author: "Dr. Maya Lindholm",
+    category_id: 5,
+    featured: false,
+    tags: ["quantum computing", "technology", "scientific breakthrough", "business impact"]
   },
   {
-    id: 43,
-    title: 'Historic Peace Agreement Ends Decades-Long Conflict',
-    slug: 'historic-peace-agreement',
-    excerpt: 'After 30 years of hostilities, rival factions sign comprehensive peace deal to rebuild war-torn region.',
-    content: `<p>Representatives from opposing factions in the long-running Eastern Mediterranean conflict have signed a comprehensive peace agreement, ending three decades of hostilities that claimed more than 120,000 lives.</p>
-    <p>The deal, brokered through two years of secret negotiations facilitated by Norway and Qatar, establishes a power-sharing government, demilitarized zones, and an international oversight committee to monitor implementation.</p>
-    <p>"Today marks not just the end of a conflict, but the beginning of a shared future," said mediator and Nobel Peace Prize laureate Maria Karlsson. "The real work of reconciliation and rebuilding now begins."</p>
-    <p>An initial reconstruction fund of $15 billion has been established with contributions from the European Union, United States, China, and regional partners to rebuild infrastructure destroyed during the conflict.</p>`,
-    image_url: 'https://images.unsplash.com/photo-1469571486292-b84468e7b036?auto=format&fit=crop&w=800&q=80',
-    category_id: 7,
-    author: 'Jonathan Perez',
-    published_at: '2025-03-25T13:45:00Z',
-    tags: ['peace', 'international', 'politics', 'conflict resolution']
+    id: 503,
+    title: "Archaeological Discovery Reveals Advanced Ancient Civilization",
+    slug: "archaeological-discovery-ancient-civilization",
+    excerpt: "Newly unearthed city suggests complex society existed 2,000 years earlier than previously thought.",
+    content: "<p>Archaeological excavations in the remote highlands of southern Peru have uncovered evidence of an advanced urban civilization dating back approximately 7,500 years—nearly two millennia earlier than scholars previously believed complex societies existed in the region.</p><p>The site, named Huayna Qhapaq by researchers, spans nearly five square kilometers and includes sophisticated water management systems, astronomical alignments, and evidence of metallurgical work that was thought to have emerged much later in human history.</p><p>\"What's extraordinary about this discovery is not just its age, but its completeness,\" explained Dr. Carlos Vega, who leads the international research team. \"We're seeing urban planning, specialized labor, and technological innovations that completely reset our understanding of social development in this part of the world.\"</p><p>Carbon dating of organic materials found at the site consistently places its peak development between 5,600 and 5,200 BCE. This timeline challenges established theories about when and how quickly human societies developed complex organizational structures.</p><p>The water management system has particularly captured researchers' attention. A network of underground aqueducts transported water from mountain sources to agricultural terraces and residential areas with a precision that would have required advanced mathematical understanding and engineering expertise.</p><p>Metallurgical evidence suggests the civilization had mastered copper annealing techniques previously thought to have originated in Mesopotamia thousands of years later. Several ceremonial objects found in what appears to be a central administrative complex show remarkable craftsmanship in copper and gold alloys.</p><p>The site also contains what researchers believe is an early writing system—geometric patterns and stylized figures inscribed on clay tablets that show intentional organization and repetition. If confirmed as writing, this would represent the earliest known writing system in the Americas by several thousand years.</p><p>\"We're just beginning to understand the implications,\" said Dr. Elena Fuentes, an archaeolinguist consulting with the project. \"This could fundamentally alter our conception of how advanced societies developed and spread throughout the ancient world.\"</p>",
+    image_url: "https://images.unsplash.com/photo-1653618868543-48b525746cc3?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-11-15T14:20:00Z",
+    author: "Prof. Thomas Harrington",
+    category_id: 5,
+    featured: false,
+    tags: ["archaeology", "history", "ancient civilizations", "discovery"]
   },
   {
-    id: 44,
-    title: 'African Continental Free Trade Area Reaches Full Implementation',
-    slug: 'afcfta-full-implementation',
-    excerpt: 'Historic trade agreement now operational across all 54 signatory nations, creating worlds largest free trade area.',
-    content: `<p>The African Continental Free Trade Area (AfCFTA) has reached full implementation across all 54 signatory nations, creating the world's largest free trade zone by number of participating countries.</p>
-    <p>Early data shows significant increases in intra-African trade, with small and medium enterprises particularly benefiting from simplified cross-border procedures and reduced tariffs.</p>
-    <p>"This is Africa's economic coming of age," said AfCFTA Secretary-General Wamkele Mene. "We are witnessing the birth of a truly integrated African economy that will transform the continent's development trajectory."</p>
-    <p>Economic analysts project the agreement will boost intra-African exports by over 80% by 2035, creating millions of jobs and lifting an estimated 30 million people out of extreme poverty.</p>`,
-    image_url: 'https://images.unsplash.com/photo-1488187800362-5a8f2832d65e?auto=format&fit=crop&w=800&q=80',
-    category_id: 7,
-    author: 'Tendai Mwangi',
-    published_at: '2025-03-21T08:00:00Z',
-    tags: ['economics', 'trade', 'africa', 'development']
+    id: 504,
+    title: "Central Banks Announce Coordinated Interest Rate Cuts",
+    slug: "central-banks-coordinated-interest-rate-cuts",
+    excerpt: "Major economies take synchronous action to stimulate growth amid economic slowdown concerns.",
+    content: "<p>In an unprecedented display of coordination, central banks from seven major economies announced simultaneous interest rate reductions today, signaling growing concerns about a synchronized global economic slowdown and attempting to head off potential recessionary pressures.</p><p>The U.S. Federal Reserve led the action with a 50 basis point cut, larger than the typical 25 point adjustment. The European Central Bank, Bank of Japan, Bank of England, and central banks of Canada, Australia, and Switzerland all announced similar measures within hours of each other.</p><p>\"This coordinated action reflects our shared assessment that preemptive measures are warranted to maintain economic momentum in the face of increasing headwinds,\" stated the joint release from the central banks. Financial markets responded immediately, with major indices rising between 2% and 4% across global exchanges.</p><p>The synchronized nature of the cuts reflects concerns about interconnected risks in the global economy. Recent data has shown manufacturing contractions in multiple regions, declining trade volumes, and weakening consumer sentiment despite relatively strong employment figures in most major economies.</p><p>Analysts note that such coordination is rare and typically reserved for crisis situations. The last similar action occurred during the financial crisis of 2008, though today's economic fundamentals are considerably stronger than during that period.</p><p>\"This isn't panic mode, but it's definitely an acknowledgment that the slowdown is more serious than many had believed,\" explained economist Regina Martinez. \"The simultaneous action also multiplies the psychological impact, potentially boosting confidence more effectively than staggered cuts would.\"</p><p>Bond markets reacted strongly, with yields falling sharply across the board. Currency markets showed relatively muted responses, suggesting the coordinated nature of the cuts prevented significant realignments between major currencies.</p><p>Economists are divided on whether the cuts will successfully prevent further economic deceleration. Some warn that central banks now have less room to maneuver if conditions deteriorate further, while others argue that decisive early action improves the odds of achieving a \"soft landing\" for the global economy.</p>",
+    image_url: "https://images.unsplash.com/photo-1611324806964-5a908a73d17f?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-10-24T16:00:00Z",
+    author: "Sandra Morrison",
+    category_id: 5,
+    featured: true,
+    tags: ["economics", "central banks", "monetary policy", "global economy"]
   },
   {
-    id: 45,
-    title: 'Global Minimum Corporate Tax Takes Effect',
-    slug: 'global-minimum-corporate-tax',
-    excerpt: 'Unprecedented international tax agreement implemented by 136 nations to end tax havens and corporate avoidance.',
-    content: `<p>After years of preparation, the global minimum corporate tax rate of 15% has taken effect across 136 nations, representing the most significant redesign of international tax rules in over a century.</p>
-    <p>The agreement, first negotiated through the OECD in 2023, aims to eliminate tax havens and prevent multinational corporations from shifting profits to low-tax jurisdictions.</p>
-    <p>"This marks the beginning of a fairer era in global taxation," said OECD Secretary-General Mathias Cormann. "For too long, multinational corporations have exploited gaps in international tax rules. That era is now over."</p>
-    <p>Initial estimates suggest the agreement will generate over $150 billion in additional global tax revenue annually, with funds earmarked for infrastructure development, education, and healthcare in participating nations.</p>`,
-    image_url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80',
-    category_id: 7,
-    author: 'Caroline Wong',
-    published_at: '2025-03-15T14:30:00Z',
-    tags: ['economics', 'tax', 'global', 'policy']
+    id: 505,
+    title: "Major Breakthrough in Alzheimer's Treatment Shows Promise in Clinical Trials",
+    slug: "alzheimers-treatment-breakthrough-clinical-trials",
+    excerpt: "New drug demonstrates significant cognitive improvement in late-stage human trials.",
+    content: "<p>A potential breakthrough in Alzheimer's disease treatment has shown remarkable results in Phase III clinical trials, with patients experiencing significant cognitive improvement and reduced disease progression. The drug, developed by NeuraTech Pharmaceuticals, targets the formation of tau tangles—protein accumulations that disrupt neural connections and contribute to cognitive decline in Alzheimer's patients.</p><p>The double-blind study involved 1,423 patients with mild to moderate Alzheimer's disease across 112 medical centers. After 18 months of treatment, participants receiving the drug showed 47% less cognitive decline compared to the placebo group, substantially exceeding the 10-15% improvements seen in previously approved treatments.</p><p>\"These results represent the most promising advance we've seen in Alzheimer's research in decades,\" said Dr. James Chen, lead investigator for the trial. \"For the first time, we're seeing not just a slowing of decline, but actual cognitive improvement in a significant number of patients.\"</p><p>Unlike previous approaches that primarily targeted amyloid plaques, this treatment focuses on the tau protein mechanism, which many researchers now believe may be more central to the disease's progression. The drug uses a novel delivery system that allows it to cross the blood-brain barrier more effectively than previous treatments.</p><p>Perhaps most significantly, 28% of patients showed measurable cognitive improvement from their baseline at the beginning of the study—an outcome rarely seen in Alzheimer's trials. Side effects were reported as relatively mild, primarily consisting of headaches and temporary dizziness, without the brain swelling complications that have limited other recent treatments.</p><p>Patient advocacy groups have responded with cautious optimism. \"While we've seen promising results before that didn't translate to widely effective treatments, the magnitude of benefit here gives genuine hope,\" said Maria Sanchez of the Alzheimer's Patient Alliance.</p><p>NeuraTech has already submitted applications for regulatory approval in the United States, Europe, and Japan. If approved, the treatment could become available to patients within 12-18 months.</p><p>Experts note that while the treatment doesn't represent a cure, it could potentially transform Alzheimer's from an inexorably progressive condition to a manageable chronic disease for many patients, significantly extending periods of independence and quality of life.</p>",
+    image_url: "https://images.unsplash.com/photo-1576671414121-aa0c81c869e0?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-10-09T11:15:00Z",
+    author: "Dr. Richard Bennett",
+    category_id: 5,
+    featured: false,
+    tags: ["healthcare", "medical research", "Alzheimer's disease", "clinical trials"]
+  },
+  {
+    id: 506,
+    title: "International Space Station to Be Replaced with Commercial Space Hub",
+    slug: "iss-replacement-commercial-space-hub",
+    excerpt: "Space agencies and private companies announce collaborative plan for next-generation orbital platform.",
+    content: "<p>In a historic shift for human presence in space, an international consortium of space agencies and private aerospace companies has announced plans to replace the aging International Space Station (ISS) with a substantially larger commercial space hub beginning in 2028. This new orbital platform will accommodate both scientific research and commercial activities, marking a fundamental transition in how humanity utilizes low Earth orbit.</p><p>The \"Orbital Gateway\" project represents an unprecedented public-private partnership involving NASA, the European Space Agency, JAXA (Japan), and space agencies from Canada, India, and the United Arab Emirates. Private sector partners include four major aerospace corporations and seven smaller specialized space companies.</p><p>Unlike the ISS, which was primarily funded and operated by government space agencies, the new platform will feature a mixed ownership model. Core infrastructure for scientific research will remain under government control, while dedicated commercial modules will be privately owned and operated.</p><p>\"This represents the next logical evolution of human presence in orbit,\" explained NASA Administrator Melissa Roberts. \"Just as government-led efforts opened aviation to commercial use, our decades of experience on the ISS have paved the way for private enterprise to take a leading role in space.\"</p><p>The planned structure will be approximately three times the size of the ISS, with dedicated areas for scientific research, in-space manufacturing, tourism, and eventually, assembly of vehicles for deeper space missions. Its modular design will allow for continued expansion over its projected 30-year operational lifespan.</p><p>Initial construction is scheduled to begin in 2027, with the first modules becoming operational in 2028. The ISS, which has been continuously occupied since November 2000, will be gradually decommissioned between 2028 and 2030 as its functions transfer to the new platform.</p><p>Economic forecasts suggest the commercial aspects of the project could generate over $15 billion annually by 2035, with applications ranging from specialized materials manufacturing that benefits from microgravity to high-end tourism and media production.</p><p>\"We're not just replacing infrastructure; we're establishing an economy in low Earth orbit,\" said Emma Chen, CEO of Orbital Ventures, one of the private partners. \"This will dramatically reduce the cost of accessing space while creating entirely new industries.\"</p>",
+    image_url: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-09-18T13:50:00Z",
+    author: "Michael Thompson",
+    category_id: 5,
+    featured: true,
+    tags: ["space", "aerospace", "international space station", "commercial space"]
   }
 ];

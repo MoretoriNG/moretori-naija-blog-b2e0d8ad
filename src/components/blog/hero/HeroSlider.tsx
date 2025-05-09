@@ -1,10 +1,10 @@
 
 import { useState, useEffect } from "react";
 import { Post } from "@/types/blog";
-import { HeroSlide } from "./HeroSlide";
 import { HeroDots } from "./HeroDots";
 import { HeroAutoplayIndicator } from "./HeroAutoplayIndicator";
 import { useHeroSlider } from "./useHeroSlider";
+import { PostCard } from "../PostCard";
 import { 
   Carousel,
   CarouselContent,
@@ -72,11 +72,16 @@ export function HeroSlider({ posts }: HeroSliderProps) {
                 className="h-full" 
                 onClick={() => setActiveIndex(index)}
               >
-                <HeroSlide 
-                  post={post} 
-                  index={index} 
-                  backgroundImages={heroBackgroundImages} 
-                />
+                <div className="relative h-full w-full">
+                  {/* Use a wrapper with absolute positioning for the special hero styling */}
+                  <div className="absolute inset-0 z-10">
+                    <PostCard 
+                      post={post}
+                      featured={true}
+                      heroMode={true}
+                    />
+                  </div>
+                </div>
               </CarouselItem>
             ))}
           </CarouselContent>
@@ -89,11 +94,11 @@ export function HeroSlider({ posts }: HeroSliderProps) {
           
           <CarouselPrevious 
             onClick={pauseAutoplay}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-8 w-8 rounded-full transition-colors" 
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-8 w-8 rounded-full transition-colors z-20" 
           />
           <CarouselNext 
             onClick={pauseAutoplay}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-8 w-8 rounded-full transition-colors" 
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-8 w-8 rounded-full transition-colors z-20" 
           />
         </Carousel>
         

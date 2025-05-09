@@ -27,13 +27,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
+      (event, currentSession) => {
+        console.log("Auth state changed:", event, currentSession?.user?.email);
+        setSession(currentSession);
+        setUser(currentSession?.user ?? null);
         
         // If session changes, fetch user profile data
-        if (session?.user) {
-          fetchProfile(session.user.id);
+        if (currentSession?.user) {
+          console.log("Fetching profile for user:", currentSession.user.id);
+          fetchProfile(currentSession.user.id);
         } else {
           setProfile(null);
         }
@@ -41,22 +43,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+      console.log("Got existing session:", currentSession?.user?.email);
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
       
-      if (session?.user) {
-        fetchProfile(session.user.id);
+      if (currentSession?.user) {
+        fetchProfile(currentSession.user.id);
       }
       
       setIsLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      console.log("Unsubscribing from auth state changes");
+      subscription.unsubscribe();
+    };
   }, []);
 
   async function fetchProfile(userId: string) {
     try {
+      console.log("Fetching profile for user ID:", userId);
       // Use the RPC function to fetch the profile by user ID
       const { data, error } = await supabase
         .rpc('get_profile_by_id', { user_id: userId });
@@ -66,6 +73,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
+      console.log("Profile data:", data);
       setProfile(data);
     } catch (error) {
       console.error('Profile fetch error:', error);
@@ -74,16 +82,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function signIn(email: string, password: string) {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      console.log("Attempting to sign in:", email);
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) {
+        console.error("Sign in error:", error.message);
         toast.error(error.message);
         throw error;
       }
 
+      console.log("Sign in successful:", data.user?.email);
       toast.success("Logged in successfully");
       navigate("/admin");
     } catch (error) {
@@ -94,7 +105,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function signUp(email: string, password: string, userData?: any) {
     try {
-      const { error } = await supabase.auth.signUp({
+      console.log("Attempting to sign up:", email);
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -103,11 +115,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       if (error) {
+        console.error("Sign up error:", error.message);
         toast.error(error.message);
         throw error;
       }
 
-      toast.success("Account created! Please check your email to verify your account.");
+      console.log("Sign up successful or confirmation email sent:", data);
+      
+      // Handle the case where email confirmation is required
+      if (data.session === null) {
+        toast.success("Account created! Please check your email to confirm your registration.");
+      } else {
+        // If confirmation is disabled in Supabase settings, user is already confirmed
+        toast.success("Account created successfully!");
+        navigate("/admin");
+      }
     } catch (error) {
       console.error("Sign up error:", error);
       throw error;
@@ -116,12 +138,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function signOut() {
     try {
+      console.log("Attempting to sign out");
       const { error } = await supabase.auth.signOut();
       if (error) {
+        console.error("Sign out error:", error.message);
         toast.error(error.message);
         throw error;
       }
       
+      console.log("Sign out successful");
       toast.success("Logged out successfully");
       navigate("/");
     } catch (error) {

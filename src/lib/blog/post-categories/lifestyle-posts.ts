@@ -1,99 +1,84 @@
 
-import { BlogPost } from '../types';
+import { Post } from "../types";
 
-export const lifestylePosts: BlogPost[] = [
+// Lifestyle blog posts
+export const lifestylePosts: Post[] = [
   {
     id: 601,
-    category_id: 6,
-    title: 'Modern Nigerian Home Design Trends',
-    slug: 'modern-nigerian-home-design',
-    excerpt: "Architects blend traditional elements with contemporary functionality in Nigeria's evolving residential design landscape.",
-    content: `<p>Nigeria's residential architecture is experiencing an exciting evolution as designers create homes that respond to local climate and cultural contexts while embracing modern aesthetics and functionality.</p>
-    <h2>Climate-Responsive Design</h2>
-    <p>Contemporary Nigerian homes increasingly incorporate passive cooling features like strategic cross-ventilation, thermal mass, and deep verandas that shield interiors from direct sunlight while allowing for outdoor living.</p>
-    <h2>Cultural Expression</h2>
-    <p>Architects are finding innovative ways to incorporate traditional patterns, materials, and spatial arrangements that honor cultural heritage while meeting contemporary lifestyle needs.</p>
-    <h2>Sustainable Materials</h2>
-    <p>There's a growing movement toward using locally-sourced, sustainable building materials including compressed earth blocks, bamboo, and reclaimed wood that reduce environmental impact while supporting local economies.</p>`,
+    title: "Mindful Living: Integrating Wellness Practices into Daily Routines",
+    slug: "mindful-living-daily-wellness-practices",
+    excerpt: "Discover how small, consistent wellness practices can transform your daily life and overall wellbeing.",
+    content: "<p>In our fast-paced world, mindful living offers a path to greater wellbeing and life satisfaction. This approach involves being fully present and engaged in daily activities, making intentional choices, and developing an awareness of how our habits affect our physical and mental health.</p><p>Morning routines set the tone for the entire day. Instead of immediately checking emails or social media, consider beginning with a few minutes of meditation, gentle stretching, or journaling. This creates space for intention-setting and can reduce stress hormones that might otherwise dominate your day.</p><p>Mindful eating practices transform not just what we eat, but how we eat. Taking time to appreciate the colors, smells, textures, and flavors of food enhances satisfaction and improves digestion. Eating without digital distractions allows you to recognize hunger and fullness cues more effectively.</p><p>Movement doesn't need to mean intense exercise. Brief walking breaks throughout the day, desk stretches, or simply standing while on phone calls can counteract the negative effects of prolonged sitting. The focus is consistency rather than intensity.</p><p>Digital boundaries protect mental space and reduce anxiety. Designating specific times to check emails and social media, creating phone-free zones in your home, and setting app time limits can help regain control over technology use rather than being controlled by it.</p><p>Sleep hygiene practices like maintaining consistent sleep-wake times, creating a relaxing bedtime routine, and optimizing your sleep environment pay dividends for overall health. Quality sleep affects everything from immune function to emotional regulation.</p><p>Gratitude practices shift focus from what's lacking to what's present in your life. Whether through a dedicated gratitude journal or simply noting three things you're thankful for each day, this practice has been scientifically shown to improve mood and outlook.</p><p>The beauty of mindful living is that it doesn't require dramatic life changes. Small, consistent adjustments to daily routines can create profound shifts in wellbeing over time, making wellness an integrated part of life rather than another item on your to-do list.</p>",
+    image_url: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-12-05T09:30:00Z",
+    author: "Maya Johnson",
+    category_id: 8,
     featured: true,
-    published_at: '2025-01-12T09:15:00Z',
-    image_url: 'https://images.unsplash.com/photo-1600607687644-c7171b46a429?auto=format&fit=crop&w=800&q=80',
-    author: 'Chioma Eze',
-    tags: ['interior design', 'architecture', 'Nigerian culture', 'sustainable living']
+    tags: ["wellness", "mindfulness", "health", "lifestyle"]
   },
   {
     id: 602,
-    category_id: 6,
-    title: 'Traditional Healing Practices in Modern Wellness',
-    slug: 'traditional-healing-modern-wellness',
-    excerpt: "How ancient African healing traditions are finding new appreciation in contemporary wellness practices.",
-    content: `<p>Traditional African healing practices that have been preserved for generations are experiencing a renaissance as people seek more holistic approaches to health and wellness.</p>
-    <p>From herbal remedies to mindfulness techniques, these ancient approaches are being validated by modern science while maintaining their cultural significance and spiritual dimensions.</p>
-    <p>Practitioners are finding ways to make these traditions accessible to wider audiences while respecting their origins and ensuring authentic knowledge transfer.</p>`,
+    title: "Sustainable Home Decor: Eco-Friendly Ways to Refresh Your Space",
+    slug: "sustainable-home-decor-eco-friendly",
+    excerpt: "Transform your living space with these environmentally conscious decor ideas that don't compromise on style.",
+    content: "<p>Creating a beautiful home doesn't have to come at the environment's expense. Sustainable home decor focuses on reducing waste, supporting ethical production, and choosing materials that have minimal environmental impact while still achieving your aesthetic vision.</p><p>Secondhand and vintage items offer unique character while extending the lifecycle of existing products. Explore thrift stores, estate sales, and online marketplaces for one-of-a-kind pieces that bring history and storytelling to your space. Furniture with good bones can be refreshed with new upholstery or paint for a custom look.</p><p>Natural and sustainable materials like bamboo, cork, reclaimed wood, organic cotton, and linen bring texture and warmth to interiors while having lower environmental impacts than many conventional alternatives. These materials often age beautifully, developing character over time.</p><p>Houseplants do double duty as decor elements that also improve indoor air quality. Consider the light conditions in your space and your care capacity when selecting plants. Even those without a green thumb can succeed with low-maintenance options like snake plants or pothos.</p><p>Multi-functional furniture optimizes space and reduces the number of items needed, particularly important in smaller homes. Look for pieces that can serve different purposes or adapt to changing needs, such as storage ottomans, extendable tables, or convertible sofas.</p><p>Artisan-made items support traditional craftsmanship and often use sustainable production methods. These pieces typically last longer than mass-produced alternatives and create connections to different cultures and traditions.</p><p>DIY projects give new life to items that might otherwise be discarded. Simple techniques like painting, reupholstering, or repurposing can transform outdated items into fresh decor elements that perfectly suit your style.</p><p>Sustainable decor is as much about curation as acquisition. By selecting items thoughtfully, emphasizing quality over quantity, and considering each item's full lifecycle, you can create a home that reflects your values while still being stylish and comfortable.</p>",
+    image_url: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-11-18T14:15:00Z",
+    author: "Oliver Reed",
+    category_id: 8,
     featured: false,
-    published_at: '2025-02-03T14:30:00Z',
-    image_url: 'https://images.unsplash.com/photo-1536303158031-c868b371399f?auto=format&fit=crop&w=800&q=80',
-    author: 'Kwame Mensah',
-    tags: ['wellness', 'traditional medicine', 'holistic health', 'cultural heritage']
+    tags: ["home decor", "sustainability", "interior design", "eco-friendly"]
   },
   {
     id: 603,
-    category_id: 6,
-    title: 'Sustainable Fashion from African Designers',
-    slug: 'sustainable-fashion-african-designers',
-    excerpt: "How African fashion houses are leading the way in ethical and environmentally conscious clothing production.",
-    content: `<p>A new generation of African fashion designers is gaining international recognition for creating sustainable, ethical clothing that honors traditional techniques while breaking new aesthetic ground.</p>
-    <p>These designers are utilizing organic cotton, natural dyes, and zero-waste pattern cutting while ensuring fair compensation for artisans and revitalizing traditional textile arts.</p>
-    <p>The movement is changing perceptions of African fashion globally while creating economic opportunities and preserving cultural heritage through innovation.</p>`,
-    featured: true,
-    published_at: '2025-02-28T11:45:00Z',
-    image_url: 'https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&w=800&q=80',
-    author: 'Aisha Diallo',
-    tags: ['fashion', 'sustainability', 'textiles', 'artisans']
+    title: "Digital Minimalism: Finding Balance in a Connected World",
+    slug: "digital-minimalism-connected-world-balance",
+    excerpt: "How to maintain meaningful digital connections while reducing screen time and information overload.",
+    content: "<p>Digital minimalism offers a thoughtful approach to technology use, focusing on intentionality and alignment with personal values rather than complete rejection of digital tools. In an increasingly connected world, this philosophy helps create healthier relationships with our devices and the platforms they host.</p><p>The first step toward digital minimalism is auditing your current technology use. Track how much time you spend on different platforms and how those activities make you feel. Many people are surprised to discover they spend 3-4 hours daily on social media without much satisfaction to show for it.</p><p>A digital declutter period can reset your relationship with technology. This involves stepping back from optional technologies for 30 days, then reintroducing selected tools that truly support your values and goals. During this period, rediscover activities that bring genuine satisfaction without the dopamine hits of digital interaction.</p><p>Quality over quantity applies to both digital tools and digital relationships. Rather than maintaining surface-level connections with hundreds of acquaintances, digital minimalists focus on nurturing meaningful relationships through more substantive interaction, whether digital or in-person.</p><p>Boundaries between work and personal life become crucial in an age of constant connectivity. Setting specific times when you're available for work communications and creating tech-free zones in your home helps maintain these distinctions that were once built into our physical environments.</p><p>Content consumption becomes more intentional under digital minimalism. Rather than endless scrolling or algorithm-driven recommendations, deliberately seek out high-quality content that informs, inspires, or genuinely entertains you.</p><p>The goal isn't technological asceticism but rather technological autonomy—using digital tools as they best serve your needs rather than defaulting to usage patterns designed to maximize engagement for platform creators. This mindful approach creates space for the depth of thought, meaningful connections, and embodied experiences that contribute to a fulfilling life.</p>",
+    image_url: "https://images.unsplash.com/photo-1522159698900-164a95b9ce5e?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-10-22T10:45:00Z",
+    author: "Zahra Ahmed",
+    category_id: 8,
+    featured: false,
+    tags: ["digital minimalism", "technology balance", "mindful tech", "lifestyle"]
   },
   {
     id: 604,
-    category_id: 6,
-    title: 'Modern African Cuisine Reimagined',
-    slug: 'modern-african-cuisine-reimagined',
-    excerpt: "Chefs across the continent are elevating traditional ingredients and techniques for a new culinary renaissance.",
-    content: `<p>Innovative chefs across Africa are creating a new culinary movement that celebrates indigenous ingredients and traditional cooking methods while incorporating contemporary techniques and presentations.</p>
-    <p>From fine dining establishments to casual eateries, these culinary artists are documenting forgotten recipes, working directly with small-scale farmers, and creating sustainable food systems.</p>
-    <p>The movement is changing international perceptions of African cuisines while fostering pride in local food cultures and creating new economic opportunities throughout the food supply chain.</p>`,
-    featured: false,
-    published_at: '2025-03-17T16:20:00Z',
-    image_url: 'https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?auto=format&fit=crop&w=800&q=80',
-    author: 'Jean-Pierre Mukendi',
-    tags: ['cuisine', 'food culture', 'chefs', 'ingredients']
+    title: "Capsule Wardrobe: Simplifying Style with Fewer, Better Pieces",
+    slug: "capsule-wardrobe-simplifying-style",
+    excerpt: "Build a versatile, sustainable wardrobe with fewer items that you truly love to wear.",
+    content: "<p>A capsule wardrobe offers a refreshing alternative to fast fashion cycles and overstuffed closets. By curating a limited collection of versatile, high-quality pieces that work well together, you can simplify daily dressing decisions while developing a more distinctive personal style.</p><p>The process begins with an honest assessment of your current wardrobe. Consider which items you actually wear regularly, which pieces make you feel confident, and which have stood the test of time in terms of both durability and style longevity.</p><p>Identifying your personal style is crucial for building a capsule wardrobe that works. Consider the colors, silhouettes, and textures you're naturally drawn to, as well as the practical requirements of your lifestyle and climate. Most successful capsule wardrobes are built around a cohesive color palette that ensures pieces mix and match easily.</p><p>Quality becomes more important than quantity in a capsule wardrobe. When you own fewer items, each piece shoulders more responsibility in your wardrobe rotation. Investing in better fabrics, construction, and timeless designs pays dividends through longevity and sustained satisfaction.</p><p>Versatility is another key consideration. Select items that can be styled multiple ways and transition between different settings with minor accessory changes. A well-chosen blazer, for instance, might work equally well in professional, casual, and evening contexts.</p><p>Many capsule wardrobe enthusiasts adopt a seasonal approach, rotating a limited number of appropriate items every three months while storing off-season clothes. This creates refreshment without accumulation and ensures each season's capsule is perfectly suited to current conditions.</p><p>Beyond the practical benefits of more space, less decision fatigue, and often reduced overall spending, capsule wardrobes support sustainable fashion practices by encouraging mindful consumption. When each purchase is considered carefully, we naturally shift toward buying less but better, reducing the environmental impact of our clothing choices.</p>",
+    image_url: "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-09-14T08:20:00Z",
+    author: "Emma Richardson",
+    category_id: 8,
+    featured: true,
+    tags: ["fashion", "minimalism", "capsule wardrobe", "sustainable style"]
   },
   {
     id: 605,
-    category_id: 6,
-    title: 'Digital Nomad Communities in Eastern Africa',
-    slug: 'digital-nomad-communities-eastern-africa',
-    excerpt: "How Rwanda, Kenya and Tanzania are becoming hubs for remote workers seeking community and adventure.",
-    content: `<p>Eastern African nations are emerging as popular destinations for digital nomads seeking meaningful community connections along with adventure, affordability, and reliable infrastructure.</p>
-    <p>Countries like Rwanda and Kenya are creating specific visa programs and infrastructure to attract remote workers, with co-living/co-working spaces that blend local culture with global connectivity.</p>
-    <p>These growing expatriate communities are fostering cultural exchange, economic opportunities, and innovative collaborations between local and international entrepreneurs.</p>`,
+    title: "Urban Gardening: Growing Food in Limited Spaces",
+    slug: "urban-gardening-growing-food-limited-spaces",
+    excerpt: "Discover how to cultivate fruits, vegetables, and herbs even in the smallest urban environments.",
+    content: "<p>Urban gardening transforms small spaces into productive growing areas, connecting city dwellers with the food system and bringing nature into urban environments. Even with limited square footage, you can create a thriving garden that provides fresh produce and the satisfaction of growing your own food.</p><p>Container gardening is the most flexible approach for urban spaces. Almost anything can grow in containers with proper planning. Choose containers with adequate drainage, use high-quality potting mix formulated for containers, and select appropriate plant varieties. Dwarf or determinate varieties often perform better in containers than their sprawling counterparts.</p><p>Vertical gardening maximizes limited horizontal space. Trellises, wall-mounted planters, hanging baskets, and tiered plant stands allow you to grow upward rather than outward. This approach is particularly effective for vining plants like cucumbers, peas, and many small fruits.</p><p>Light conditions present the biggest challenge for many urban gardeners. Carefully assess the sunlight patterns in your space throughout the day and seasons. Most fruiting plants require at least 6-8 hours of direct sunlight, but many leafy greens and herbs can thrive with less. If natural light is insufficient, grow lights can supplement.</p><p>Water management requires special attention in container gardens, which dry out faster than in-ground beds. Self-watering containers, drip irrigation systems, or even simple watering globes can help maintain consistent moisture during busy or hot periods. Collecting rainwater, where permitted, offers both sustainability benefits and better water quality for plants.</p><p>Community gardens provide options for urban residents without adequate growing space at home. These shared spaces offer not just land for cultivation but also knowledge exchange and community building among diverse participants.</p><p>Urban gardening connects people to seasonal rhythms, provides fresher nutrition than store-bought alternatives, reduces packaging waste, and creates habitat for pollinators in concrete landscapes. Whether you're growing microgreens on a windowsill or maintaining multiple raised beds on a rooftop, urban gardening transforms both spaces and the people who tend them.</p>",
+    image_url: "https://images.unsplash.com/photo-1422205512921-12dac7b3b603?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-08-30T15:55:00Z",
+    author: "Miguel Sanchez",
+    category_id: 8,
     featured: false,
-    published_at: '2025-04-05T08:45:00Z',
-    image_url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
-    author: 'Sarah Kamau',
-    tags: ['digital nomads', 'remote work', 'community', 'travel']
+    tags: ["gardening", "urban living", "food", "sustainability"]
   },
   {
     id: 606,
-    category_id: 6,
-    title: 'Mindfulness Retreats in West African Coastal Villages',
-    slug: 'mindfulness-retreats-west-africa',
-    excerpt: "Wellness tourism blossoms as peaceful coastal communities host retreats combining local wisdom with global practices.",
-    content: `<p>Quiet fishing villages along West Africa's coast are being thoughtfully transformed into destinations for mindfulness and wellness retreats that blend local spiritual traditions with global contemplative practices.</p>
-    <p>These retreats emphasize authentic cultural exchange, environmental sustainability, and direct economic benefits for host communities while offering visitors meaningful experiences away from overwrought tourist destinations.</p>
-    <p>Local guides share traditional knowledge about medicinal plants, ocean ecology, and cultural practices that have sustained communities for generations.</p>`,
+    title: "Slow Travel: Experiencing Places More Deeply",
+    slug: "slow-travel-experiencing-places-deeply",
+    excerpt: "Move beyond tourist checklists and connect more authentically with destinations through the slow travel movement.",
+    content: "<p>Slow travel represents a mindful approach to experiencing new places, emphasizing quality of experiences over quantity of destinations visited. This philosophy encourages travelers to spend more time in fewer locations, engaging more deeply with local cultures, environments, and communities.</p><p>The origins of slow travel connect to the broader slow movement that began with slow food in Italy, emphasizing local traditions and regional specialties over homogenized global offerings. Applied to travel, this means savoring the unique qualities of each place rather than rushing through standardized tourist experiences.</p><p>Extended stays in a single location form the foundation of slow travel. Instead of hopping between cities every few days, slow travelers might spend weeks or even months in one place. This approach allows time to develop routines, favorite spots, and even relationships with locals that wouldn't be possible during briefer visits.</p><p>Local transportation becomes part of the experience rather than just a means to an end. Walking, cycling, and public transit offer opportunities to observe daily life and interact with residents in ways that private transfers or tour buses don't permit. The journey becomes as meaningful as the destination.</p><p>Culinary exploration takes center stage for many slow travelers. Shopping at local markets, taking cooking classes, and frequenting neighborhood establishments rather than tourist restaurants offers insight into regional food traditions and supports local economies more directly.</p><p>Language learning, even at a basic level, opens doors to more authentic interactions. Making efforts to communicate in the local language demonstrates respect and often leads to more genuine connections and experiences that might otherwise remain inaccessible.</p><p>Environmental benefits accrue from slow travel practices as well. Fewer flights between destinations and more reliance on lower-impact transportation reduces the carbon footprint of travel significantly, addressing growing concerns about tourism's environmental impact.</p><p>Ultimately, slow travel transforms vacation time from a rushed collection of checklist items into a more meaningful engagement with places and people. The memories created through these deeper experiences typically last longer and resonate more profoundly than those from conventional tourism approaches.</p>",
+    image_url: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-08-12T11:10:00Z",
+    author: "Sophia Chen",
+    category_id: 8,
     featured: true,
-    published_at: '2025-05-01T13:10:00Z',
-    image_url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80',
-    author: 'Fatou Sow',
-    tags: ['mindfulness', 'wellness tourism', 'retreats', 'cultural exchange']
+    tags: ["travel", "slow living", "cultural experiences", "sustainable tourism"]
   }
 ];

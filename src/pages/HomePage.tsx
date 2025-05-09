@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { HeroSlider } from "@/components/blog/hero";
 import FeaturedPosts from "@/components/blog/FeaturedPosts";
@@ -6,6 +7,7 @@ import { TrendingTopics } from "@/components/blog/TrendingTopics";
 import { Newsletter } from "@/components/blog/Newsletter";
 import { getFeaturedPosts, getRecentPosts, getAllPosts, getCategoryById } from "@/lib/blog";
 import { Post, PostCategory } from "@/types/blog";
+import AdBanner from "@/components/blog/advertising/AdBanner";
 
 export default function HomePage() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -37,20 +39,42 @@ export default function HomePage() {
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
+      {/* Top Ad Banner */}
+      <AdBanner size="header" id="header-promo" />
+      
       {/* Hero Section */}
       <HeroSlider posts={recentPosts} />
       
-      {/* Featured Posts Carousel */}
-      <FeaturedPosts posts={allPosts} />
-      
-      {/* Trending Topics */}
-      <TrendingTopics />
-      
-      {/* Category Posts with Tabs */}
-      <CategoryPosts initialCategory="tech" />
-      
-      {/* Newsletter */}
-      <Newsletter />
+      <div className="container px-4 lg:px-8 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Main Content */}
+        <div className="lg:col-span-9">
+          {/* Featured Posts Carousel */}
+          <FeaturedPosts posts={allPosts} />
+          
+          {/* Mid-page Ad Banner */}
+          <div className="my-8">
+            <AdBanner size="large" id="mid-content-promo" />
+          </div>
+          
+          {/* Category Posts with Tabs */}
+          <CategoryPosts initialCategory="tech" />
+        </div>
+        
+        {/* Sidebar */}
+        <div className="lg:col-span-3 space-y-8">
+          {/* Sidebar Ad Banner */}
+          <AdBanner size="sidebar" id="sidebar-promo-1" />
+          
+          {/* Trending Topics */}
+          <TrendingTopics />
+          
+          {/* Second Sidebar Ad Banner */}
+          <AdBanner size="sidebar" id="sidebar-promo-2" />
+          
+          {/* Newsletter */}
+          <Newsletter />
+        </div>
+      </div>
     </div>
   );
 }

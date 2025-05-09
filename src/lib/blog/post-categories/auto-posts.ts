@@ -1,99 +1,84 @@
 
-import { BlogPost } from '../types';
+import { Post } from "../types";
 
-export const autoPosts: BlogPost[] = [
+// Automotive blog posts
+export const autoPosts: Post[] = [
   {
-    id: 701,
-    category_id: 7,
-    title: 'Electric Vehicle Revolution in Africa',
-    slug: 'electric-vehicle-revolution-africa',
-    excerpt: 'How African nations are building infrastructure for electric mobility and sustainable transportation.',
-    content: `<p>The electric vehicle (EV) market in Africa is experiencing significant growth as governments and private companies invest in sustainable transportation solutions tailored to local needs.</p>
-    <h2>Infrastructure Development</h2>
-    <p>Several African nations are building charging networks along major transportation corridors, with Kenya and South Africa leading the way. Solar-powered charging stations are becoming increasingly common, leveraging Africa's abundant sunshine.</p>
-    <h2>Local Manufacturing</h2>
-    <p>Companies like Kiira Motors in Uganda and Innoson in Nigeria are developing electric vehicles designed specifically for African roads and conditions, creating jobs and technological expertise.</p>
-    <h2>Challenges and Opportunities</h2>
-    <p>While challenges remain, including grid reliability and initial vehicle costs, the potential benefits for reducing pollution, decreasing fuel imports, and creating new industries are driving continued investment and policy development.</p>`,
+    id: 201,
+    title: "The Future of Electric Vehicles: What to Expect in 2025",
+    slug: "future-of-electric-vehicles-2025",
+    excerpt: "Electric vehicles are rapidly evolving. Here's what innovations and trends we can expect to see in the coming year.",
+    content: "<p>The automotive industry is undergoing a significant transformation with the rise of electric vehicles (EVs). In 2025, we're expecting to see several breakthrough technologies and market shifts that will further accelerate EV adoption worldwide.</p><p>Battery technology continues to advance, with new solid-state batteries promising longer ranges and faster charging times. Several major automakers have announced plans to introduce EVs with ranges exceeding 500 miles on a single charge, addressing one of the primary concerns of potential EV buyers.</p><p>Charging infrastructure is expanding rapidly, with governments and private companies investing billions in creating more accessible charging networks. New ultrafast charging technologies are being deployed that can provide up to 200 miles of range in just 10 minutes of charging.</p><p>The cost of EVs is also expected to decrease significantly as economies of scale kick in and battery production becomes more efficient. Industry analysts predict that EVs will reach price parity with traditional combustion engine vehicles by late 2025, removing one of the last major barriers to widespread adoption.</p><p>Autonomous driving features are becoming increasingly sophisticated in EVs, with several models offering advanced driver assistance systems that can handle highway driving with minimal human intervention. The integration of AI and machine learning is making these systems more reliable and adaptable to various driving conditions.</p><p>The environmental benefits of EVs are becoming more pronounced as electricity grids continue to incorporate more renewable energy sources. This makes the overall carbon footprint of EVs even lower compared to traditional vehicles.</p><p>As these trends continue to develop, 2025 is shaping up to be a pivotal year for the electric vehicle industry, potentially marking the beginning of the end for combustion engine dominance in the automotive sector.</p>",
+    image_url: "https://images.unsplash.com/photo-1593941707882-a5bfb4f37a0b?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-12-15T08:30:00Z",
+    author: "Alex Rivera",
+    category_id: 2,
     featured: true,
-    published_at: '2025-01-08T14:30:00Z',
-    image_url: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=800&q=80',
-    author: 'Emmanuel Okafor',
-    tags: ['electric vehicles', 'sustainability', 'infrastructure', 'manufacturing']
+    tags: ["electric vehicles", "automotive", "technology", "sustainability"]
   },
   {
-    id: 702,
-    category_id: 7,
-    title: 'Advanced Driver Assistance Systems for African Roads',
-    slug: 'adas-african-roads',
-    excerpt: 'How ADAS technology is being adapted for unique challenges of driving in diverse African environments.',
-    content: `<p>Advanced Driver Assistance Systems (ADAS) are being customized for African driving conditions, addressing unique challenges from unpaved roads to urban congestion.</p>
-    <p>Systems now include features like pothole detection, offline GPS navigation for areas with limited connectivity, and dust/heavy rain sensors calibrated for local weather conditions.</p>
-    <p>Several automakers are testing these technologies across different African regions, with plans to make them standard in vehicles sold on the continent starting in 2026.</p>`,
+    id: 202,
+    title: "Autonomous Driving Technology: Current State and Future Directions",
+    slug: "autonomous-driving-technology-state-future",
+    excerpt: "Where do we stand with self-driving technology, and what challenges remain before full automation becomes reality?",
+    content: "<p>Autonomous driving technology has made remarkable progress in recent years, but significant challenges remain before we see widespread adoption of fully self-driving vehicles. This article examines the current state of the technology and explores the road ahead.</p><p>Currently, most production vehicles offer Level 2 autonomy, which includes features like adaptive cruise control, lane-keeping assistance, and automated parking. A few high-end vehicles are beginning to offer Level 3 capabilities, allowing drivers to take their hands off the wheel and eyes off the road under specific conditions, like highway driving or traffic jams.</p><p>The leap to Level 4 (high automation) and Level 5 (full automation) presents enormous technical, regulatory, and ethical challenges. Sensor technology continues to improve, with a combination of cameras, radar, lidar, and ultrasonic sensors providing vehicles with increasingly detailed environmental awareness. Processing this sensor data requires sophisticated AI algorithms that can interpret complex traffic situations and make split-second decisions.</p><p>Weather conditions remain a significant obstacle, as heavy rain, snow, or fog can severely impair sensor performance. Urban environments with unpredictable pedestrians, cyclists, and construction zones also present major challenges for autonomous systems.</p><p>Regulatory frameworks are still evolving, with different countries and states adopting varied approaches to testing and deploying autonomous vehicles. Questions about liability in case of accidents involving self-driving cars are still being debated among policymakers, insurers, and manufacturers.</p><p>Despite these challenges, investment in autonomous technology continues to grow. Tech companies, traditional automakers, and specialized startups are all racing to develop safe and reliable self-driving systems. The potential benefits, including reduced accidents, increased mobility for the elderly and disabled, and more efficient transportation networks, make this a goal worth pursuing despite the obstacles.</p><p>While fully autonomous vehicles may not be commonplace for several more years, the incremental improvements in driver assistance technologies are already enhancing safety and convenience for millions of drivers worldwide.</p>",
+    image_url: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-11-22T14:45:00Z",
+    author: "Morgan Chen",
+    category_id: 2,
     featured: false,
-    published_at: '2025-02-15T09:45:00Z',
-    image_url: 'https://images.unsplash.com/photo-1494905998402-395d579af36f?auto=format&fit=crop&w=800&q=80',
-    author: 'Nala Mbeki',
-    tags: ['ADAS', 'safety', 'technology', 'innovation']
+    tags: ["autonomous driving", "AI", "automotive", "technology"]
   },
   {
-    id: 703,
-    category_id: 7,
-    title: 'The Revival of Classic Car Restoration in North Africa',
-    slug: 'classic-car-restoration-north-africa',
-    excerpt: 'Morocco and Tunisia emerge as hubs for high-quality classic car restoration with global clientele.',
-    content: `<p>North Africa is becoming renowned for classic car restoration, with specialized garages in Morocco and Tunisia attracting vehicles from around the world.</p>
-    <p>Skilled craftspeople combine traditional metalworking techniques with modern technology to bring vintage automobiles back to life, often at competitive prices compared to European restoration shops.</p>
-    <p>The industry is creating jobs and preserving traditional craftsmanship while bringing in foreign currency through a growing roster of international clients.</p>`,
+    id: 203,
+    title: "Classic Car Restoration: Preserving Automotive Heritage",
+    slug: "classic-car-restoration-preserving-heritage",
+    excerpt: "The art and science of classic car restoration is keeping automotive history alive for future generations.",
+    content: "<p>Classic car restoration is a labor of love that combines craftsmanship, engineering knowledge, and historical research. This practice not only preserves automotive heritage but also connects enthusiasts to the rich history of automobile design and manufacturing.</p><p>The restoration process typically begins with thorough research about the specific model, including original factory specifications, correct paint colors, upholstery materials, and mechanical components. Many restorers aim for period accuracy, seeking out original or reproduction parts to maintain the vehicle's historical integrity.</p><p>Modern technology has transformed the restoration process in recent years. 3D scanning and printing can recreate rare parts that are no longer manufactured. Digital archives provide access to original factory manuals and blueprints that guide restoration efforts. Social media has connected communities of enthusiasts who share knowledge and resources.</p><p>Different approaches to restoration exist, from concours-quality restorations that aim for factory-perfect condition to restomodding, which combines classic aesthetics with modern performance and convenience features. Each approach has its merits and passionate advocates within the classic car community.</p><p>Beyond the mechanical and aesthetic aspects, classic car restoration involves understanding the cultural and historical context in which these vehicles were designed and used. Each restored vehicle tells a story about industrial design, consumer preferences, and technological capabilities of its era.</p><p>The economic aspect of classic car restoration is significant as well. Rare and meticulously restored vehicles can command premium prices at auctions, sometimes selling for millions of dollars. This has transformed what began as a hobby for enthusiasts into a serious investment category.</p><p>As we move toward an era of electric and autonomous vehicles, the preservation of automotive heritage becomes even more important. Classic car restoration ensures that future generations can experience and appreciate the mechanical ingenuity, design evolution, and cultural significance of automobiles throughout history.</p>",
+    image_url: "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-10-05T09:15:00Z",
+    author: "Rachel Johnson",
+    category_id: 2,
     featured: false,
-    published_at: '2025-03-02T11:20:00Z',
-    image_url: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80',
-    author: 'Amir El-Masri',
-    tags: ['classic cars', 'restoration', 'craftsmanship', 'Morocco', 'Tunisia']
+    tags: ["classic cars", "restoration", "automotive history", "craftsmanship"]
   },
   {
-    id: 704,
-    category_id: 7,
-    title: 'Autonomous Vehicle Testing Begins in Rwanda',
-    slug: 'autonomous-vehicle-testing-rwanda',
-    excerpt: 'Rwanda leads the continent in creating regulatory framework for self-driving vehicle trials.',
-    content: `<p>Rwanda has established Africa's first comprehensive regulatory framework for testing autonomous vehicles, positioning itself as a continental leader in this emerging technology.</p>
-    <p>Initial trials include self-driving shuttle buses connecting Kigali's business district with the airport, with plans to expand to delivery vehicles and other applications.</p>
-    <p>The initiative is attracting technology companies looking to test autonomous systems in diverse environments, bringing investment and technical expertise to the country.</p>`,
+    id: 204,
+    title: "The Rise of Electric Motorcycles: Silent Revolution",
+    slug: "rise-of-electric-motorcycles",
+    excerpt: "Electric motorcycles are gaining traction among riders for their performance, low maintenance, and environmental benefits.",
+    content: "<p>Electric motorcycles are transforming the two-wheeled landscape, offering a compelling alternative to traditional gas-powered bikes. With instant torque delivery, minimal maintenance requirements, and zero emissions, these vehicles are attracting both dedicated motorcyclists and newcomers to riding.</p><p>Modern electric motorcycles have overcome many of the limitations that plagued earlier models. Battery technology has improved significantly, with many models now offering ranges of 100+ miles on a single charge. Charging infrastructure continues to expand, making longer journeys increasingly practical for electric motorcycle riders.</p><p>Performance is another area where electric motorcycles excel. The instant torque delivery of electric motors provides exhilarating acceleration from a standstill. Without the need for clutch operation or gear shifting, these bikes offer a simpler riding experience that can be less intimidating for beginners while still satisfying experienced riders.</p><p>Maintenance requirements are substantially reduced with electric motorcycles. There are no oil changes, valve adjustments, or exhaust systems to maintain. The drivetrain has far fewer moving parts, resulting in lower long-term ownership costs and increased reliability.</p><p>The environmental benefits extend beyond zero tailpipe emissions. Electric motorcycles are significantly quieter than their gas-powered counterparts, reducing noise pollution in urban areas and natural environments. This can make them more neighbor-friendly and allows riders to experience nature without disturbing wildlife.</p><p>Major motorcycle manufacturers are increasing their electric offerings, while innovative startups are pushing the boundaries of design and technology. This competition is accelerating development and driving down prices, making electric motorcycles increasingly accessible.</p><p>As battery technology continues to improve and charging infrastructure expands, electric motorcycles are poised to capture an increasingly significant share of the motorcycle market, particularly in urban environments where their advantages are most pronounced.</p>",
+    image_url: "https://images.unsplash.com/photo-1558981852-426c6c22a060?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-09-18T11:20:00Z",
+    author: "Jamie Park",
+    category_id: 2,
     featured: false,
-    published_at: '2025-04-01T13:15:00Z',
-    image_url: 'https://images.unsplash.com/photo-1658692688702-42368734f767?auto=format&fit=crop&w=800&q=80',
-    author: 'Jean-Pierre Habimana',
-    tags: ['autonomous vehicles', 'regulation', 'Rwanda', 'technology']
+    tags: ["motorcycles", "electric vehicles", "sustainability", "transportation"]
   },
   {
-    id: 705,
-    category_id: 7,
-    title: 'Sustainable Biofuels from Agricultural Waste',
-    slug: 'sustainable-biofuels-agricultural-waste',
-    excerpt: 'Nigerian startups pioneer converting cassava and corn waste into automotive biofuels.',
-    content: `<p>Nigerian startups are developing innovative processes to convert agricultural waste from cassava and corn production into sustainable biofuels for automotive use.</p>
-    <p>These biofuels require minimal modifications to existing vehicles while reducing carbon emissions and providing additional income streams for farmers.</p>
-    <p>The technology is attracting interest from major oil companies looking to diversify their fuel offerings with more sustainable alternatives.</p>`,
+    id: 205,
+    title: "Car Maintenance Tips for Extended Vehicle Life",
+    slug: "car-maintenance-tips-extended-vehicle-life",
+    excerpt: "Follow these essential maintenance practices to keep your vehicle running smoothly and extend its operational lifespan.",
+    content: "<p>Regular maintenance is the key to extending your vehicle's life and avoiding costly repairs. This guide covers essential practices that every car owner should follow to keep their vehicle running smoothly for years to come.</p><p>Oil changes remain the most critical maintenance task. Modern vehicles may have extended oil change intervals, but it's important to follow manufacturer recommendations based on your driving conditions. Regular oil changes prevent engine wear and maintain proper lubrication of critical components.</p><p>Tire maintenance affects both safety and efficiency. Check tire pressure monthly, including the spare, and maintain the recommended inflation levels. Rotate tires according to the schedule in your owner's manual to ensure even wear. Regular alignment checks prevent premature tire wear and improve handling.</p><p>Fluid levels should be checked regularly, including brake fluid, power steering fluid, transmission fluid, and coolant. These fluids perform crucial functions, and low levels can lead to component failure. Follow the replacement intervals recommended by your manufacturer, as these fluids degrade over time.</p><p>Filters protect your engine and cabin. The engine air filter should be checked regularly and replaced when dirty. The fuel filter prevents contaminants from reaching the engine, while the cabin air filter ensures clean air inside your vehicle. Replacing these filters according to schedule improves performance and comfort.</p><p>Battery maintenance is often overlooked. Keep battery terminals clean and free of corrosion, and have the battery tested annually, especially before extreme temperature seasons. Most batteries last 3-5 years, so plan for replacement within this timeframe to avoid unexpected failures.</p><p>Listen to your vehicle. Unusual noises, vibrations, or handling issues should be investigated promptly. Addressing minor problems early can prevent them from developing into major repairs.</p><p>Following these maintenance practices not only extends your vehicle's life but also enhances safety, improves fuel efficiency, and maintains resale value. The small investments in regular maintenance pay dividends through reliable transportation and avoided repair costs.</p>",
+    image_url: "https://images.unsplash.com/photo-1551678203-c9cd2b0d8734?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-08-29T16:40:00Z",
+    author: "Chris Torres",
+    category_id: 2,
     featured: true,
-    published_at: '2025-04-18T10:05:00Z',
-    image_url: 'https://images.unsplash.com/photo-1595433707802-6b2626ef1c91?auto=format&fit=crop&w=800&q=80',
-    author: 'Chioma Okonkwo',
-    tags: ['biofuels', 'sustainability', 'agriculture', 'innovation']
+    tags: ["car maintenance", "automotive care", "vehicle tips", "DIY"]
   },
   {
-    id: 706,
-    category_id: 7,
-    title: 'Off-Road Vehicle Innovations for Conservation',
-    slug: 'off-road-vehicles-conservation',
-    excerpt: 'Specialized electric off-road vehicles help wildlife conservation efforts while reducing environmental impact.',
-    content: `<p>New electric off-road vehicles designed specifically for wildlife conservation are revolutionizing anti-poaching and research operations across African national parks.</p>
-    <p>These vehicles feature silent operation to avoid disturbing wildlife, long-range capabilities suitable for remote areas, and integrated drone landing platforms for aerial surveillance.</p>
-    <p>Early deployments in Kenyan and Tanzanian conservation areas have shown promising results, with plans to expand to additional protected areas.</p>`,
+    id: 206,
+    title: "Hydrogen Fuel Cell Vehicles: Alternative to Battery Electric?",
+    slug: "hydrogen-fuel-cell-vehicles-alternative",
+    excerpt: "Hydrogen fuel cell technology offers another path to zero-emission vehicles, with unique advantages and challenges.",
+    content: "<p>While battery electric vehicles have dominated the zero-emission vehicle conversation, hydrogen fuel cell vehicles represent an alternative approach with distinct characteristics. This technology converts hydrogen into electricity through an electrochemical process, with water vapor as the only emission.</p><p>Refueling time is one of the primary advantages of hydrogen fuel cell vehicles over battery electric vehicles. Filling a hydrogen tank takes just a few minutes, similar to refueling a gasoline vehicle. This makes hydrogen particularly attractive for commercial applications where vehicle downtime needs to be minimized.</p><p>Range anxiety is less of a concern with fuel cell vehicles, as they typically offer ranges of 300-400 miles on a full tank, comparable to conventional gasoline vehicles. The energy density of compressed hydrogen provides this extended range without requiring heavy battery packs.</p><p>Infrastructure remains a significant challenge for hydrogen adoption. Hydrogen refueling stations are expensive to build and maintain, and the current network is limited to select regions, primarily in California, Japan, and parts of Europe. Expanding this infrastructure requires substantial investment and coordination between government and industry stakeholders.</p><p>Production and distribution of hydrogen present both challenges and opportunities. Currently, most hydrogen is produced from natural gas, which generates carbon emissions. However, "green hydrogen" produced using renewable electricity and electrolysis offers a truly zero-emission pathway. The energy losses in producing, compressing, transporting, and using hydrogen make the overall efficiency lower than direct use of electricity in battery vehicles.</p><p>Several automakers, including Toyota, Hyundai, and Honda, have developed commercial hydrogen fuel cell vehicles, demonstrating their commitment to this technology. The heaviest investment is occurring in the commercial sector, with hydrogen seen as particularly promising for long-haul trucking, buses, and industrial applications.</p><p>Rather than competing technologies, many experts view battery electric and hydrogen fuel cell vehicles as complementary solutions that will serve different segments of the transportation market as we transition away from fossil fuels.</p>",
+    image_url: "https://images.unsplash.com/photo-1603085607707-30821187e0e3?auto=format&fit=crop&w=800&q=80",
+    published_at: "2023-07-14T13:25:00Z",
+    author: "Dr. Sarah Williams",
+    category_id: 2,
     featured: false,
-    published_at: '2025-05-05T16:40:00Z',
-    image_url: 'https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?auto=format&fit=crop&w=800&q=80',
-    author: 'David Mutua',
-    tags: ['conservation', 'electric vehicles', 'wildlife', 'technology']
+    tags: ["hydrogen", "fuel cell", "alternative energy", "automotive technology"]
   }
 ];
