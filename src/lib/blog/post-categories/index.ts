@@ -7,10 +7,10 @@ import { lifestylePosts } from './lifestyle-posts';
 import { newsPosts } from './news-posts';
 import { sportsPosts } from './sports-posts';
 import { techPosts } from './tech-posts';
-import { Post as PostType } from '../types';
+import { Post } from '@/types/blog';
 
 // Re-export types for easier access
-export type Post = PostType;
+export type { Post };
 
 export {
   autoPosts,
