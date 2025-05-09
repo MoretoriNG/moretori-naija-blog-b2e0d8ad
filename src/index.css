@@ -94,6 +94,7 @@
 
   body {
     @apply bg-background text-foreground font-sans;
+    font-size: 14px;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -101,7 +102,23 @@
   }
 
   .post-content {
-    @apply prose prose-lg max-w-none prose-headings:font-heading prose-headings:font-bold prose-p:text-foreground/90 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline;
+    @apply prose prose-sm max-w-none prose-headings:font-heading prose-headings:font-bold prose-p:text-foreground/90 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline;
+  }
+
+  .post-content p {
+    @apply text-sm leading-relaxed;
+  }
+
+  .post-content img {
+    @apply mx-auto rounded-lg shadow-md my-6;
+  }
+
+  .post-content figure {
+    @apply my-8;
+  }
+
+  .post-content figcaption {
+    @apply text-center text-xs text-muted-foreground mt-2;
   }
 }
 

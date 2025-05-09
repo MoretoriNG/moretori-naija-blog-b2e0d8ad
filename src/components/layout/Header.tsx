@@ -31,7 +31,12 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-green-500 to-orange-500 bg-clip-text text-transparent">
+            <img 
+              src="/lovable-uploads/69147eee-3513-4da6-b867-18916d74115a.png" 
+              alt="Moretori Naija Logo" 
+              className="h-10 w-auto"
+            />
+            <span className="text-2xl font-extrabold text-orange-500">
               Moretori Naija
             </span>
           </Link>
