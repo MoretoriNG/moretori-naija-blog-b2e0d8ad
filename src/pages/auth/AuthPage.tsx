@@ -1,111 +1,160 @@
 
-import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { motion } from "@/components/ui/motion";
-import { Card, CardDescription, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAuth } from "@/contexts/AuthContext";
-import { LoginForm } from "@/components/auth/LoginForm";
-import { RegisterForm } from "@/components/auth/RegisterForm";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { LoginForm } from '@/components/auth/LoginForm';
+import { RegisterForm } from '@/components/auth/RegisterForm';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Sparkles, Shield, Users } from 'lucide-react';
 
 export default function AuthPage() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const { signIn, signUp, user } = useAuth();
-  const initialTab = searchParams.get('tab') === 'register' ? 'register' : 'login';
-  const [activeTab, setActiveTab] = useState<"login" | "register">(initialTab as "login" | "register");
-  const [loginEmail, setLoginEmail] = useState("");
-  
-  // Update URL when tab changes
-  useEffect(() => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set('tab', activeTab);
-    window.history.replaceState({}, '', `${window.location.pathname}?${newParams}`);
-  }, [activeTab, searchParams]);
+  const [activeTab, setActiveTab] = useState('login');
 
-  // If user is already logged in, redirect to admin
-  useEffect(() => {
-    if (user) {
-      navigate("/admin");
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.1
+      }
     }
-  }, [user, navigate]);
-
-  const handleSuccessfulRegistration = (email: string) => {
-    setActiveTab("login");
-    setLoginEmail(email); // Pre-fill the email for convenience
   };
 
-  if (user) {
-    return null; // Handled by useEffect redirect
-  }
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+
+  const backgroundVariants = {
+    animate: {
+      background: [
+        'linear-gradient(45deg, #667eea 0%, #764ba2 100%)',
+        'linear-gradient(45deg, #f093fb 0%, #f5576c 100%)',
+        'linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)',
+        'linear-gradient(45deg, #667eea 0%, #764ba2 100%)'
+      ],
+      transition: {
+        duration: 8,
+        repeat: Infinity,
+        ease: "linear"
+      }
+    }
+  };
 
   return (
-    <motion.div 
-      className="min-h-screen flex items-center justify-center p-4"
-      style={{ 
-        backgroundImage: 'linear-gradient(135deg, #1a365d 0%, #2a4365 50%, #1a365d 100%)' 
-      }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <motion.div 
-        className="w-full max-w-md"
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated background */}
+      <motion.div
+        className="absolute inset-0 opacity-90"
+        variants={backgroundVariants}
+        animate="animate"
+      />
+      
+      {/* Floating elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-20 left-20 w-32 h-32 bg-white/10 rounded-full blur-xl"
+          animate={{
+            x: [0, 100, 0],
+            y: [0, -50, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-20 w-48 h-48 bg-white/5 rounded-full blur-2xl"
+          animate={{
+            x: [0, -80, 0],
+            y: [0, 40, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </div>
+
+      <motion.div
+        className="w-full max-w-md relative z-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
       >
-        <Card className="border-0 shadow-2xl overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-600/20 to-blue-600/20 z-0"></div>
-          
-          <CardHeader className="text-center relative z-10">
-            <CardTitle className="text-3xl font-extrabold">
-              <span className="bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent">
-                Welcome Back
-              </span>
-            </CardTitle>
-            <CardDescription>
-              Sign in or create an account to manage your content
-            </CardDescription>
-          </CardHeader>
-          
-          <CardContent className="relative z-10 pb-8">
-            <Tabs value={activeTab} onValueChange={(val) => setActiveTab(val as "login" | "register")} className="w-full">
-              <TabsList className="grid grid-cols-2 mb-8">
-                <TabsTrigger value="login">Login</TabsTrigger>
-                <TabsTrigger value="register">Register</TabsTrigger>
-              </TabsList>
+        <motion.div variants={itemVariants} className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full mb-4">
+            <Sparkles className="w-8 h-8 text-white" />
+          </div>
+          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+          <p className="text-white/80">Join our community of readers and writers</p>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <Card className="backdrop-blur-md bg-white/90 border-white/20 shadow-2xl">
+            <CardHeader className="text-center pb-4">
+              <CardTitle className="text-2xl font-bold text-gray-800">
+                {activeTab === 'login' ? 'Sign In' : 'Create Account'}
+              </CardTitle>
+              <CardDescription className="text-gray-600">
+                {activeTab === 'login'
+                  ? 'Access your account to continue'
+                  : 'Join thousands of users worldwide'
+                }
+              </CardDescription>
+            </CardHeader>
+            
+            <CardContent className="space-y-6">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <TabsList className="grid w-full grid-cols-2 mb-6">
+                  <TabsTrigger 
+                    value="login" 
+                    className="data-[state=active]:bg-orange-500 data-[state=active]:text-white"
+                  >
+                    Sign In
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="register"
+                    className="data-[state=active]:bg-orange-500 data-[state=active]:text-white"
+                  >
+                    Sign Up
+                  </TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="login" className="space-y-4">
+                  <LoginForm />
+                </TabsContent>
+                
+                <TabsContent value="register" className="space-y-4">
+                  <RegisterForm />
+                </TabsContent>
+              </Tabs>
               
-              <TabsContent value="login">
-                <motion.div
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <LoginForm 
-                    onLogin={signIn} 
-                  />
-                </motion.div>
-              </TabsContent>
-              
-              <TabsContent value="register">
-                <motion.div
-                  initial={{ x: 20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <RegisterForm 
-                    onRegister={signUp}
-                    onSuccess={handleSuccessfulRegistration}
-                  />
-                </motion.div>
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-          
-          <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-orange-500 via-blue-500 to-orange-500"></div>
-        </Card>
+              {/* Features section */}
+              <div className="border-t pt-6">
+                <div className="grid grid-cols-2 gap-4 text-center">
+                  <div className="flex flex-col items-center space-y-2">
+                    <Shield className="w-6 h-6 text-orange-500" />
+                    <span className="text-xs text-gray-600">Secure & Safe</span>
+                  </div>
+                  <div className="flex flex-col items-center space-y-2">
+                    <Users className="w-6 h-6 text-orange-500" />
+                    <span className="text-xs text-gray-600">Join Community</span>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }

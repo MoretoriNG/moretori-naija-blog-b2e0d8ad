@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Menu, X, Facebook, Twitter, Instagram, Bell, Globe } from 'lucide-react';
+import { Menu, X, Facebook, Twitter, Instagram } from 'lucide-react';
 import { SearchBar } from './navigation/SearchBar';
 import { UserMenu, MobileUserMenu } from './navigation/UserMenu';
 import { TopBar } from './navigation/TopBar';
@@ -56,6 +56,15 @@ export function Header() {
                 {category}
               </Link>
             ))}
+            <Link
+              to="/videos"
+              className={cn(
+                "px-3 py-2 text-sm font-medium transition-all duration-200 rounded-md hover:bg-orange-50 hover:text-orange-600",
+                location.pathname === "/videos" && "bg-orange-100 text-orange-700"
+              )}
+            >
+              Videos
+            </Link>
           </nav>
         </div>
         
@@ -74,17 +83,6 @@ export function Header() {
                className="p-2 text-muted-foreground hover:text-pink-600 hover:bg-pink-50 rounded-full transition-all">
               <Instagram className="h-4 w-4" />
             </a>
-          </div>
-          
-          {/* Advanced features */}
-          <div className="hidden md:flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-4 w-4" />
-              <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full text-xs"></span>
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Globe className="h-4 w-4" />
-            </Button>
           </div>
           
           {/* Enhanced Search */}
@@ -135,6 +133,18 @@ export function Header() {
               {category}
             </Link>
           ))}
+          <Link
+            to="/videos"
+            className={cn(
+              "text-sm font-medium transition-colors py-2 px-3 rounded-md",
+              location.pathname === "/videos"
+                ? "bg-orange-100 text-orange-700" 
+                : "hover:text-orange-600 hover:bg-orange-50"
+            )}
+            onClick={handleMenuClose}
+          >
+            Videos
+          </Link>
         </nav>
         
         {/* Mobile Auth */}

@@ -9,6 +9,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import HomePage from "./pages/HomePage";
 import PostPage from "./pages/PostPage";
 import CategoryPage from "./pages/CategoryPage";
+import VideosPage from "./pages/VideosPage";
 import AboutPage from "./pages/AboutPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import LoginPage from "./pages/admin/LoginPage";
@@ -38,6 +39,7 @@ const App = () => (
                 <Route path="/" element={<HomePage />} />
                 <Route path="/post/:slug" element={<PostPage />} />
                 <Route path="/category/:slug" element={<CategoryPage />} />
+                <Route path="/videos" element={<VideosPage />} />
                 <Route path="/about" element={<AboutPage />} />
               </Route>
               
