@@ -6,9 +6,13 @@ import { RegisterForm } from '@/components/auth/RegisterForm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sparkles, Shield, Users } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState('login');
+  const { signIn, signUp } = useAuth();
+  const navigate = useNavigate();
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -45,6 +49,19 @@ export default function AuthPage() {
         ease: "linear"
       }
     }
+  };
+
+  const handleLogin = async (email: string, password: string) => {
+    await signIn(email, password);
+    navigate('/');
+  };
+
+  const handleRegister = async (email: string, password: string, userData: any) => {
+    await signUp(email, password, userData);
+  };
+
+  const handleRegistrationSuccess = (email: string) => {
+    setActiveTab('login');
   };
 
   return (
@@ -130,11 +147,14 @@ export default function AuthPage() {
                 </TabsList>
                 
                 <TabsContent value="login" className="space-y-4">
-                  <LoginForm />
+                  <LoginForm onLogin={handleLogin} />
                 </TabsContent>
                 
                 <TabsContent value="register" className="space-y-4">
-                  <RegisterForm />
+                  <RegisterForm 
+                    onRegister={handleRegister} 
+                    onSuccess={handleRegistrationSuccess}
+                  />
                 </TabsContent>
               </Tabs>
               
