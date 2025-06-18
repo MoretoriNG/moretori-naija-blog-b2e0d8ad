@@ -1,10 +1,11 @@
 
 import { useState, useEffect } from "react";
-import { Post } from "@/types/blog";
+import { Post, PostCategory } from "@/types/blog";
 import { HeroDots } from "./HeroDots";
 import { HeroAutoplayIndicator } from "./HeroAutoplayIndicator";
 import { useHeroSlider } from "./useHeroSlider";
 import { PostCard } from "../PostCard";
+import { CategoryPlaylist } from "./CategoryPlaylist";
 import { 
   Carousel,
   CarouselContent,
@@ -12,6 +13,7 @@ import {
   CarouselPrevious,
   CarouselNext
 } from "@/components/ui/carousel";
+import { getPostsByCategory, getAllPosts } from "@/lib/blog";
 
 interface HeroSliderProps {
   posts: Post[];
@@ -39,83 +41,96 @@ export function HeroSlider({ posts }: HeroSliderProps) {
   } = useHeroSlider(posts);
   
   const [isLoaded, setIsLoaded] = useState(false);
+  const [categoryPlaylists, setCategoryPlaylists] = useState<{[key: string]: Post[]}>({});
   
   useEffect(() => {
     setIsLoaded(true);
+    
+    // Get latest posts from different categories for playlists
+    const categories: PostCategory[] = ['tech', 'health', 'entertainment', 'business', 'sports', 'lifestyle'];
+    const playlists: {[key: string]: Post[]} = {};
+    
+    categories.forEach(category => {
+      const categoryPosts = getPostsByCategory(category).slice(0, 6).map(post => ({
+        ...post,
+        id: String(post.id),
+        category,
+        coverImage: post.image_url,
+        publishedAt: post.published_at
+      })) as Post[];
+      playlists[category] = categoryPosts;
+    });
+    
+    setCategoryPlaylists(playlists);
   }, []);
   
   if (posts.length === 0) {
     return null;
   }
   
-  const enhancedPosts = shufflePosts(posts).map((post, index) => ({
+  const enhancedPosts = shufflePosts(posts).slice(0, 6).map((post, index) => ({
     ...post,
     coverImage: post.coverImage || post.image_url || heroBackgroundImages[index % heroBackgroundImages.length]
   }));
   
   return (
     <section className="relative bg-black overflow-hidden">
-      <div className="h-[350px] md:h-[450px] relative">
-        {/* Images carousel */}
-        <Carousel
-          opts={{
-            loop: true,
-          }}
-          className="w-full h-full"
-          onMouseEnter={() => setAutoplayEnabled(false)}
-          onMouseLeave={() => setAutoplayEnabled(true)}
-        >
-          <CarouselContent className="h-full">
-            {enhancedPosts.map((post, index) => (
-              <CarouselItem 
-                key={post.id} 
-                className="h-full" 
-                onClick={() => setActiveIndex(index)}
-              >
-                <div className="relative h-full w-full">
-                  {/* Use a wrapper with absolute positioning for the special hero styling */}
-                  <div className="absolute inset-0 z-10">
+      <div className="grid grid-cols-1 lg:grid-cols-4 h-[400px] md:h-[500px]">
+        {/* Main Carousel - Takes 3/4 of the width */}
+        <div className="lg:col-span-3 relative">
+          <Carousel
+            opts={{
+              loop: true,
+            }}
+            className="w-full h-full"
+            onMouseEnter={() => setAutoplayEnabled(false)}
+            onMouseLeave={() => setAutoplayEnabled(true)}
+          >
+            <CarouselContent className="h-full">
+              {enhancedPosts.map((post, index) => (
+                <CarouselItem 
+                  key={post.id} 
+                  className="h-full" 
+                  onClick={() => setActiveIndex(index)}
+                >
+                  <div className="relative h-full w-full">
                     <PostCard 
                       post={post}
                       featured={true}
                       heroMode={true}
                     />
                   </div>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            
+            <HeroDots 
+              posts={enhancedPosts} 
+              activeIndex={activeIndex} 
+              onDotClick={handleDotClick} 
+            />
+            
+            <CarouselPrevious 
+              onClick={pauseAutoplay}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-8 w-8 rounded-full transition-colors z-20" 
+            />
+            <CarouselNext 
+              onClick={pauseAutoplay}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-8 w-8 rounded-full transition-colors z-20" 
+            />
+          </Carousel>
           
-          <HeroDots 
-            posts={enhancedPosts} 
-            activeIndex={activeIndex} 
-            onDotClick={handleDotClick} 
+          {/* Autoplay indicator */}
+          <HeroAutoplayIndicator 
+            autoplayEnabled={autoplayEnabled}
+            setAutoplayEnabled={setAutoplayEnabled} 
           />
-          
-          <CarouselPrevious 
-            onClick={pauseAutoplay}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-8 w-8 rounded-full transition-colors z-20" 
-          />
-          <CarouselNext 
-            onClick={pauseAutoplay}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/10 text-white h-8 w-8 rounded-full transition-colors z-20" 
-          />
-        </Carousel>
+        </div>
         
-        {/* Autoplay indicator */}
-        <HeroAutoplayIndicator 
-          autoplayEnabled={autoplayEnabled}
-          setAutoplayEnabled={setAutoplayEnabled} 
-        />
-        
-        <style>
-          {`
-            @keyframes progress {
-              0% { width: 0%; }
-              100% { width: 100%; }
-            }
-          `}
-        </style>
+        {/* Category Playlist Sidebar - Takes 1/4 of the width */}
+        <div className="lg:col-span-1 bg-gradient-to-b from-gray-900 to-black border-l border-gray-800 hidden lg:block">
+          <CategoryPlaylist playlists={categoryPlaylists} />
+        </div>
       </div>
     </section>
   );

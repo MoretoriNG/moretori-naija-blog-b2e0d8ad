@@ -35,22 +35,6 @@ export default function AuthPage() {
     }
   };
 
-  const backgroundVariants = {
-    animate: {
-      background: [
-        'linear-gradient(45deg, #667eea 0%, #764ba2 100%)',
-        'linear-gradient(45deg, #f093fb 0%, #f5576c 100%)',
-        'linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)',
-        'linear-gradient(45deg, #667eea 0%, #764ba2 100%)'
-      ],
-      transition: {
-        duration: 8,
-        repeat: Infinity,
-        ease: "linear"
-      }
-    }
-  };
-
   const handleLogin = async (email: string, password: string) => {
     await signIn(email, password);
     navigate('/');
@@ -69,8 +53,19 @@ export default function AuthPage() {
       {/* Animated background */}
       <motion.div
         className="absolute inset-0 opacity-90"
-        variants={backgroundVariants}
-        animate="animate"
+        animate={{
+          background: [
+            'linear-gradient(45deg, #667eea 0%, #764ba2 100%)',
+            'linear-gradient(45deg, #f093fb 0%, #f5576c 100%)',
+            'linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)',
+            'linear-gradient(45deg, #667eea 0%, #764ba2 100%)'
+          ]
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "linear"
+        }}
       />
       
       {/* Floating elements */}

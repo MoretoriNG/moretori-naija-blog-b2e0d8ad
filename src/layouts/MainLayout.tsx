@@ -9,27 +9,13 @@ import AdBanner from "@/components/blog/advertising/AdBanner";
 export default function MainLayout() {
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header Banner */}
-      <AdBanner 
-        size="header" 
-        id="header-promo"
-        className="z-20"
-      />
-
       <Header />
       
       <main className="flex-1">
         <Outlet />
       </main>
       
-      {/* Pre-footer Ad Banner */}
-      <AdBanner 
-        size="large" 
-        id="pre-footer-banner"
-        className="container my-6"
-      />
-      
-      {/* Additional footer ad banner */}
+      {/* Single footer ad banner */}
       <AdBanner 
         size="large" 
         id="footer-banner"

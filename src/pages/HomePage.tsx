@@ -39,9 +39,6 @@ export default function HomePage() {
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
-      {/* Top Ad Banner */}
-      <AdBanner size="header" id="header-promo" />
-      
       {/* Hero Section */}
       <HeroSlider posts={recentPosts} />
       
@@ -50,11 +47,6 @@ export default function HomePage() {
         <div className="lg:col-span-9">
           {/* Featured Posts Carousel */}
           <FeaturedPosts posts={allPosts} />
-          
-          {/* Mid-page Ad Banner */}
-          <div className="my-8">
-            <AdBanner size="large" id="mid-content-promo" />
-          </div>
           
           {/* Category Posts with Tabs */}
           <CategoryPosts initialCategory="tech" />
@@ -67,9 +59,6 @@ export default function HomePage() {
           
           {/* Trending Topics */}
           <TrendingTopics />
-          
-          {/* Second Sidebar Ad Banner */}
-          <AdBanner size="sidebar" id="sidebar-promo-2" />
           
           {/* Newsletter */}
           <Newsletter />
