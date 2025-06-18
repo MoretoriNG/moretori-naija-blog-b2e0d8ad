@@ -6,10 +6,9 @@ import { toast } from 'sonner';
 import { Post, PostCategory } from '@/types/blog';
 import { useState, useEffect } from 'react';
 import { PostHeader } from '@/components/blog/post/PostHeader';
-import { PostContent } from '@/components/blog/post/PostContent';
-import { PostComments } from '@/components/blog/post/PostComments';
-import { RelatedPosts } from '@/components/blog/post/RelatedPosts';
-import AdBanner from '@/components/blog/advertising/AdBanner';
+import { PostNavigation } from '@/components/blog/post/PostNavigation';
+import { PostLayoutWrapper } from '@/components/blog/post/PostLayoutWrapper';
+import { PostArticle } from '@/components/blog/post/PostArticle';
 
 // High-quality placeholder images
 const placeholderImages = [
@@ -24,13 +23,10 @@ export default function PostPage() {
   const navigate = useNavigate();
   const post = getPostBySlug(slug || '');
   
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const [likes, setLikes] = useState(Math.floor(Math.random() * 50) + 5);
   const [comments, setComments] = useState<{id: number, author: string, text: string, date: Date}[]>([]);
   const [showCommentForm, setShowCommentForm] = useState(false);
   
   useEffect(() => {
-    // Scroll to top when component mounts
     window.scrollTo(0, 0);
   }, [slug]);
   
@@ -49,7 +45,7 @@ export default function PostPage() {
   const category = getCategoryById(post.category_id);
   const categorySlug = category?.slug || 'uncategorized';
   const relatedPosts = getRelatedPosts(post.id, post.category_id, 3);
-  const readingTimeMinutes = Math.ceil(post.content.split(' ').length / 200); // Estimate reading time
+  const readingTimeMinutes = Math.ceil(post.content.split(' ').length / 200);
   
   const handleShare = (platform?: string) => {
     const shareUrl = window.location.href;
@@ -103,7 +99,6 @@ export default function PostPage() {
     toast.success('Comment posted successfully!');
   };
 
-  // Map old data structure to match the Post type expected by PostCard
   const mappedRelatedPosts = relatedPosts.map(relatedPost => ({
     ...relatedPost,
     id: String(relatedPost.id),
@@ -113,11 +108,8 @@ export default function PostPage() {
   })) as Post[];
 
   return (
-    <div className="bg-gradient-to-b from-white to-gray-50">
-      {/* Leaderboard ad banner after navbar */}
-      <AdBanner size="large" className="container my-4" />
-      
-      {/* Featured Image Header */}
+    <PostLayoutWrapper>
+      {/* Featured Image Header with cool effect */}
       <PostHeader
         title={post.title}
         imageUrl={post.image_url || placeholderImages[0]}
@@ -127,49 +119,20 @@ export default function PostPage() {
         readingTimeMinutes={readingTimeMinutes}
       />
       
-      <div className="container py-8 md:py-12 max-w-4xl">
+      <div className="container max-w-4xl">
         {/* Breadcrumb */}
-        <div className="text-sm text-muted-foreground mb-8">
-          <Link to="/" className="hover:text-blue-500">Home</Link>
-          {category && (
-            <>
-              <span className="mx-2">/</span>
-              <Link to={`/category/${category.slug}`} className="hover:text-blue-500">
-                {category.name}
-              </Link>
-            </>
-          )}
-          <span className="mx-2">/</span>
-          <span className="text-foreground">{post.title}</span>
-        </div>
+        <PostNavigation postTitle={post.title} categoryId={post.category_id} />
         
-        {/* Article layout */}
-        <article className="flex flex-col md:flex-row gap-8">
-          {/* Main content */}
-          <PostContent
-            content={post.content}
-            excerpt={post.excerpt}
-            author={post.author}
-            tags={post.tags}
-            handleShare={handleShare}
-            onShowCommentForm={() => setShowCommentForm(true)}
-          />
-        </article>
-        
-        {/* Comments section */}
-        <PostComments
+        <PostArticle
+          post={post}
+          relatedPosts={mappedRelatedPosts}
           comments={comments}
           showCommentForm={showCommentForm}
           onAddComment={handleAddComment}
           onShowCommentForm={() => setShowCommentForm(true)}
           onHideCommentForm={() => setShowCommentForm(false)}
+          handleShare={handleShare}
         />
-        
-        {/* Related Posts */}
-        <RelatedPosts posts={mappedRelatedPosts} />
-        
-        {/* Featured Ad Banner */}
-        <AdBanner size="medium" className="mb-8" />
         
         {/* Return to blog button */}
         <div className="mt-8 flex justify-center">
@@ -184,9 +147,6 @@ export default function PostPage() {
           </Button>
         </div>
       </div>
-      
-      {/* Footer Ad Banner */}
-      <AdBanner size="large" className="container my-8" />
-    </div>
+    </PostLayoutWrapper>
   );
 }

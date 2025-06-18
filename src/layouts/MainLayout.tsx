@@ -22,6 +22,13 @@ export default function MainLayout() {
         <Outlet />
       </main>
       
+      {/* Pre-footer Ad Banner */}
+      <AdBanner 
+        size="large" 
+        id="pre-footer-banner"
+        className="container my-6"
+      />
+      
       {/* Additional footer ad banner */}
       <AdBanner 
         size="large" 
