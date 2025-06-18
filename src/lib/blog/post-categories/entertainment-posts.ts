@@ -1,7 +1,7 @@
 
 import { generateId } from "../utils";
 
-// Entertainment posts
+// Entertainment posts with enhanced images
 export const entertainmentPosts = [
   {
     id: 3,
@@ -16,7 +16,7 @@ export const entertainmentPosts = [
     <h2>Industry Growth</h2>
     <p>The success of Afrobeats is transforming Nigeria's music industry infrastructure, with improvements in production quality, distribution networks, and intellectual property protection.</p>`,
     category_id: 3,
-    image_url: '/images/afrobeats-concert.jpg',
+    image_url: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80',
     author: 'Chioma Okafor',
     published_at: '2023-03-18',
     featured: true,
@@ -35,7 +35,7 @@ export const entertainmentPosts = [
     <h2>Industry Impact</h2>
     <p>International streaming success is changing career trajectories for Nigerian actors, directors, and crew members, while also influencing how films are financed and produced locally.</p>`,
     category_id: 3,
-    image_url: '/images/nollywood-streaming.jpg',
+    image_url: 'https://images.unsplash.com/photo-1489599809873-caab7b7e2fe7?auto=format&fit=crop&w=800&q=80',
     author: 'Ebuka Okafor',
     published_at: '2023-07-25',
     featured: false,
@@ -54,7 +54,7 @@ export const entertainmentPosts = [
     <h2>International Tours</h2>
     <p>Leading Nigerian comedians now regularly tour internationally, performing for diaspora audiences and increasingly crossing over to mainstream comedy scenes in other countries.</p>`,
     category_id: 3,
-    image_url: '/images/nigerian-comedy.jpg',
+    image_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
     author: 'Joy Adekunle',
     published_at: '2023-08-18',
     featured: false,
@@ -73,7 +73,7 @@ export const entertainmentPosts = [
     <h2>Distribution Challenges</h2>
     <p>Despite creative successes, Nigerian animation studios continue to face challenges in distribution and monetization, with many exploring partnerships with international platforms to reach wider audiences.</p>`,
     category_id: 3,
-    image_url: '/images/nigeria-animation.jpg',
+    image_url: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=800&q=80',
     author: 'Kemi Adeleke',
     published_at: '2023-09-20',
     featured: false,
@@ -92,7 +92,7 @@ export const entertainmentPosts = [
     <h2>Infrastructure Development</h2>
     <p>The growing festival scene is driving investments in event infrastructure, sound and lighting technology, and logistics capabilities that benefit Nigeria's broader entertainment industry.</p>`,
     category_id: 3,
-    image_url: '/images/music-festival.jpg',
+    image_url: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&q=80',
     author: 'Femi Adeyemi',
     published_at: '2023-10-22',
     featured: false,
@@ -111,11 +111,10 @@ export const entertainmentPosts = [
     <h2>Economic Opportunities</h2>
     <p>The gaming ecosystem is creating new career paths for young Nigerians, from professional players and content creators to event organizers, commentators, and technical support roles.</p>`,
     category_id: 3,
-    image_url: '/images/gaming-nigeria.jpg',
+    image_url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80',
     author: 'Tobi Ajayi',
     published_at: '2023-11-15',
     featured: false,
     tags: ['Gaming', 'Esports', 'Entertainment', 'Technology']
   },
 ];
-

@@ -4,7 +4,6 @@ import { HeroSlider } from "@/components/blog/hero";
 import FeaturedPosts from "@/components/blog/FeaturedPosts";
 import { CategoryPosts } from "@/components/blog/CategoryPosts";
 import { TrendingTopics } from "@/components/blog/TrendingTopics";
-import { Newsletter } from "@/components/blog/Newsletter";
 import { getFeaturedPosts, getRecentPosts, getAllPosts, getCategoryById } from "@/lib/blog";
 import { Post, PostCategory } from "@/types/blog";
 import AdBanner from "@/components/blog/advertising/AdBanner";
@@ -59,9 +58,6 @@ export default function HomePage() {
           
           {/* Trending Topics */}
           <TrendingTopics />
-          
-          {/* Newsletter */}
-          <Newsletter />
         </div>
       </div>
     </div>

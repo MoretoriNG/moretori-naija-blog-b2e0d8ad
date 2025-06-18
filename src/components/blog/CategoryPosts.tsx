@@ -27,7 +27,7 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
   const [compactView, setCompactView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  const categories: PostCategory[] = ['tech', 'auto', 'health', 'entertainment', 'news', 'business', 'sports', 'lifestyle'];
+  const categories: PostCategory[] = ['tech', 'auto', 'health', 'entertainment', 'business', 'sports'];
   
   // Show loading effect when changing categories
   useEffect(() => {
@@ -89,10 +89,8 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
       auto: "Automotive",
       health: "Health & Wellness",
       entertainment: "Entertainment",
-      news: "Current News",
       business: "Business",
-      sports: "Sports",
-      lifestyle: "Lifestyle"
+      sports: "Sports"
     };
     return titles[category] || category.charAt(0).toUpperCase() + category.slice(1);
   };

@@ -1,84 +1,120 @@
 
-import { Post } from "../types";
+import { generateId } from "../utils";
 
-// Automotive blog posts
-export const autoPosts: Post[] = [
+// Auto posts with enhanced images
+export const autoPosts = [
   {
-    id: 201,
-    title: "The Future of Electric Vehicles: What to Expect in 2025",
-    slug: "future-of-electric-vehicles-2025",
-    excerpt: "Electric vehicles are rapidly evolving. Here's what innovations and trends we can expect to see in the coming year.",
-    content: "<p>The automotive industry is undergoing a significant transformation with the rise of electric vehicles (EVs). In 2025, we're expecting to see several breakthrough technologies and market shifts that will further accelerate EV adoption worldwide.</p><p>Battery technology continues to advance, with new solid-state batteries promising longer ranges and faster charging times. Several major automakers have announced plans to introduce EVs with ranges exceeding 500 miles on a single charge, addressing one of the primary concerns of potential EV buyers.</p><p>Charging infrastructure is expanding rapidly, with governments and private companies investing billions in creating more accessible charging networks. New ultrafast charging technologies are being deployed that can provide up to 200 miles of range in just 10 minutes of charging.</p><p>The cost of EVs is also expected to decrease significantly as economies of scale kick in and battery production becomes more efficient. Industry analysts predict that EVs will reach price parity with traditional combustion engine vehicles by late 2025, removing one of the last major barriers to widespread adoption.</p><p>Autonomous driving features are becoming increasingly sophisticated in EVs, with several models offering advanced driver assistance systems that can handle highway driving with minimal human intervention. The integration of AI and machine learning is making these systems more reliable and adaptable to various driving conditions.</p><p>The environmental benefits of EVs are becoming more pronounced as electricity grids continue to incorporate more renewable energy sources. This makes the overall carbon footprint of EVs even lower compared to traditional vehicles.</p><p>As these trends continue to develop, 2025 is shaping up to be a pivotal year for the electric vehicle industry, potentially marking the beginning of the end for combustion engine dominance in the automotive sector.</p>",
-    image_url: "https://images.unsplash.com/photo-1593941707882-a5bfb4f37a0b?auto=format&fit=crop&w=800&q=80",
-    published_at: "2023-12-15T08:30:00Z",
-    author: "Alex Rivera",
-    category_id: 2,
+    id: generateId(),
+    title: 'Electric Vehicles in Nigeria: The Road to Sustainable Transportation',
+    slug: 'electric-vehicles-nigeria-sustainable-transportation',
+    excerpt: 'Exploring the potential and challenges of EV adoption in Nigeria',
+    content: `<p>Electric vehicles represent a significant opportunity for Nigeria to reduce its carbon footprint and dependence on imported fuel, but infrastructure and cost challenges must be addressed for widespread adoption.</p>
+    <h2>Infrastructure Development</h2>
+    <p>The development of charging station networks in major cities is crucial for EV adoption, with both government and private sector initiatives beginning to address this need.</p>
+    <h2>Local Manufacturing</h2>
+    <p>Several Nigerian companies are exploring local assembly and manufacturing of electric vehicles, which could reduce costs and create employment opportunities in the automotive sector.</p>
+    <h2>Policy Support</h2>
+    <p>Government incentives, including tax breaks and import duty reductions on EVs and charging equipment, are needed to accelerate adoption and make electric vehicles more affordable for Nigerian consumers.</p>`,
+    category_id: 8,
+    image_url: 'https://images.unsplash.com/photo-1593941707882-a5bac6861d75?auto=format&fit=crop&w=800&q=80',
+    author: 'Chidi Okwu',
+    published_at: '2023-03-25',
     featured: true,
-    tags: ["electric vehicles", "automotive", "technology", "sustainability"]
+    tags: ['Electric Vehicles', 'Sustainability', 'Transportation', 'Technology']
   },
   {
-    id: 202,
-    title: "Autonomous Driving Technology: Current State and Future Directions",
-    slug: "autonomous-driving-technology-state-future",
-    excerpt: "Where do we stand with self-driving technology, and what challenges remain before full automation becomes reality?",
-    content: "<p>Autonomous driving technology has made remarkable progress in recent years, but significant challenges remain before we see widespread adoption of fully self-driving vehicles. This article examines the current state of the technology and explores the road ahead.</p><p>Currently, most production vehicles offer Level 2 autonomy, which includes features like adaptive cruise control, lane-keeping assistance, and automated parking. A few high-end vehicles are beginning to offer Level 3 capabilities, allowing drivers to take their hands off the wheel and eyes off the road under specific conditions, like highway driving or traffic jams.</p><p>The leap to Level 4 (high automation) and Level 5 (full automation) presents enormous technical, regulatory, and ethical challenges. Sensor technology continues to improve, with a combination of cameras, radar, lidar, and ultrasonic sensors providing vehicles with increasingly detailed environmental awareness. Processing this sensor data requires sophisticated AI algorithms that can interpret complex traffic situations and make split-second decisions.</p><p>Weather conditions remain a significant obstacle, as heavy rain, snow, or fog can severely impair sensor performance. Urban environments with unpredictable pedestrians, cyclists, and construction zones also present major challenges for autonomous systems.</p><p>Regulatory frameworks are still evolving, with different countries and states adopting varied approaches to testing and deploying autonomous vehicles. Questions about liability in case of accidents involving self-driving cars are still being debated among policymakers, insurers, and manufacturers.</p><p>Despite these challenges, investment in autonomous technology continues to grow. Tech companies, traditional automakers, and specialized startups are all racing to develop safe and reliable self-driving systems. The potential benefits, including reduced accidents, increased mobility for the elderly and disabled, and more efficient transportation networks, make this a goal worth pursuing despite the obstacles.</p><p>While fully autonomous vehicles may not be commonplace for several more years, the incremental improvements in driver assistance technologies are already enhancing safety and convenience for millions of drivers worldwide.</p>",
-    image_url: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80",
-    published_at: "2023-11-22T14:45:00Z",
-    author: "Morgan Chen",
-    category_id: 2,
+    id: generateId(),
+    title: 'The Rise of Local Car Assembly Plants',
+    slug: 'rise-local-car-assembly-plants',
+    excerpt: 'How Nigeria is building its automotive manufacturing capacity',
+    content: `<p>Nigeria's automotive industry is experiencing renewed growth with several local assembly plants established by international manufacturers, creating jobs and reducing reliance on vehicle imports.</p>
+    <h2>Manufacturing Partnerships</h2>
+    <p>Partnerships between Nigerian companies and international automakers are bringing vehicle assembly operations to Nigeria, with plants producing cars, trucks, and buses for both local and regional markets.</p>
+    <h2>Skills Development</h2>
+    <p>Training programs are developing the technical skills needed for automotive manufacturing, creating opportunities for Nigerian workers in engineering, assembly, and quality control.</p>
+    <h2>Supply Chain Development</h2>
+    <p>Local content requirements are encouraging the development of Nigerian suppliers for automotive components, building a more integrated and sustainable automotive ecosystem.</p>`,
+    category_id: 8,
+    image_url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80',
+    author: 'Amina Hassan',
+    published_at: '2023-04-12',
     featured: false,
-    tags: ["autonomous driving", "AI", "automotive", "technology"]
+    tags: ['Manufacturing', 'Automotive Industry', 'Local Content', 'Economic Development']
   },
   {
-    id: 203,
-    title: "Classic Car Restoration: Preserving Automotive Heritage",
-    slug: "classic-car-restoration-preserving-heritage",
-    excerpt: "The art and science of classic car restoration is keeping automotive history alive for future generations.",
-    content: "<p>Classic car restoration is a labor of love that combines craftsmanship, engineering knowledge, and historical research. This practice not only preserves automotive heritage but also connects enthusiasts to the rich history of automobile design and manufacturing.</p><p>The restoration process typically begins with thorough research about the specific model, including original factory specifications, correct paint colors, upholstery materials, and mechanical components. Many restorers aim for period accuracy, seeking out original or reproduction parts to maintain the vehicle's historical integrity.</p><p>Modern technology has transformed the restoration process in recent years. 3D scanning and printing can recreate rare parts that are no longer manufactured. Digital archives provide access to original factory manuals and blueprints that guide restoration efforts. Social media has connected communities of enthusiasts who share knowledge and resources.</p><p>Different approaches to restoration exist, from concours-quality restorations that aim for factory-perfect condition to restomodding, which combines classic aesthetics with modern performance and convenience features. Each approach has its merits and passionate advocates within the classic car community.</p><p>Beyond the mechanical and aesthetic aspects, classic car restoration involves understanding the cultural and historical context in which these vehicles were designed and used. Each restored vehicle tells a story about industrial design, consumer preferences, and technological capabilities of its era.</p><p>The economic aspect of classic car restoration is significant as well. Rare and meticulously restored vehicles can command premium prices at auctions, sometimes selling for millions of dollars. This has transformed what began as a hobby for enthusiasts into a serious investment category.</p><p>As we move toward an era of electric and autonomous vehicles, the preservation of automotive heritage becomes even more important. Classic car restoration ensures that future generations can experience and appreciate the mechanical ingenuity, design evolution, and cultural significance of automobiles throughout history.</p>",
-    image_url: "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?auto=format&fit=crop&w=800&q=80",
-    published_at: "2023-10-05T09:15:00Z",
-    author: "Rachel Johnson",
-    category_id: 2,
+    id: generateId(),
+    title: 'Motorcycle Taxis: Transforming Urban Mobility',
+    slug: 'motorcycle-taxis-transforming-urban-mobility',
+    excerpt: 'The role of okada and ride-hailing motorcycles in Nigerian cities',
+    content: `<p>Motorcycle taxis have become an integral part of Nigeria's urban transportation system, providing affordable mobility solutions and employment opportunities despite regulatory challenges.</p>
+    <h2>Digital Platforms</h2>
+    <p>Ride-hailing apps for motorcycles are improving safety and convenience while providing tracking and payment solutions that benefit both riders and passengers.</p>
+    <h2>Safety Initiatives</h2>
+    <p>Training programs for motorcycle taxi operators focus on road safety, defensive driving, and customer service to reduce accidents and improve service quality.</p>
+    <h2>Economic Impact</h2>
+    <p>The motorcycle taxi industry provides livelihoods for millions of Nigerians and offers an affordable transportation option that supports economic activity in urban areas.</p>`,
+    category_id: 8,
+    image_url: 'https://images.unsplash.com/photo-1558377052-81dad8e1b596?auto=format&fit=crop&w=800&q=80',
+    author: 'Kemi Adebayo',
+    published_at: '2023-05-08',
     featured: false,
-    tags: ["classic cars", "restoration", "automotive history", "craftsmanship"]
+    tags: ['Motorcycle Taxis', 'Urban Mobility', 'Transportation', 'Gig Economy']
   },
   {
-    id: 204,
-    title: "The Rise of Electric Motorcycles: Silent Revolution",
-    slug: "rise-of-electric-motorcycles",
-    excerpt: "Electric motorcycles are gaining traction among riders for their performance, low maintenance, and environmental benefits.",
-    content: "<p>Electric motorcycles are transforming the two-wheeled landscape, offering a compelling alternative to traditional gas-powered bikes. With instant torque delivery, minimal maintenance requirements, and zero emissions, these vehicles are attracting both dedicated motorcyclists and newcomers to riding.</p><p>Modern electric motorcycles have overcome many of the limitations that plagued earlier models. Battery technology has improved significantly, with many models now offering ranges of 100+ miles on a single charge. Charging infrastructure continues to expand, making longer journeys increasingly practical for electric motorcycle riders.</p><p>Performance is another area where electric motorcycles excel. The instant torque delivery of electric motors provides exhilarating acceleration from a standstill. Without the need for clutch operation or gear shifting, these bikes offer a simpler riding experience that can be less intimidating for beginners while still satisfying experienced riders.</p><p>Maintenance requirements are substantially reduced with electric motorcycles. There are no oil changes, valve adjustments, or exhaust systems to maintain. The drivetrain has far fewer moving parts, resulting in lower long-term ownership costs and increased reliability.</p><p>The environmental benefits extend beyond zero tailpipe emissions. Electric motorcycles are significantly quieter than their gas-powered counterparts, reducing noise pollution in urban areas and natural environments. This can make them more neighbor-friendly and allows riders to experience nature without disturbing wildlife.</p><p>Major motorcycle manufacturers are increasing their electric offerings, while innovative startups are pushing the boundaries of design and technology. This competition is accelerating development and driving down prices, making electric motorcycles increasingly accessible.</p><p>As battery technology continues to improve and charging infrastructure expands, electric motorcycles are poised to capture an increasingly significant share of the motorcycle market, particularly in urban environments where their advantages are most pronounced.</p>",
-    image_url: "https://images.unsplash.com/photo-1558981852-426c6c22a060?auto=format&fit=crop&w=800&q=80",
-    published_at: "2023-09-18T11:20:00Z",
-    author: "Jamie Park",
-    category_id: 2,
+    id: generateId(),
+    title: 'Car Import vs Local Assembly: Economic Implications',
+    slug: 'car-import-vs-local-assembly-economic-implications',
+    excerpt: 'Analyzing the economic impact of vehicle import policies and local production',
+    content: `<p>Nigeria's automotive policy aims to balance consumer choice with industrial development, creating tension between vehicle imports and local assembly operations.</p>
+    <h2>Import Restrictions</h2>
+    <p>Restrictions on vehicle imports are designed to encourage local assembly, but implementation challenges and enforcement issues affect both consumers and manufacturers.</p>
+    <h2>Price Considerations</h2>
+    <p>The cost of locally assembled vehicles compared to imports influences consumer purchasing decisions and the competitiveness of Nigerian automotive operations.</p>
+    <h2>Technology Transfer</h2>
+    <p>Local assembly operations provide opportunities for technology transfer and skills development that benefit Nigeria's long-term industrial capabilities and competitiveness.</p>`,
+    category_id: 8,
+    image_url: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=800&q=80',
+    author: 'Tunde Fashola',
+    published_at: '2023-06-15',
     featured: false,
-    tags: ["motorcycles", "electric vehicles", "sustainability", "transportation"]
+    tags: ['Automotive Policy', 'Import Substitution', 'Economic Policy', 'Manufacturing']
   },
   {
-    id: 205,
-    title: "Car Maintenance Tips for Extended Vehicle Life",
-    slug: "car-maintenance-tips-extended-vehicle-life",
-    excerpt: "Follow these essential maintenance practices to keep your vehicle running smoothly and extend its operational lifespan.",
-    content: "<p>Regular maintenance is the key to extending your vehicle's life and avoiding costly repairs. This guide covers essential practices that every car owner should follow to keep their vehicle running smoothly for years to come.</p><p>Oil changes remain the most critical maintenance task. Modern vehicles may have extended oil change intervals, but it's important to follow manufacturer recommendations based on your driving conditions. Regular oil changes prevent engine wear and maintain proper lubrication of critical components.</p><p>Tire maintenance affects both safety and efficiency. Check tire pressure monthly, including the spare, and maintain the recommended inflation levels. Rotate tires according to the schedule in your owner's manual to ensure even wear. Regular alignment checks prevent premature tire wear and improve handling.</p><p>Fluid levels should be checked regularly, including brake fluid, power steering fluid, transmission fluid, and coolant. These fluids perform crucial functions, and low levels can lead to component failure. Follow the replacement intervals recommended by your manufacturer, as these fluids degrade over time.</p><p>Filters protect your engine and cabin. The engine air filter should be checked regularly and replaced when dirty. The fuel filter prevents contaminants from reaching the engine, while the cabin air filter ensures clean air inside your vehicle. Replacing these filters according to schedule improves performance and comfort.</p><p>Battery maintenance is often overlooked. Keep battery terminals clean and free of corrosion, and have the battery tested annually, especially before extreme temperature seasons. Most batteries last 3-5 years, so plan for replacement within this timeframe to avoid unexpected failures.</p><p>Listen to your vehicle. Unusual noises, vibrations, or handling issues should be investigated promptly. Addressing minor problems early can prevent them from developing into major repairs.</p><p>Following these maintenance practices not only extends your vehicle's life but also enhances safety, improves fuel efficiency, and maintains resale value. The small investments in regular maintenance pay dividends through reliable transportation and avoided repair costs.</p>",
-    image_url: "https://images.unsplash.com/photo-1551678203-c9cd2b0d8734?auto=format&fit=crop&w=800&q=80",
-    published_at: "2023-08-29T16:40:00Z",
-    author: "Chris Torres",
-    category_id: 2,
-    featured: true,
-    tags: ["car maintenance", "automotive care", "vehicle tips", "DIY"]
-  },
-  {
-    id: 206,
-    title: "Hydrogen Fuel Cell Vehicles: Alternative to Battery Electric?",
-    slug: "hydrogen-fuel-cell-vehicles-alternative",
-    excerpt: "Hydrogen fuel cell technology offers another path to zero-emission vehicles, with unique advantages and challenges.",
-    content: "<p>While battery electric vehicles have dominated the zero-emission vehicle conversation, hydrogen fuel cell vehicles represent an alternative approach with distinct characteristics. This technology converts hydrogen into electricity through an electrochemical process, with water vapor as the only emission.</p><p>Refueling time is one of the primary advantages of hydrogen fuel cell vehicles over battery electric vehicles. Filling a hydrogen tank takes just a few minutes, similar to refueling a gasoline vehicle. This makes hydrogen particularly attractive for commercial applications where vehicle downtime needs to be minimized.</p><p>Range anxiety is less of a concern with fuel cell vehicles, as they typically offer ranges of 300-400 miles on a full tank, comparable to conventional gasoline vehicles. The energy density of compressed hydrogen provides this extended range without requiring heavy battery packs.</p><p>Infrastructure remains a significant challenge for hydrogen adoption. Hydrogen refueling stations are expensive to build and maintain, and the current network is limited to select regions, primarily in California, Japan, and parts of Europe. Expanding this infrastructure requires substantial investment and coordination between government and industry stakeholders.</p><p>Production and distribution of hydrogen present both challenges and opportunities. Currently, most hydrogen is produced from natural gas, which generates carbon emissions. However, &quot;green hydrogen&quot; produced using renewable electricity and electrolysis offers a truly zero-emission pathway. The energy losses in producing, compressing, transporting, and using hydrogen make the overall efficiency lower than direct use of electricity in battery vehicles.</p><p>Several automakers, including Toyota, Hyundai, and Honda, have developed commercial hydrogen fuel cell vehicles, demonstrating their commitment to this technology. The heaviest investment is occurring in the commercial sector, with hydrogen seen as particularly promising for long-haul trucking, buses, and industrial applications.</p><p>Rather than competing technologies, many experts view battery electric and hydrogen fuel cell vehicles as complementary solutions that will serve different segments of the transportation market as we transition away from fossil fuels.</p>",
-    image_url: "https://images.unsplash.com/photo-1603085607707-30821187e0e3?auto=format&fit=crop&w=800&q=80",
-    published_at: "2023-07-14T13:25:00Z",
-    author: "Dr. Sarah Williams",
-    category_id: 2,
+    id: generateId(),
+    title: 'Road Infrastructure and Vehicle Maintenance Challenges',
+    slug: 'road-infrastructure-vehicle-maintenance-challenges',
+    excerpt: 'How poor road conditions affect vehicle longevity and maintenance costs',
+    content: `<p>Nigeria's road infrastructure challenges significantly impact vehicle maintenance costs and lifespan, affecting both individual car owners and commercial transportation operators.</p>
+    <h2>Maintenance Industry</h2>
+    <p>The challenging road conditions have created a robust vehicle maintenance and repair industry, with skilled mechanics and spare parts dealers serving communities across the country.</p>
+    <h2>Cost Implications</h2>
+    <p>Poor road conditions increase fuel consumption, tire wear, and mechanical stress on vehicles, leading to higher total cost of ownership for Nigerian vehicle operators.</p>
+    <h2>Infrastructure Investment</h2>
+    <p>Ongoing road improvement projects aim to reduce vehicle operating costs and improve transportation efficiency, though progress varies significantly across different regions.</p>`,
+    category_id: 8,
+    image_url: 'https://images.unsplash.com/photo-1486754735734-325b5831c3ad?auto=format&fit=crop&w=800&q=80',
+    author: 'Bola Tinubu',
+    published_at: '2023-07-20',
     featured: false,
-    tags: ["hydrogen", "fuel cell", "alternative energy", "automotive technology"]
+    tags: ['Road Infrastructure', 'Vehicle Maintenance', 'Transportation Costs', 'Infrastructure Development']
+  },
+  {
+    id: generateId(),
+    title: 'The Future of Autonomous Vehicles in Africa',
+    slug: 'future-autonomous-vehicles-africa',
+    excerpt: 'Exploring the potential impact of self-driving cars on African transportation',
+    content: `<p>While autonomous vehicles may seem futuristic for Nigeria, understanding their potential impact and preparing for their eventual introduction is important for long-term transportation planning.</p>
+    <h2>Infrastructure Requirements</h2>
+    <p>Autonomous vehicles require sophisticated road infrastructure, digital mapping, and communication systems that present both challenges and opportunities for Nigerian development.</p>
+    <h2>Economic Disruption</h2>
+    <p>The introduction of autonomous vehicles could significantly impact employment in transportation sectors while creating new opportunities in technology and maintenance fields.</p>
+    <h2>Gradual Adoption</h2>
+    <p>The transition to autonomous vehicles will likely be gradual, starting with specific applications like highway freight transport before expanding to urban passenger services.</p>`,
+    category_id: 8,
+    image_url: 'https://images.unsplash.com/photo-1555487505-50e91d1f640d?auto=format&fit=crop&w=800&q=80',
+    author: 'Dr. Adaora Okafor',
+    published_at: '2023-08-10',
+    featured: false,
+    tags: ['Autonomous Vehicles', 'Future Technology', 'Transportation Planning', 'Innovation']
   }
 ];

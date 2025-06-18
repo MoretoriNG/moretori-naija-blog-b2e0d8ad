@@ -1,122 +1,120 @@
 
-// Update beginning of tech-posts.ts to include Nigeria's Rising Tech Ecosystem post
 import { generateId } from "../utils";
 
-// Technology posts
+// Technology posts with enhanced images
 export const techPosts = [
   {
-    id: 2,
-    title: 'Nigeria\'s Rising Tech Ecosystem',
-    slug: 'nigeria-rising-tech-ecosystem',
-    excerpt: 'The growth of technology startups in Nigeria and their global impact',
-    content: `<p>Nigeria's technology ecosystem is experiencing unprecedented growth, with Lagos emerging as one of Africa's leading startup hubs. Investment in Nigerian tech companies continues to rise as local entrepreneurs develop solutions for both local and global markets.</p>
-    <h2>Fintech Leadership</h2>
-    <p>Financial technology companies are at the forefront of Nigeria's tech revolution, addressing challenges in banking, payments, and financial inclusion across the continent.</p>
-    <h2>Creating Opportunities</h2>
-    <p>The expanding tech sector is creating new job opportunities and contributing significantly to economic diversification beyond traditional oil and gas industries.</p>
-    <h2>Infrastructure Challenges</h2>
-    <p>Despite remarkable progress, challenges in power supply, internet connectivity, and regulatory frameworks continue to impact scaling efforts for many promising startups.</p>`,
+    id: 1,
+    title: 'The Future of AI in Nigeria: Opportunities and Challenges',
+    slug: 'future-ai-nigeria-opportunities-challenges',
+    excerpt: 'Exploring how artificial intelligence is reshaping various sectors in Nigeria',
+    content: `<p>Artificial Intelligence is rapidly transforming Nigeria's technology landscape, with significant implications for various sectors including healthcare, education, finance, and agriculture.</p>
+    <h2>Current AI Initiatives</h2>
+    <p>Several Nigerian tech companies and startups are already implementing AI solutions to address local challenges, from fraud detection in banking to crop monitoring in agriculture.</p>
+    <h2>Educational Integration</h2>
+    <p>Universities and tech hubs across Nigeria are incorporating AI curriculum and training programs to prepare the next generation of tech professionals for an AI-driven economy.</p>
+    <h2>Regulatory Framework</h2>
+    <p>The Nigerian government is working on policies to govern AI development and deployment while encouraging innovation and protecting citizens' rights.</p>`,
     category_id: 1,
-    image_url: '/images/lagos-tech-hub.jpg',
-    author: 'Tunde Johnson',
-    published_at: '2023-05-02',
+    image_url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+    author: 'Dr. Adebayo Ogundimu',
+    published_at: '2023-03-15',
     featured: true,
-    tags: ['Startups', 'Technology', 'Africa', 'Innovation']
+    tags: ['AI', 'Technology', 'Innovation', 'Nigeria']
   },
   {
     id: generateId(),
-    title: 'The Impact of 5G Technology in Nigeria',
-    slug: 'impact-5g-technology-nigeria',
-    excerpt: 'Exploring how 5G is transforming connectivity and digital services in Nigeria',
-    content: `<p>Nigeria's adoption of 5G technology marks a significant milestone in the country's digital transformation journey, promising faster speeds, lower latency, and enabling new applications from smart cities to remote healthcare.</p>
-    <h2>Infrastructure Development</h2>
-    <p>The rollout of 5G requires significant investment in infrastructure, creating both challenges and opportunities for Nigeria's telecommunications sector and digital economy.</p>
-    <h2>Economic Opportunities</h2>
-    <p>From enabling new business models to enhancing productivity across sectors, 5G technology has the potential to contribute significantly to Nigeria's economic growth and diversification efforts.</p>
-    <h2>Addressing the Digital Divide</h2>
-    <p>As 5G deployment begins in major cities, stakeholders must work to ensure that the benefits of this advanced technology eventually reach underserved communities to avoid widening the digital divide.</p>`,
+    title: 'Nigeria\'s Fintech Revolution: Banking for the Unbanked',
+    slug: 'nigeria-fintech-revolution-banking-unbanked',
+    excerpt: 'How mobile banking and digital payments are transforming financial inclusion',
+    content: `<p>Nigeria's fintech sector has experienced explosive growth, with companies like Flutterwave, Paystack, and Interswitch leading the charge in revolutionizing financial services across Africa.</p>
+    <h2>Mobile Money Adoption</h2>
+    <p>The widespread adoption of mobile money services has brought millions of previously unbanked Nigerians into the formal financial system, enabling them to save, transfer money, and access credit.</p>
+    <h2>Regulatory Support</h2>
+    <p>The Central Bank of Nigeria has implemented progressive policies that support fintech innovation while maintaining financial stability and consumer protection.</p>
+    <h2>Regional Expansion</h2>
+    <p>Nigerian fintech companies are expanding across Africa, positioning Nigeria as a continental hub for financial technology innovation and investment.</p>`,
     category_id: 1,
-    image_url: '/images/5g-tower.jpg',
-    author: 'Emeka Nwosu',
-    published_at: '2023-07-15',
+    image_url: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80',
+    author: 'Kemi Adeosun',
+    published_at: '2023-04-20',
     featured: false,
-    tags: ['5G', 'Telecommunications', 'Digital Transformation', 'Infrastructure']
+    tags: ['Fintech', 'Mobile Banking', 'Financial Inclusion', 'Innovation']
   },
   {
     id: generateId(),
-    title: 'Blockchain Applications Beyond Cryptocurrency',
-    slug: 'blockchain-beyond-cryptocurrency',
-    excerpt: 'How blockchain technology is being applied in various sectors in Nigeria',
-    content: `<p>While often associated primarily with cryptocurrencies, blockchain technology is finding diverse applications across multiple sectors in Nigeria, from supply chain management to property registration.</p>
-    <h2>Ensuring Food Safety</h2>
-    <p>Blockchain-based systems are being developed to trace agricultural products from farm to table, enhancing food safety and helping farmers access premium markets through verified sustainability practices.</p>
-    <h2>Securing Land Records</h2>
-    <p>Pilot projects using blockchain for land registration aim to address longstanding challenges in property rights, reducing fraud and disputes while increasing transparency in land transactions.</p>
-    <h2>Enhancing Public Services</h2>
-    <p>Government agencies are exploring blockchain solutions for identity verification, academic credential verification, and other public services to reduce corruption and improve efficiency.</p>`,
+    title: 'Smart Cities Initiative: Lagos Leading the Way',
+    slug: 'smart-cities-initiative-lagos-leading',
+    excerpt: 'How Lagos is implementing smart city technologies to improve urban living',
+    content: `<p>Lagos State is at the forefront of Nigeria's smart city initiatives, implementing various technological solutions to address urban challenges and improve the quality of life for its residents.</p>
+    <h2>Traffic Management</h2>
+    <p>The implementation of intelligent traffic management systems and digital mapping has begun to address Lagos's notorious traffic congestion, with real-time monitoring and adaptive signal control.</p>
+    <h2>Digital Infrastructure</h2>
+    <p>Investment in fiber optic networks and 5G infrastructure is creating the backbone necessary for smart city applications and improved connectivity across the state.</p>
+    <h2>Citizen Services</h2>
+    <p>Digital platforms for government services, online payment systems, and mobile apps for public services are making it easier for residents to interact with government and access essential services.</p>`,
     category_id: 1,
-    image_url: '/images/blockchain-application.jpg',
-    author: 'Yusuf Ibrahim',
-    published_at: '2023-08-05',
+    image_url: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=800&q=80',
+    author: 'Tunde Bakare',
+    published_at: '2023-05-10',
     featured: false,
-    tags: ['Blockchain', 'Technology', 'Innovation', 'Digital Transformation']
+    tags: ['Smart Cities', 'Urban Planning', 'Technology', 'Lagos']
   },
   {
     id: generateId(),
-    title: 'The Growth of Cloud Computing Services in Africa',
-    slug: 'cloud-computing-africa',
-    excerpt: 'How businesses across Africa are leveraging cloud technologies',
-    content: `<p>Cloud computing adoption is accelerating across Africa, allowing businesses to access sophisticated IT infrastructure and services without massive capital investments in hardware.</p>
-    <h2>Startups and Innovation</h2>
-    <p>Cloud platforms are enabling African startups to build and scale innovative solutions rapidly, competing globally without the traditional barriers of IT infrastructure limitations.</p>
-    <h2>Major Providers Expanding</h2>
-    <p>Leading cloud service providers are establishing data centers across the continent, improving performance and addressing data sovereignty concerns for African businesses and governments.</p>
-    <h2>Connectivity Challenges</h2>
-    <p>Despite its benefits, cloud adoption faces challenges including reliable connectivity, cost of data, and skills gaps that stakeholders must address to fully realize its potential.</p>`,
+    title: 'Blockchain Technology in Nigeria: Beyond Cryptocurrency',
+    slug: 'blockchain-technology-nigeria-beyond-cryptocurrency',
+    excerpt: 'Exploring practical applications of blockchain in governance, supply chain, and identity management',
+    content: `<p>While cryptocurrency often dominates blockchain discussions in Nigeria, the technology's potential extends far beyond digital currency, with applications in governance, supply chain management, and digital identity verification.</p>
+    <h2>Supply Chain Transparency</h2>
+    <p>Nigerian companies are beginning to use blockchain to track products from farm to consumer, ensuring authenticity and reducing fraud in agricultural exports and pharmaceutical supply chains.</p>
+    <h2>Digital Identity</h2>
+    <p>Blockchain-based identity management systems could help address challenges with identity verification and documentation, particularly in rural areas where traditional ID systems are less accessible.</p>
+    <h2>Government Applications</h2>
+    <p>Several state governments are exploring blockchain for land registry, voting systems, and transparent resource allocation to reduce corruption and improve public trust.</p>`,
     category_id: 1,
-    image_url: '/images/cloud-computing.jpg',
-    author: 'Blessing Afolabi',
-    published_at: '2023-08-22',
+    image_url: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800&q=80',
+    author: 'Dr. Chinyere Okwu',
+    published_at: '2023-06-18',
     featured: false,
-    tags: ['Cloud Computing', 'Digital Transformation', 'Business Technology', 'Data Centers']
+    tags: ['Blockchain', 'Digital Identity', 'Supply Chain', 'Governance']
   },
   {
     id: generateId(),
-    title: 'Artificial Intelligence in African Languages',
-    slug: 'ai-african-languages',
-    excerpt: 'Efforts to develop AI solutions that support indigenous African languages',
-    content: `<p>Researchers and developers across Africa are working to ensure that artificial intelligence technologies can understand and process African languages, making digital tools more accessible to diverse linguistic communities.</p>
-    <h2>Natural Language Processing</h2>
-    <p>Projects focusing on natural language processing for languages like Yoruba, Igbo, Swahili, and others are creating the foundation for more inclusive AI applications across the continent.</p>
-    <h2>Voice Recognition Advances</h2>
-    <p>Voice recognition systems being developed for African languages could transform how millions interact with technology, especially in communities with lower literacy rates.</p>
-    <h2>Cultural Preservation</h2>
-    <p>Beyond practical applications, these AI language projects contribute to the digital preservation of linguistic diversity and cultural heritage that might otherwise be at risk in the digital age.</p>`,
+    title: 'Nigeria\'s Tech Talent Exodus: Brain Drain or Global Expansion?',
+    slug: 'nigeria-tech-talent-exodus-brain-drain-global-expansion',
+    excerpt: 'Analyzing the impact of Nigerian tech professionals seeking opportunities abroad',
+    content: `<p>The migration of Nigerian tech professionals to Europe, North America, and other global tech hubs has sparked debate about whether this represents a loss for Nigeria or an opportunity for global influence and knowledge transfer.</p>
+    <h2>Skills and Opportunity Gap</h2>
+    <p>Many Nigerian developers and tech professionals cite limited opportunities, poor infrastructure, and lower compensation as primary reasons for seeking opportunities abroad.</p>
+    <h2>Remittances and Investment</h2>
+    <p>Nigerian tech professionals abroad often invest back home, start companies with Nigerian operations, or eventually return with valuable experience and international connections.</p>
+    <h2>Policy Responses</h2>
+    <p>Government and private sector initiatives aimed at retaining tech talent include improved internet infrastructure, tax incentives for tech companies, and programs to support local startups and innovation hubs.</p>`,
     category_id: 1,
-    image_url: '/images/ai-language.jpg',
-    author: 'Dr. Nkem Adebiyi',
-    published_at: '2023-09-10',
+    image_url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80',
+    author: 'Emeka Okafor',
+    published_at: '2023-07-12',
     featured: false,
-    tags: ['Artificial Intelligence', 'Languages', 'Technology', 'Cultural Heritage']
+    tags: ['Tech Talent', 'Migration', 'Innovation', 'Policy']
   },
   {
     id: generateId(),
-    title: 'Cybersecurity Challenges in Nigeria\'s Digital Economy',
-    slug: 'cybersecurity-nigeria-digital-economy',
-    excerpt: 'Addressing growing security concerns as Nigeria\'s digital presence expands',
-    content: `<p>As Nigeria's digital economy grows rapidly, cybersecurity threats are increasing in both frequency and sophistication, presenting significant challenges for businesses, individuals, and government institutions.</p>
-    <h2>Financial Sector Vulnerabilities</h2>
-    <p>Nigeria's expanding digital financial services face particular security challenges, with banks and fintech companies investing heavily in cybersecurity measures to protect customer assets and data.</p>
-    <h2>Building Local Expertise</h2>
-    <p>Educational institutions and training programs are working to address the shortage of cybersecurity professionals in Nigeria, developing local talent to meet growing demand for expertise.</p>
-    <h2>Policy and Regulation</h2>
-    <p>Government agencies are developing and implementing policies and regulations to enhance cybersecurity frameworks, though challenges remain in enforcement and keeping pace with evolving threats.</p>`,
+    title: 'Renewable Energy Tech: Solar Solutions for Rural Nigeria',
+    slug: 'renewable-energy-tech-solar-solutions-rural-nigeria',
+    excerpt: 'How innovative solar technology is bringing power to underserved communities',
+    content: `<p>Innovative solar technology solutions are addressing Nigeria's electricity challenges, particularly in rural areas where grid connectivity is limited or unreliable.</p>
+    <h2>Mini-Grid Solutions</h2>
+    <p>Solar mini-grids are providing reliable electricity to rural communities, enabling small businesses, schools, and healthcare facilities to operate more effectively and improve quality of life.</p>
+    <h2>Pay-as-You-Go Systems</h2>
+    <p>Mobile payment integration with solar home systems allows families to access clean energy through affordable, flexible payment plans that match their income patterns.</p>
+    <h2>Agricultural Applications</h2>
+    <p>Solar-powered irrigation systems, cold storage, and processing equipment are helping farmers increase productivity and reduce post-harvest losses, contributing to food security and rural economic development.</p>`,
     category_id: 1,
-    image_url: '/images/cybersecurity.jpg',
-    author: 'Victor Okonkwo',
-    published_at: '2023-10-05',
+    image_url: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80',
+    author: 'Fatima Abubakar',
+    published_at: '2023-08-25',
     featured: false,
-    tags: ['Cybersecurity', 'Digital Economy', 'Technology', 'Risk Management']
-  },
+    tags: ['Renewable Energy', 'Solar Power', 'Rural Development', 'Innovation']
+  }
 ];
-

@@ -13,7 +13,7 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { user } = useAuth();
-  const categories = ["Tech", "Auto", "Health", "Entertainment", "News"];
+  const categories = ["Tech", "Auto", "Health", "Entertainment", "Business", "Sports"];
   
   useEffect(() => {
     setIsOpen(false);

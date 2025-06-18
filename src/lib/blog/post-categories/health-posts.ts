@@ -1,121 +1,120 @@
 
 import { generateId } from "../utils";
 
-// Health posts
+// Health posts with enhanced images
 export const healthPosts = [
   {
-    id: generateId(),
-    title: 'The Future of AI in Healthcare',
-    slug: 'future-ai-healthcare',
-    excerpt: 'How artificial intelligence is revolutionizing the healthcare industry',
-    content: `<p>The integration of artificial intelligence in healthcare is transforming patient care, diagnosis, and treatment planning. From predictive analytics to robotic surgery, AI technologies are enhancing precision medicine approaches.</p>
-    <h2>Early Detection</h2>
-    <p>AI algorithms can detect patterns in medical images that might be missed by human eyes, potentially identifying diseases at earlier stages when they're more treatable.</p>
-    <h2>Administrative Efficiency</h2>
-    <p>Beyond clinical applications, AI is streamlining administrative tasks, reducing paperwork, and allowing healthcare professionals to spend more time with patients.</p>
-    <h2>Challenges Ahead</h2>
-    <p>Despite promising advances, concerns about data privacy, algorithmic bias, and the human element of care remain important considerations as AI becomes more prevalent in healthcare settings.</p>`,
+    id: 2,
+    title: 'Mental Health Awareness in Nigeria: Breaking the Stigma',
+    slug: 'mental-health-awareness-nigeria-breaking-stigma',
+    excerpt: 'Addressing the growing mental health crisis and changing perceptions',
+    content: `<p>Mental health awareness in Nigeria is gradually improving, but significant challenges remain in addressing stigma, accessibility of care, and public understanding of mental health conditions.</p>
+    <h2>Cultural Barriers</h2>
+    <p>Traditional beliefs and cultural stigma around mental health continue to prevent many Nigerians from seeking professional help, often leading to reliance on spiritual or traditional remedies alone.</p>
+    <h2>Healthcare Infrastructure</h2>
+    <p>Nigeria faces a severe shortage of mental health professionals, with limited specialized facilities and resources dedicated to mental health care across the country.</p>
+    <h2>Digital Health Solutions</h2>
+    <p>Mobile apps and telemedicine platforms are beginning to bridge the gap in mental health services, providing accessible support and resources to underserved populations.</p>`,
     category_id: 2,
-    image_url: '/images/healthcare-ai.jpg',
-    author: 'Dr. Amina Okonkwo',
-    published_at: '2023-04-15',
+    image_url: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80',
+    author: 'Dr. Yemi Kale',
+    published_at: '2023-03-20',
     featured: true,
-    tags: ['AI', 'Healthcare', 'Technology', 'Medicine']
+    tags: ['Mental Health', 'Healthcare', 'Awareness', 'Stigma']
   },
   {
     id: generateId(),
-    title: 'Traditional Medicine in Modern Nigerian Healthcare',
-    slug: 'traditional-medicine-modern-healthcare',
-    excerpt: 'How traditional healing practices are being integrated with contemporary medicine',
-    content: `<p>Nigeria is experiencing a growing interest in integrating traditional medicine with modern healthcare practices, recognizing the potential benefits of combining indigenous knowledge with scientific approaches.</p>
-    <h2>Research and Standardization</h2>
-    <p>Universities and research institutions are studying traditional remedies, documenting their properties, and working to establish standards that ensure safety and efficacy.</p>
-    <h2>Policy Frameworks</h2>
-    <p>Government health agencies are developing regulations to formally incorporate traditional practitioners into the healthcare system while ensuring patient safety and quality control.</p>
-    <h2>Preserving Knowledge</h2>
-    <p>Efforts to document and preserve traditional medical knowledge not only contribute to healthcare options but also protect cultural heritage that might otherwise be lost to future generations.</p>`,
+    title: 'Combating Malaria: Nigeria\'s Fight Against Endemic Disease',
+    slug: 'combating-malaria-nigeria-fight-endemic-disease',
+    excerpt: 'Latest developments in malaria prevention and treatment strategies',
+    content: `<p>Nigeria continues to bear the highest burden of malaria globally, but innovative prevention strategies, improved treatments, and international partnerships are making significant progress in reducing infection rates and mortality.</p>
+    <h2>Prevention Strategies</h2>
+    <p>Distribution of long-lasting insecticidal nets, indoor residual spraying, and community education programs have shown measurable success in reducing malaria transmission in targeted areas.</p>
+    <h2>Treatment Advances</h2>
+    <p>The introduction of rapid diagnostic tests and artemisinin-based combination therapies has improved treatment outcomes and reduced mortality rates, particularly among children under five.</p>
+    <h2>Research and Development</h2>
+    <p>Nigerian research institutions are contributing to global malaria research, including vaccine development and studies on drug resistance patterns specific to local parasite strains.</p>`,
     category_id: 2,
-    image_url: '/images/traditional-medicine.jpg',
-    author: 'Dr. Folashade Adewumi',
-    published_at: '2023-07-20',
+    image_url: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80',
+    author: 'Dr. Adaora Okonkwo',
+    published_at: '2023-04-15',
     featured: false,
-    tags: ['Traditional Medicine', 'Healthcare', 'Cultural Heritage', 'Research']
+    tags: ['Malaria', 'Public Health', 'Disease Prevention', 'Healthcare']
   },
   {
     id: generateId(),
-    title: 'Mental Health Awareness in Nigeria',
-    slug: 'mental-health-awareness-nigeria',
-    excerpt: 'Breaking stigma and improving access to mental health services',
-    content: `<p>Mental health awareness is gradually increasing in Nigeria, with advocates working to reduce stigma, improve understanding, and expand access to mental health services across the country.</p>
-    <h2>Challenging Stigma</h2>
-    <p>Social media campaigns, community outreach, and celebrity advocacy are helping to challenge longstanding stigmas around mental health conditions and seeking professional help.</p>
-    <h2>Training Healthcare Workers</h2>
-    <p>Programs to train more mental health professionals and integrate mental health services into primary healthcare are expanding, though significant gaps in access remain.</p>
-    <h2>Policy Development</h2>
-    <p>Recent policy initiatives aim to improve mental health services and protections for people with mental health conditions, though implementation challenges persist due to resource limitations.</p>`,
+    title: 'Traditional Medicine Meets Modern Healthcare',
+    slug: 'traditional-medicine-meets-modern-healthcare',
+    excerpt: 'Integrating indigenous healing practices with contemporary medical care',
+    content: `<p>Nigeria's rich tradition of herbal medicine and traditional healing practices is increasingly being integrated with modern healthcare, creating opportunities for more holistic and culturally appropriate treatment approaches.</p>
+    <h2>Research and Validation</h2>
+    <p>Scientific studies are validating the efficacy of certain traditional remedies, leading to the development of standardized herbal medicines and integration into formal healthcare systems.</p>
+    <h2>Practitioner Training</h2>
+    <p>Programs are being developed to train traditional healers in basic medical principles while educating modern healthcare providers about traditional practices and their potential benefits.</p>
+    <h2>Regulatory Framework</h2>
+    <p>Government agencies are working to establish quality standards and regulations for traditional medicine to ensure safety and efficacy while preserving cultural heritage.</p>`,
     category_id: 2,
-    image_url: '/images/mental-health.jpg',
-    author: 'Damilola Owolabi',
-    published_at: '2023-08-12',
+    image_url: 'https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=800&q=80',
+    author: 'Dr. Bola Tinubu',
+    published_at: '2023-05-22',
     featured: false,
-    tags: ['Mental Health', 'Healthcare', 'Awareness', 'Public Health']
+    tags: ['Traditional Medicine', 'Healthcare Integration', 'Cultural Heritage', 'Medical Research']
   },
   {
     id: generateId(),
-    title: 'Malaria Prevention Innovations in Africa',
-    slug: 'malaria-prevention-innovations',
-    excerpt: 'New approaches to combating one of Africa\'s most persistent health challenges',
-    content: `<p>Innovative approaches to malaria prevention are showing promising results across Africa, combining new technologies with community engagement strategies to reduce infection rates.</p>
-    <h2>Next-Generation Insecticides</h2>
-    <p>Researchers are developing new types of insecticides to address the growing resistance of mosquitoes to current formulations, as well as more effective and longer-lasting bed nets.</p>
-    <h2>Genetic Approaches</h2>
-    <p>Experimental projects using genetically modified mosquitoes aim to reduce populations of malaria-carrying species in targeted areas, though these approaches remain controversial.</p>
-    <h2>Vaccine Developments</h2>
-    <p>Recent advances in malaria vaccines are creating new possibilities for prevention, with ongoing trials across the continent working to optimize effectiveness and implementation strategies.</p>`,
+    title: 'Maternal and Child Health: Progress and Challenges',
+    slug: 'maternal-child-health-progress-challenges',
+    excerpt: 'Improving outcomes for mothers and children across Nigeria',
+    content: `<p>Nigeria has made significant strides in reducing maternal and infant mortality rates, but substantial challenges remain in ensuring all women and children have access to quality healthcare services.</p>
+    <h2>Rural Healthcare Access</h2>
+    <p>Mobile health clinics and community health programs are bringing essential services to remote areas, including prenatal care, skilled birth attendance, and vaccination programs.</p>
+    <h2>Nutrition Programs</h2>
+    <p>Initiatives addressing malnutrition and micronutrient deficiencies are showing positive results in improving child development outcomes and reducing mortality rates.</p>
+    <h2>Healthcare Worker Training</h2>
+    <p>Expanded training programs for midwives, community health workers, and traditional birth attendants are improving the quality of care available in underserved areas.</p>`,
     category_id: 2,
-    image_url: '/images/malaria-prevention.jpg',
-    author: 'Dr. Ngozi Eze',
-    published_at: '2023-09-05',
+    image_url: 'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=800&q=80',
+    author: 'Dr. Ngozi Okafor',
+    published_at: '2023-06-10',
     featured: false,
-    tags: ['Malaria', 'Public Health', 'Innovation', 'Disease Prevention']
+    tags: ['Maternal Health', 'Child Health', 'Healthcare Access', 'Rural Health']
   },
   {
     id: generateId(),
-    title: 'Nutrition and Food Security in Nigeria',
-    slug: 'nutrition-food-security-nigeria',
-    excerpt: 'Addressing malnutrition challenges through policy and innovation',
-    content: `<p>Nigeria continues to face significant challenges in nutrition and food security, with efforts underway to address malnutrition through agricultural innovation, education, and policy reform.</p>
-    <h2>Child Nutrition Programs</h2>
-    <p>Targeted programs focusing on the first 1000 days of life aim to reduce stunting and improve cognitive development through improved maternal and child nutrition practices.</p>
-    <h2>Agricultural Solutions</h2>
-    <p>Biofortification of staple crops and support for diverse farming systems are among the strategies being employed to increase the nutrient content of foods available to vulnerable communities.</p>
-    <h2>Urban Food Systems</h2>
-    <p>With increasing urbanization, initiatives focusing on urban agriculture and improved food distribution networks are working to ensure nutritious foods remain accessible and affordable in cities.</p>`,
+    title: 'Telemedicine Revolution in Nigerian Healthcare',
+    slug: 'telemedicine-revolution-nigerian-healthcare',
+    excerpt: 'How digital health platforms are transforming medical care delivery',
+    content: `<p>The COVID-19 pandemic accelerated the adoption of telemedicine in Nigeria, with digital health platforms now providing consultations, prescription services, and health monitoring to patients across the country.</p>
+    <h2>Remote Consultations</h2>
+    <p>Video and voice consultation platforms are enabling patients in remote areas to access specialist care without traveling long distances, reducing costs and improving access to quality healthcare.</p>
+    <h2>Digital Health Records</h2>
+    <p>Electronic health record systems are improving continuity of care and enabling better coordination between healthcare providers, while giving patients more control over their health information.</p>
+    <h2>Health Monitoring Apps</h2>
+    <p>Mobile health applications are helping Nigerians track chronic conditions, medication adherence, and preventive care, promoting better health outcomes and early intervention.</p>`,
     category_id: 2,
-    image_url: '/images/food-security.jpg',
-    author: 'Amara Nwankwo',
-    published_at: '2023-10-15',
+    image_url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=800&q=80',
+    author: 'Dr. Olumide Adeyemi',
+    published_at: '2023-07-18',
     featured: false,
-    tags: ['Nutrition', 'Food Security', 'Public Health', 'Agriculture']
+    tags: ['Telemedicine', 'Digital Health', 'Healthcare Technology', 'Remote Care']
   },
   {
     id: generateId(),
-    title: 'Telemedicine Expansion Across Rural Nigeria',
-    slug: 'telemedicine-rural-nigeria',
-    excerpt: 'How remote healthcare services are reaching underserved communities',
-    content: `<p>Telemedicine services are expanding across rural Nigeria, helping bridge healthcare access gaps by connecting remote communities with medical expertise without requiring long and expensive travel.</p>
-    <h2>Mobile Health Units</h2>
-    <p>Mobile clinics equipped with telemedicine technology are reaching villages without permanent healthcare facilities, providing both basic care and specialist consultations.</p>
-    <h2>Training Community Health Workers</h2>
-    <p>Local health workers are being trained to facilitate telemedicine sessions, perform basic diagnostics, and provide follow-up care under the remote guidance of physicians.</p>
-    <h2>Connectivity Challenges</h2>
-    <p>Despite its promise, telemedicine expansion faces significant challenges including reliable internet connectivity, electricity access, and ensuring the quality of remote consultations.</p>`,
+    title: 'Vaccine Hesitancy and Public Health Education',
+    slug: 'vaccine-hesitancy-public-health-education',
+    excerpt: 'Addressing misconceptions and building trust in vaccination programs',
+    content: `<p>Vaccine hesitancy remains a significant challenge in Nigeria, affecting routine immunization programs and outbreak response efforts, requiring targeted education and community engagement strategies.</p>
+    <h2>Community Engagement</h2>
+    <p>Successful vaccination programs increasingly rely on community leaders, religious figures, and local influencers to build trust and address specific concerns within different communities.</p>
+    <h2>Education Campaigns</h2>
+    <p>Multi-platform education campaigns using local languages and culturally appropriate messaging are helping to counter misinformation and improve vaccine acceptance rates.</p>
+    <h2>Healthcare Provider Training</h2>
+    <p>Training healthcare workers in effective communication about vaccine benefits and risks is crucial for addressing patient concerns and improving vaccination rates at the community level.</p>`,
     category_id: 2,
-    image_url: '/images/telemedicine.jpg',
-    author: 'Dr. Chinedu Obi',
-    published_at: '2023-11-08',
+    image_url: 'https://images.unsplash.com/photo-1632053002636-e1d0ef220e9d?auto=format&fit=crop&w=800&q=80',
+    author: 'Dr. Funmi Adebayo',
+    published_at: '2023-08-30',
     featured: false,
-    tags: ['Telemedicine', 'Rural Health', 'Healthcare Access', 'Technology']
-  },
+    tags: ['Vaccination', 'Public Health', 'Health Education', 'Community Engagement']
+  }
 ];
-
