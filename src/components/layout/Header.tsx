@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Menu, X } from 'lucide-react';
+import { Menu, X, TrendingUp, Clock, Fire } from 'lucide-react';
 import { SearchBar } from './navigation/SearchBar';
 import { UserMenu, MobileUserMenu } from './navigation/UserMenu';
 import { TopBar } from './navigation/TopBar';
@@ -13,7 +13,15 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { user } = useAuth();
-  const categories = ["Tech", "Auto", "Health", "Entertainment", "Business", "Sports"];
+  
+  const categories = [
+    { name: "Tech", slug: "tech", color: "bg-blue-500", hoverColor: "hover:bg-blue-50 hover:text-blue-600" },
+    { name: "Auto", slug: "auto", color: "bg-red-500", hoverColor: "hover:bg-red-50 hover:text-red-600" },
+    { name: "Health", slug: "health", color: "bg-green-500", hoverColor: "hover:bg-green-50 hover:text-green-600" },
+    { name: "Entertainment", slug: "entertainment", color: "bg-purple-500", hoverColor: "hover:bg-purple-50 hover:text-purple-600" },
+    { name: "Business", slug: "business", color: "bg-indigo-500", hoverColor: "hover:bg-indigo-50 hover:text-indigo-600" },
+    { name: "Sports", slug: "sports", color: "bg-orange-500", hoverColor: "hover:bg-orange-50 hover:text-orange-600" }
+  ];
   
   useEffect(() => {
     setIsOpen(false);
@@ -25,7 +33,7 @@ export function Header() {
   
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-md shadow-sm">
-      {/* Top bar with date and email */}
+      {/* Top bar with date */}
       <TopBar />
       
       {/* Main header */}
@@ -42,28 +50,41 @@ export function Header() {
             </span>
           </Link>
           
-          {/* Enhanced Desktop Navigation */}
+          {/* Enhanced Desktop Navigation with Functional Categories */}
           <nav className="hidden md:flex items-center gap-1">
             {categories.map((category) => (
               <Link
-                key={category}
-                to={`/category/${category.toLowerCase()}`}
+                key={category.slug}
+                to={`/category/${category.slug}`}
                 className={cn(
-                  "px-3 py-2 text-sm font-medium transition-all duration-200 rounded-md hover:bg-orange-50 hover:text-orange-600",
-                  location.pathname.includes(category.toLowerCase()) && "bg-orange-100 text-orange-700"
+                  "relative px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg group",
+                  category.hoverColor,
+                  location.pathname.includes(category.slug) && `bg-gradient-to-r from-${category.color.split('-')[1]}-100 to-${category.color.split('-')[1]}-50 text-${category.color.split('-')[1]}-700 shadow-sm`
                 )}
               >
-                {category}
+                <div className="flex items-center gap-1">
+                  <div className={cn("w-2 h-2 rounded-full", category.color, "opacity-70 group-hover:opacity-100")}></div>
+                  {category.name}
+                </div>
+                {location.pathname.includes(category.slug) && (
+                  <div className={cn("absolute bottom-0 left-0 right-0 h-0.5 rounded-full", category.color)}></div>
+                )}
               </Link>
             ))}
             <Link
               to="/videos"
               className={cn(
-                "px-3 py-2 text-sm font-medium transition-all duration-200 rounded-md hover:bg-orange-50 hover:text-orange-600",
-                location.pathname === "/videos" && "bg-orange-100 text-orange-700"
+                "px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg hover:bg-gradient-to-r hover:from-pink-50 hover:to-pink-100 hover:text-pink-600 relative group",
+                location.pathname === "/videos" && "bg-gradient-to-r from-pink-100 to-pink-50 text-pink-700 shadow-sm"
               )}
             >
-              Videos
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 rounded-full bg-pink-500 opacity-70 group-hover:opacity-100"></div>
+                Videos
+              </div>
+              {location.pathname === "/videos" && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 rounded-full"></div>
+              )}
             </Link>
           </nav>
         </div>
@@ -72,7 +93,7 @@ export function Header() {
           {/* Enhanced Search */}
           <SearchBar />
           
-          {/* Auth Section - Only Sign In */}
+          {/* Auth Section */}
           <div className="hidden md:flex items-center gap-2">
             {user ? (
               <UserMenu onMenuItemClick={handleMenuClose} />
@@ -104,29 +125,31 @@ export function Header() {
         <nav className="flex flex-col space-y-4 mb-6">
           {categories.map((category) => (
             <Link
-              key={category}
-              to={`/category/${category.toLowerCase()}`}
+              key={category.slug}
+              to={`/category/${category.slug}`}
               className={cn(
-                "text-sm font-medium transition-colors py-2 px-3 rounded-md",
-                location.pathname.includes(category.toLowerCase()) 
-                  ? "bg-orange-100 text-orange-700" 
-                  : "hover:text-orange-600 hover:bg-orange-50"
+                "text-sm font-medium transition-colors py-3 px-4 rounded-lg flex items-center gap-2",
+                location.pathname.includes(category.slug) 
+                  ? `bg-gradient-to-r from-${category.color.split('-')[1]}-100 to-${category.color.split('-')[1]}-50 text-${category.color.split('-')[1]}-700` 
+                  : category.hoverColor
               )}
               onClick={handleMenuClose}
             >
-              {category}
+              <div className={cn("w-2 h-2 rounded-full", category.color)}></div>
+              {category.name}
             </Link>
           ))}
           <Link
             to="/videos"
             className={cn(
-              "text-sm font-medium transition-colors py-2 px-3 rounded-md",
+              "text-sm font-medium transition-colors py-3 px-4 rounded-lg flex items-center gap-2",
               location.pathname === "/videos"
-                ? "bg-orange-100 text-orange-700" 
-                : "hover:text-orange-600 hover:bg-orange-50"
+                ? "bg-gradient-to-r from-pink-100 to-pink-50 text-pink-700" 
+                : "hover:bg-pink-50 hover:text-pink-600"
             )}
             onClick={handleMenuClose}
           >
+            <div className="w-2 h-2 rounded-full bg-pink-500"></div>
             Videos
           </Link>
         </nav>

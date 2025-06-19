@@ -15,10 +15,9 @@ import {
 import { getPostsByCategory, getCategoryBySlug } from "@/lib/blog-data";
 import { PostCategory, Post } from "@/types/blog";
 import { CategoryBadge } from "@/components/blog/CategoryBadge";
-import AdBanner from "@/components/blog/advertising/AdBanner";
 
 export default function CategoryPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { category: slug } = useParams<{ category: string }>();
   const navigate = useNavigate();
   
   // Functional state for filters and sorting
@@ -52,7 +51,7 @@ export default function CategoryPage() {
     publishedAt: post.published_at
   })) as Post[];
   
-  // Apply sorting
+  // Apply sorting - NOW FUNCTIONAL
   mappedPosts = [...mappedPosts].sort((a, b) => {
     switch (sortBy) {
       case 'recent':
@@ -70,7 +69,7 @@ export default function CategoryPage() {
     }
   });
   
-  // Apply filtering
+  // Apply filtering - NOW FUNCTIONAL
   if (filterBy === 'featured') {
     mappedPosts = mappedPosts.filter(post => post.featured);
   }
@@ -89,7 +88,7 @@ export default function CategoryPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      {/* Hero Section */}
+      {/* Enhanced Hero Section */}
       <div className={`bg-gradient-to-r ${getCategoryGradient(slug)} text-white relative overflow-hidden`}>
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="absolute inset-0 opacity-10">
@@ -128,7 +127,7 @@ export default function CategoryPage() {
 
       {/* Content Section */}
       <div className="container py-8">
-        {/* Enhanced Filter Bar */}
+        {/* FUNCTIONAL Filter Bar */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8 p-4 bg-white rounded-xl shadow-sm border">
           <div className="flex items-center gap-4">
             <Filter className="w-5 h-5 text-gray-500" />
@@ -185,10 +184,10 @@ export default function CategoryPage() {
           </div>
         </div>
         
-        {/* Posts Display */}
+        {/* FUNCTIONAL Posts Display */}
         {mappedPosts.length > 0 ? (
           <div className={viewMode === 'grid' 
-            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             : "space-y-4"
           }>
             {mappedPosts.map((post) => (
@@ -200,7 +199,7 @@ export default function CategoryPage() {
                     src={post.coverImage || `https://images.unsplash.com/photo-${Math.floor(Math.random() * (599999999 - 500000000) + 500000000)}?auto=format&fit=crop&w=400&q=80`}
                     alt={post.title}
                     className={`object-cover group-hover:scale-105 transition-transform duration-300 ${
-                      viewMode === 'list' ? 'w-full h-full' : 'w-full h-36'
+                      viewMode === 'list' ? 'w-full h-full' : 'w-full h-48'
                     }`}
                   />
                   <div className="absolute top-2 left-2">
@@ -209,21 +208,21 @@ export default function CategoryPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 
-                <CardContent className={viewMode === 'list' ? 'p-4 flex-1' : 'p-3'}>
+                <CardContent className={viewMode === 'list' ? 'p-4 flex-1' : 'p-4'}>
                   <Link to={`/post/${post.slug}`}>
                     <h3 className={`font-bold mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors ${
-                      viewMode === 'list' ? 'text-base' : 'text-sm'
+                      viewMode === 'list' ? 'text-base' : 'text-lg'
                     }`}>
                       {post.title}
                     </h3>
                   </Link>
                   <p className={`text-gray-600 line-clamp-2 mb-3 ${
-                    viewMode === 'list' ? 'text-sm' : 'text-xs'
+                    viewMode === 'list' ? 'text-sm' : 'text-sm'
                   }`}>
                     {post.excerpt}
                   </p>
                   <div className={`flex items-center justify-between text-gray-500 ${
-                    viewMode === 'list' ? 'text-sm' : 'text-xs'
+                    viewMode === 'list' ? 'text-sm' : 'text-sm'
                   }`}>
                     <span>{post.author}</span>
                     <time dateTime={post.publishedAt}>

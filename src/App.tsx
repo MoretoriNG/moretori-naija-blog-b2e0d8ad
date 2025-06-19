@@ -43,16 +43,17 @@ function App() {
             </Route>
             
             {/* Admin Layout Routes */}
-            <Route path="/admin" element={
-              <ProtectedRoute>
-                <AdminLayout />
-              </ProtectedRoute>
-            }>
-              <Route index element={<AdminDashboard />} />
-              <Route path="posts/new" element={<NewPostPage />} />
-              <Route path="posts/:id/edit" element={<EditPostPage />} />
-              <Route path="media" element={<MediaLibraryPage />} />
-              <Route path="settings" element={<SettingsPage />} />
+            <Route 
+              path="/admin" 
+              element={<ProtectedRoute redirectTo="/auth" />}
+            >
+              <Route path="" element={<AdminLayout />}>
+                <Route index element={<AdminDashboard />} />
+                <Route path="posts/new" element={<NewPostPage />} />
+                <Route path="posts/:id/edit" element={<EditPostPage />} />
+                <Route path="media" element={<MediaLibraryPage />} />
+                <Route path="settings" element={<SettingsPage />} />
+              </Route>
             </Route>
             
             {/* 404 Route */}
