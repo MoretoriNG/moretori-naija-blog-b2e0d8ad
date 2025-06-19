@@ -3,14 +3,12 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Post, PostCategory } from "@/types/blog";
 import { Button } from "@/components/ui/button";
-import { getRecentPostsByCategory, getCategoryById } from "@/lib/blog-data";
+import { getRecentPostsByCategory, getCategoryBySlug } from "@/lib/blog-data";
 import { toast } from "sonner";
 import AdBanner from "./advertising/AdBanner";
 
 // Import refactored components
 import { CategoryHeader } from "./category/CategoryHeader";
-import { CategoryFilters } from "./category/CategoryFilters";
-import { GridPostList } from "./category/GridPostList";
 import { ListPostList } from "./category/ListPostList";
 import { EmptyState } from "./category/EmptyState";
 
@@ -21,10 +19,7 @@ interface CategoryPostsProps {
 export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
   const [activeCategory, setActiveCategory] = useState<PostCategory>(initialCategory);
   const [loading, setLoading] = useState(false);
-  const [sortBy, setSortBy] = useState<'recent' | 'popular'>('recent');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [savedPosts, setSavedPosts] = useState<string[]>([]);
-  const [compactView, setCompactView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
   const categories: PostCategory[] = ['tech', 'auto', 'health', 'entertainment', 'business', 'sports'];
@@ -51,23 +46,10 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
   const categoryPosts = rawCategoryPosts.map(post => ({
     ...post,
     id: String(post.id),
-    category: getCategoryById(post.category_id)?.slug as PostCategory || 'uncategorized',
+    category: getCategoryBySlug(post.category_id)?.slug as PostCategory || 'uncategorized',
     coverImage: post.image_url,
     publishedAt: post.published_at
   })) as Post[];
-  
-  // Sort posts based on selection
-  const sortedPosts = [...categoryPosts].sort((a, b) => {
-    if (sortBy === 'recent') {
-      return new Date(b.publishedAt || b.published_at || '').getTime() - 
-             new Date(a.publishedAt || a.published_at || '').getTime();
-    } else {
-      // For "popular" we'll simulate popularity with a random factor based on post ID for demo
-      const popularityA = parseInt(String(a.id)) % 10;
-      const popularityB = parseInt(String(b.id)) % 10;
-      return popularityB - popularityA;
-    }
-  });
   
   const handleCategoryChange = (value: string) => {
     setActiveCategory(value as PostCategory);
@@ -105,36 +87,15 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
             getCategoryTitle={getCategoryTitle}
             handleCategoryChange={handleCategoryChange}
           />
-          
-          <CategoryFilters 
-            postsCount={sortedPosts.length}
-            sortBy={sortBy}
-            viewMode={viewMode}
-            compactView={compactView}
-            setSortBy={setSortBy}
-            setViewMode={setViewMode}
-            setCompactView={setCompactView}
-          />
         </div>
         
         <div className={`transition-opacity duration-300 ${loading ? 'opacity-50' : 'opacity-100'}`}>
-          {sortedPosts.length > 0 ? (
-            <>
-              {viewMode === 'grid' ? (
-                <GridPostList 
-                  posts={sortedPosts} 
-                  compactView={compactView} 
-                  handleSavePost={handleSavePost}
-                  savedPosts={savedPosts}
-                />
-              ) : (
-                <ListPostList 
-                  posts={sortedPosts}
-                  handleSavePost={handleSavePost}
-                  savedPosts={savedPosts}
-                />
-              )}
-            </>
+          {categoryPosts.length > 0 ? (
+            <ListPostList 
+              posts={categoryPosts}
+              handleSavePost={handleSavePost}
+              savedPosts={savedPosts}
+            />
           ) : (
             <EmptyState category={activeCategory} />
           )}

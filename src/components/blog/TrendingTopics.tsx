@@ -1,34 +1,35 @@
 
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Flame, Zap } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 
 export function TrendingTopics() {
   const trendingTopics = [
-    { name: "Politics", slug: "politics", icon: <TrendingUp className="h-3 w-3" /> },
-    { name: "Music", slug: "music", icon: <Flame className="h-3 w-3" /> },
-    { name: "Fashion", slug: "fashion", icon: <Zap className="h-3 w-3" /> },
-    { name: "Sports", slug: "sports", icon: <Flame className="h-3 w-3" /> },
-    { name: "Afrobeats", slug: "afrobeats", icon: <TrendingUp className="h-3 w-3" /> },
-    { name: "Nollywood", slug: "nollywood", icon: <Zap className="h-3 w-3" /> }
+    { name: "Politics", slug: "politics" },
+    { name: "Music", slug: "music" },
+    { name: "Fashion", slug: "fashion" },
+    { name: "Sports", slug: "sports" },
+    { name: "Afrobeats", slug: "afrobeats" },
+    { name: "Nollywood", slug: "nollywood" }
   ];
 
   return (
-    <section className="py-4 border-y border-border/50 bg-muted/30 backdrop-blur-sm">
+    <section className="py-3 border-y border-border/30 bg-muted/20">
       <div className="container">
-        <div className="flex items-center gap-3 overflow-x-auto py-2 scrollbar-none">
+        <div className="flex items-center gap-2 flex-wrap">
           <span className="flex items-center gap-1 font-medium text-sm text-foreground/70 whitespace-nowrap">
-            <TrendingUp className="h-4 w-4 text-vibehub-purple" /> Trending:
+            <TrendingUp className="h-3 w-3 text-orange-500" /> Trending:
           </span>
           
-          {trendingTopics.map((topic) => (
-            <Link key={topic.slug} to={`/category/${topic.slug}`}>
-              <Badge variant="outline" className="bg-background/60 hover:bg-background flex items-center gap-1 py-1.5">
-                {topic.icon}
-                <span>{topic.name}</span>
-              </Badge>
-            </Link>
-          ))}
+          <div className="flex flex-wrap gap-1">
+            {trendingTopics.map((topic) => (
+              <Link key={topic.slug} to={`/category/${topic.slug}`}>
+                <Badge variant="outline" className="bg-background/50 hover:bg-background text-xs py-0.5 px-2">
+                  {topic.name}
+                </Badge>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </section>

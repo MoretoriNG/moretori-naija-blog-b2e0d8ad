@@ -11,9 +11,11 @@ import {
   CarouselContent,
   CarouselItem,
   CarouselPrevious,
-  CarouselNext
+  CarouselNext,
+  CarouselApi
 } from "@/components/ui/carousel";
 import { getPostsByCategory, getAllPosts } from "@/lib/blog";
+import Autoplay from "embla-carousel-autoplay";
 
 interface HeroSliderProps {
   posts: Post[];
@@ -42,6 +44,7 @@ export function HeroSlider({ posts }: HeroSliderProps) {
   
   const [isLoaded, setIsLoaded] = useState(false);
   const [categoryPlaylists, setCategoryPlaylists] = useState<{[key: string]: Post[]}>({});
+  const [api, setApi] = useState<CarouselApi>();
   
   useEffect(() => {
     setIsLoaded(true);
@@ -63,6 +66,16 @@ export function HeroSlider({ posts }: HeroSliderProps) {
     
     setCategoryPlaylists(playlists);
   }, []);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    api.on("select", () => {
+      setActiveIndex(api.selectedScrollSnap());
+    });
+  }, [api, setActiveIndex]);
   
   if (posts.length === 0) {
     return null;
@@ -79,12 +92,18 @@ export function HeroSlider({ posts }: HeroSliderProps) {
         {/* Main Carousel - Takes 3/4 of the width */}
         <div className="lg:col-span-3 relative">
           <Carousel
+            setApi={setApi}
             opts={{
               loop: true,
             }}
+            plugins={[
+              Autoplay({
+                delay: 5000,
+                stopOnInteraction: true,
+                stopOnMouseEnter: true,
+              }),
+            ]}
             className="w-full h-full"
-            onMouseEnter={() => setAutoplayEnabled(false)}
-            onMouseLeave={() => setAutoplayEnabled(true)}
           >
             <CarouselContent className="h-full">
               {enhancedPosts.map((post, index) => (
