@@ -46,7 +46,7 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
   const categoryPosts = rawCategoryPosts.map(post => ({
     ...post,
     id: String(post.id),
-    category: getCategoryBySlug(post.category_id)?.slug as PostCategory || 'uncategorized',
+    category: getCategoryBySlug(String(post.category_id))?.slug as PostCategory || 'uncategorized',
     coverImage: post.image_url,
     publishedAt: post.published_at
   })) as Post[];

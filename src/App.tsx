@@ -11,7 +11,8 @@ import PostPage from "@/pages/PostPage";
 import VideosPage from "@/pages/VideosPage";
 import AboutPage from "@/pages/AboutPage";
 import NotFound from "@/pages/NotFound";
-import AuthPage from "@/pages/auth/AuthPage";
+import UserAuthPage from "@/pages/auth/UserAuthPage";
+import AdminAuthPage from "@/pages/auth/AdminAuthPage";
 import UserProfilePage from "@/pages/UserProfilePage";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import NewPostPage from "@/pages/admin/NewPostPage";
@@ -29,8 +30,11 @@ function App() {
       <Router>
         <AuthProvider>
           <Routes>
-            {/* Auth Route */}
-            <Route path="/auth" element={<AuthPage />} />
+            {/* Auth Routes */}
+            <Route path="/auth/user" element={<UserAuthPage />} />
+            <Route path="/auth/admin" element={<AdminAuthPage />} />
+            {/* Legacy auth route redirect */}
+            <Route path="/auth" element={<UserAuthPage />} />
             
             {/* Main Layout Routes */}
             <Route path="/" element={<MainLayout />}>
@@ -45,7 +49,7 @@ function App() {
             {/* Admin Layout Routes */}
             <Route 
               path="/admin" 
-              element={<ProtectedRoute redirectTo="/auth" />}
+              element={<ProtectedRoute redirectTo="/auth/admin" />}
             >
               <Route path="" element={<AdminLayout />}>
                 <Route index element={<AdminDashboard />} />
