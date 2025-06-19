@@ -36,9 +36,6 @@ export function UserMenu({ onMenuItemClick }: UserMenuProps) {
             <DropdownMenuItem asChild>
               <Link to="/profile" onClick={onMenuItemClick}>Profile</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link to="/favorites" onClick={onMenuItemClick}>My Favorites</Link>
-            </DropdownMenuItem>
             {user && (
               <DropdownMenuItem asChild>
                 <Link to="/admin" onClick={onMenuItemClick}>Admin Panel</Link>

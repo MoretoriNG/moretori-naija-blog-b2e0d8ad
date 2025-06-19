@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Menu, X, Facebook, Twitter, Instagram } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { SearchBar } from './navigation/SearchBar';
 import { UserMenu, MobileUserMenu } from './navigation/UserMenu';
 import { TopBar } from './navigation/TopBar';
@@ -25,7 +25,7 @@ export function Header() {
   
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-md shadow-sm">
-      {/* Top bar with date and socials */}
+      {/* Top bar with date and email */}
       <TopBar />
       
       {/* Main header */}
@@ -69,22 +69,6 @@ export function Header() {
         </div>
         
         <div className="flex items-center gap-4">
-          {/* Enhanced Social Links */}
-          <div className="hidden md:flex items-center gap-2">
-            <a href="https://facebook.com" target="_blank" rel="noreferrer" 
-               className="p-2 text-muted-foreground hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all">
-              <Facebook className="h-4 w-4" />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noreferrer" 
-               className="p-2 text-muted-foreground hover:text-sky-500 hover:bg-sky-50 rounded-full transition-all">
-              <Twitter className="h-4 w-4" />
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" 
-               className="p-2 text-muted-foreground hover:text-pink-600 hover:bg-pink-50 rounded-full transition-all">
-              <Instagram className="h-4 w-4" />
-            </a>
-          </div>
-          
           {/* Enhanced Search */}
           <SearchBar />
           

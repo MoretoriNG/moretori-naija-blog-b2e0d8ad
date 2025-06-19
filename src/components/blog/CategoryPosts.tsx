@@ -84,9 +84,9 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
   };
   
   const getCategoryTitle = (category: PostCategory): string => {
-    const titles: Record<PostCategory, string> = {
+    const titles: Record<string, string> = {
       tech: "Technology",
-      auto: "Automotive",
+      auto: "Automotive", 
       health: "Health & Wellness",
       entertainment: "Entertainment",
       business: "Business",

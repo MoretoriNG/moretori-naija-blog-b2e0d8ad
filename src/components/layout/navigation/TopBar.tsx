@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Calendar, Mail, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Calendar, Mail } from 'lucide-react';
 
 export function TopBar() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -29,22 +29,11 @@ export function TopBar() {
           <Calendar className="h-3.5 w-3.5 mr-1.5" />
           <span>{formattedDate}</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center">
           <a href="mailto:contact@moretorinaija.com" className="flex items-center text-xs hover:text-blue-200 transition-colors">
             <Mail className="h-3.5 w-3.5 mr-1" />
             <span className="hidden sm:inline">contact@moretorinaija.com</span>
           </a>
-          <div className="flex gap-2">
-            <a href="https://facebook.com" target="_blank" rel="noreferrer" className="hover:text-blue-200 transition-colors">
-              <Facebook className="h-3.5 w-3.5" />
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-blue-200 transition-colors">
-              <Instagram className="h-3.5 w-3.5" />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-blue-200 transition-colors">
-              <Twitter className="h-3.5 w-3.5" />
-            </a>
-          </div>
         </div>
       </div>
     </div>
