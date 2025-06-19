@@ -8,12 +8,14 @@ import { EmptyState } from "@/components/blog/category/EmptyState";
 import { getPostsByCategory, getCategoryById } from "@/lib/blog";
 import { PostCategory, Post } from "@/types/blog";
 import AdBanner from "@/components/blog/advertising/AdBanner";
+import { toast } from "sonner";
 
 export default function CategoryPage() {
   const { category } = useParams<{ category: string }>();
   const [activeCategory, setActiveCategory] = useState<PostCategory>(category as PostCategory || 'tech');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [compactView, setCompactView] = useState(false);
+  const [savedPosts, setSavedPosts] = useState<string[]>([]);
 
   const categories: PostCategory[] = ['tech', 'auto', 'health', 'entertainment', 'business', 'sports'];
 
@@ -32,6 +34,18 @@ export default function CategoryPage() {
   const getCategoryTitle = (category: PostCategory): string => {
     const categoryData = getCategoryById(category);
     return categoryData?.name || category.charAt(0).toUpperCase() + category.slice(1);
+  };
+
+  const handleSavePost = (postId: string) => {
+    setSavedPosts(prev => {
+      if (prev.includes(postId)) {
+        toast.success("Post removed from bookmarks");
+        return prev.filter(id => id !== postId);
+      } else {
+        toast.success("Post saved to bookmarks");
+        return [...prev, postId];
+      }
+    });
   };
 
   // Get posts for the active category
@@ -55,15 +69,24 @@ export default function CategoryPage() {
         />
 
         {/* Ad Banner */}
-        <AdBanner size="banner" id="category-top" className="mb-8" />
+        <AdBanner size="large" id="category-top" className="mb-8" />
 
         {/* Posts Grid/List */}
         {posts.length > 0 ? (
           <div className="space-y-6">
             {viewMode === 'grid' ? (
-              <GridPostList posts={posts} compactView={compactView} />
+              <GridPostList 
+                posts={posts} 
+                compactView={compactView}
+                handleSavePost={handleSavePost}
+                savedPosts={savedPosts}
+              />
             ) : (
-              <ListPostList posts={posts} compactView={compactView} />
+              <ListPostList 
+                posts={posts}
+                handleSavePost={handleSavePost}
+                savedPosts={savedPosts}
+              />
             )}
           </div>
         ) : (
@@ -71,7 +94,7 @@ export default function CategoryPage() {
         )}
 
         {/* Bottom Ad Banner */}
-        <AdBanner size="banner" id="category-bottom" className="mt-12" />
+        <AdBanner size="large" id="category-bottom" className="mt-12" />
       </div>
     </div>
   );
