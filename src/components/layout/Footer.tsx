@@ -68,7 +68,12 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {/* Brand Column */}
           <div className="space-y-4 col-span-2 md:col-span-1">
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center space-x-3">
+              <img 
+                src="/lovable-uploads/f9e07f20-f02d-4c0a-af0c-0ac7050a9b97.png" 
+                alt="Moretori Naija Logo" 
+                className="h-10 w-auto"
+              />
               <span className="text-xl font-bold bg-gradient-to-r from-blue-400 via-green-400 to-orange-400 bg-clip-text text-transparent">
                 Moretori Naija
               </span>
@@ -89,7 +94,7 @@ export function Footer() {
           <div className="space-y-3">
             <h3 className="text-base font-medium">Categories</h3>
             <div className="grid grid-cols-1 gap-1">
-              {["Tech", "Auto", "Health", "Entertainment", "News"].map((category) => (
+              {["Tech", "Auto", "Health", "Entertainment", "Business", "Sports"].map((category) => (
                 <FooterLink key={category} to={`/category/${category.toLowerCase()}`}>
                   {category}
                 </FooterLink>

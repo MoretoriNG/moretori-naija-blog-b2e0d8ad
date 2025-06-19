@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Menu, X, TrendingUp, Clock, Fire } from 'lucide-react';
+import { Menu, X, TrendingUp, Clock } from 'lucide-react';
 import { SearchBar } from './navigation/SearchBar';
 import { UserMenu, MobileUserMenu } from './navigation/UserMenu';
 import { TopBar } from './navigation/TopBar';

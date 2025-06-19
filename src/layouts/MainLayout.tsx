@@ -18,18 +18,16 @@ export default function MainLayout() {
     <div className="flex min-h-screen flex-col">
       <Header />
       
-      <div className="flex flex-1">
-        <main className={`flex-1 ${shouldShowSidebar ? 'mr-6' : ''}`}>
-          <Outlet />
-        </main>
+      <main className="flex-1">
+        <Outlet />
         
-        {/* Right Sidebar - Hidden on mobile, shown on desktop */}
+        {/* Right Sidebar - Show below content on all pages */}
         {shouldShowSidebar && (
-          <aside className="hidden xl:block flex-shrink-0 sticky top-20 h-fit">
+          <div className="container my-8 flex justify-center">
             <RightSidebar />
-          </aside>
+          </div>
         )}
-      </div>
+      </main>
       
       {/* Single footer ad banner */}
       <AdBanner 

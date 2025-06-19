@@ -24,11 +24,18 @@ export function Newsletter() {
       <div className="container px-4 md:px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-3 text-center md:text-left">
-            <div className="inline-block rounded-lg bg-blue-500/30 px-3 py-1 text-sm">
-              <span className="flex items-center gap-1">
-                <Mail className="h-3.5 w-3.5" />
-                <span>Newsletter</span>
-              </span>
+            <div className="flex items-center gap-3 mb-4">
+              <img 
+                src="/lovable-uploads/f9e07f20-f02d-4c0a-af0c-0ac7050a9b97.png" 
+                alt="Moretori Naija Logo" 
+                className="h-10 w-auto"
+              />
+              <div className="inline-block rounded-lg bg-blue-500/30 px-3 py-1 text-sm">
+                <span className="flex items-center gap-1">
+                  <Mail className="h-3.5 w-3.5" />
+                  <span>Newsletter</span>
+                </span>
+              </div>
             </div>
             <h2 className="text-2xl font-bold tracking-tighter">
               Stay Updated with <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">Moretori Naija</span>

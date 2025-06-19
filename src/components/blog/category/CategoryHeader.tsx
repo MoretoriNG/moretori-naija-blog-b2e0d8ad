@@ -1,16 +1,8 @@
 
 import { PostCategory } from "@/types/blog";
-import { Sparkles, Filter, SortAsc, Grid3X3, List, Bookmark, Eye } from "lucide-react";
+import { Sparkles, Eye, Bookmark } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
 
 interface CategoryHeaderProps {
   activeCategory: PostCategory;
@@ -33,8 +25,6 @@ export function CategoryHeader({
       entertainment: { posts: 28, trending: 15 },
       business: { posts: 41, trending: 9 },
       sports: { posts: 36, trending: 11 },
-      lifestyle: { posts: 29, trending: 7 },
-      news: { posts: 52, trending: 18 },
       auto: { posts: 24, trending: 6 }
     };
     return stats[category] || { posts: 0, trending: 0 };
@@ -77,56 +67,6 @@ export function CategoryHeader({
             </Badge>
           </div>
         </div>
-        
-        {/* Action Buttons */}
-        <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="border-blue-200 hover:bg-blue-50">
-                <Filter className="w-4 h-4 mr-2" />
-                Filter
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem>
-                <Sparkles className="w-4 h-4 mr-2" />
-                Featured Only
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Eye className="w-4 h-4 mr-2" />
-                Most Viewed
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Bookmark className="w-4 h-4 mr-2" />
-                Saved Articles
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="border-blue-200 hover:bg-blue-50">
-                <SortAsc className="w-4 h-4 mr-2" />
-                Sort
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
-              <DropdownMenuItem>Latest First</DropdownMenuItem>
-              <DropdownMenuItem>Most Popular</DropdownMenuItem>
-              <DropdownMenuItem>A-Z</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          
-          <div className="flex items-center border border-blue-200 rounded-lg overflow-hidden">
-            <Button variant="ghost" size="sm" className="hover:bg-blue-50 rounded-none">
-              <Grid3X3 className="w-4 h-4" />
-            </Button>
-            <Button variant="ghost" size="sm" className="hover:bg-blue-50 rounded-none">
-              <List className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
       </div>
       
       {/* Enhanced Category Tabs */}
@@ -137,7 +77,7 @@ export function CategoryHeader({
           onValueChange={handleCategoryChange}
           className="w-full"
         >
-          <TabsList className="grid grid-cols-4 md:grid-cols-8 gap-2 min-w-[600px] md:min-w-0 bg-white/60 backdrop-blur-sm p-1 rounded-xl">
+          <TabsList className="grid grid-cols-3 md:grid-cols-6 gap-2 min-w-[600px] md:min-w-0 bg-white/60 backdrop-blur-sm p-1 rounded-xl">
             {categories.map((category) => (
               <TabsTrigger 
                 key={category} 
