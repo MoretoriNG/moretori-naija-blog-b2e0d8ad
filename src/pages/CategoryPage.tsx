@@ -5,7 +5,7 @@ import { CategoryHeader } from "@/components/blog/category/CategoryHeader";
 import { GridPostList } from "@/components/blog/category/GridPostList";
 import { ListPostList } from "@/components/blog/category/ListPostList";
 import { EmptyState } from "@/components/blog/category/EmptyState";
-import { getPostsByCategory, getCategoryById } from "@/lib/blog";
+import { getPostsByCategory, getCategoryBySlug } from "@/lib/blog";
 import { PostCategory, Post } from "@/types/blog";
 import AdBanner from "@/components/blog/advertising/AdBanner";
 import { toast } from "sonner";
@@ -32,7 +32,7 @@ export default function CategoryPage() {
   };
 
   const getCategoryTitle = (category: PostCategory): string => {
-    const categoryData = getCategoryById(category);
+    const categoryData = getCategoryBySlug(category);
     return categoryData?.name || category.charAt(0).toUpperCase() + category.slice(1);
   };
 
