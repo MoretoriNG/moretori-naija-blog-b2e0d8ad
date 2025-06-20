@@ -2,7 +2,7 @@
 export type PostCategory = 'tech' | 'auto' | 'health' | 'entertainment' | 'news' | 'business' | 'sports' | 'lifestyle';
 
 export interface Post {
-  id: string | number;
+  id: string;
   title: string;
   slug: string;
   excerpt: string;

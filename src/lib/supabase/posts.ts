@@ -38,6 +38,18 @@ export const supabasePosts = {
     return data;
   },
 
+  // Get post by ID
+  async getPostById(id: string) {
+    const { data, error } = await supabase
+      .from('posts')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
   // Create new post
   async createPost(post: Omit<Post, 'id' | 'created_at' | 'updated_at'>) {
     const { data, error } = await supabase

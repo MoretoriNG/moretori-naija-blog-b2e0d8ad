@@ -22,8 +22,7 @@ export default function EditPostPage() {
   const loadPost = async () => {
     try {
       setLoading(true);
-      const allPosts = await supabasePosts.getAllPosts();
-      const foundPost = allPosts.find(p => String(p.id) === id);
+      const foundPost = await supabasePosts.getPostById(id!);
       
       if (!foundPost) {
         toast.error("Post not found");

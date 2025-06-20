@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { PostList } from "@/components/admin/PostList";
@@ -50,12 +49,12 @@ export default function AdminDashboard() {
 
       setPosts(transformedPosts);
       
-      // Calculate stats
+      // Calculate stats using the original Supabase data for published status
       setStats({
         totalPosts: transformedPosts.length,
         featuredPosts: transformedPosts.filter(post => post.featured).length,
-        publishedPosts: transformedPosts.filter(post => allPosts.find(p => p.id === post.id)?.published).length,
-        draftPosts: transformedPosts.filter(post => !allPosts.find(p => p.id === post.id)?.published).length
+        publishedPosts: allPosts.filter(post => post.published).length,
+        draftPosts: allPosts.filter(post => !post.published).length
       });
     } catch (error) {
       console.error('Error loading posts:', error);
