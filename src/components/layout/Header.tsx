@@ -40,11 +40,9 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
           <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-            <img 
-              src="/lovable-uploads/f9e07f20-f02d-4c0a-af0c-0ac7050a9b97.png" 
-              alt="Moretori Naija Logo" 
-              className="h-12 w-auto drop-shadow-md"
-            />
+            <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-xl">MN</span>
+            </div>
             <span className="text-2xl font-black text-orange-500 tracking-tight">
               Moretori Naija
             </span>
@@ -99,7 +97,7 @@ export function Header() {
               <UserMenu onMenuItemClick={handleMenuClose} />
             ) : (
               <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white font-medium">
-                <Link to="/auth">Sign In</Link>
+                <Link to="/auth/user">Sign In</Link>
               </Button>
             )}
           </div>
@@ -159,7 +157,7 @@ export function Header() {
           <MobileUserMenu onMenuItemClick={handleMenuClose} />
         ) : (
           <Button asChild className="w-full bg-orange-500 hover:bg-orange-600 text-white">
-            <Link to="/auth" onClick={handleMenuClose}>Sign In</Link>
+            <Link to="/auth/user" onClick={handleMenuClose}>Sign In</Link>
           </Button>
         )}
       </div>

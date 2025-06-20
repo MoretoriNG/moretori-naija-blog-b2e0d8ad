@@ -5,26 +5,10 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/compone
 import { AdminNav } from "@/components/admin/AdminNav";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { Loader2 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function AdminLayout() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Simulate authentication check
-  // In a real app, this would check a token in localStorage or a cookie
-  useEffect(() => {
-    const checkAuth = () => {
-      // For demo purposes, we'll consider the user authenticated
-      // In a real app, this would verify a token with your backend
-      const isLoggedIn = localStorage.getItem("admin_authenticated") === "true";
-      setIsAuthenticated(isLoggedIn);
-      setIsLoading(false);
-    };
-
-    // Add a small delay to simulate an API call
-    const timer = setTimeout(checkAuth, 500);
-    return () => clearTimeout(timer);
-  }, []);
+  const { user, profile, isLoading } = useAuth();
 
   if (isLoading) {
     return (
@@ -34,9 +18,12 @@ export default function AdminLayout() {
     );
   }
 
-  if (!isAuthenticated) {
-    // Redirect to admin login if not authenticated
-    return <Navigate to="/admin/login" replace />;
+  // Check if user is admin
+  const isAdmin = profile?.role === 'admin' || user?.user_metadata?.role === 'admin';
+
+  if (!user || !isAdmin) {
+    // Redirect to admin login if not authenticated or not admin
+    return <Navigate to="/auth/admin" replace />;
   }
 
   return (
