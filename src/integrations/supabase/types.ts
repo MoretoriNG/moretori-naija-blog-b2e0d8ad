@@ -9,33 +9,90 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      posts: {
+      categories: {
         Row: {
-          content: string
-          created_at: string | null
+          color: string | null
+          created_at: string
+          description: string | null
           id: number
-          image_url: string | null
-          summary: string | null
-          title: string
-          user_id: string
+          name: string
+          slug: string
         }
         Insert: {
-          content: string
-          created_at?: string | null
-          id?: never
-          image_url?: string | null
-          summary?: string | null
-          title: string
-          user_id: string
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          id?: number
+          name: string
+          slug: string
         }
         Update: {
-          content?: string
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          id?: number
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      posts: {
+        Row: {
+          author: string | null
+          category: string | null
+          content: string
+          cover_image: string | null
+          created_at: string | null
+          excerpt: string | null
+          featured: boolean | null
+          id: number
+          image_url: string | null
+          published: boolean | null
+          slug: string | null
+          summary: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+          user_id: string
+          video_url: string | null
+        }
+        Insert: {
+          author?: string | null
+          category?: string | null
+          content: string
+          cover_image?: string | null
           created_at?: string | null
+          excerpt?: string | null
+          featured?: boolean | null
           id?: never
           image_url?: string | null
+          published?: boolean | null
+          slug?: string | null
           summary?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+          video_url?: string | null
+        }
+        Update: {
+          author?: string | null
+          category?: string | null
+          content?: string
+          cover_image?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          featured?: boolean | null
+          id?: never
+          image_url?: string | null
+          published?: boolean | null
+          slug?: string | null
+          summary?: string | null
+          tags?: string[] | null
           title?: string
+          updated_at?: string | null
           user_id?: string
+          video_url?: string | null
         }
         Relationships: []
       }
@@ -43,18 +100,21 @@ export type Database = {
         Row: {
           avatar_url: string | null
           id: string
+          role: string | null
           updated_at: string | null
           username: string | null
         }
         Insert: {
           avatar_url?: string | null
           id: string
+          role?: string | null
           updated_at?: string | null
           username?: string | null
         }
         Update: {
           avatar_url?: string | null
           id?: string
+          role?: string | null
           updated_at?: string | null
           username?: string | null
         }
@@ -70,6 +130,7 @@ export type Database = {
         Returns: {
           avatar_url: string | null
           id: string
+          role: string | null
           updated_at: string | null
           username: string | null
         }[]

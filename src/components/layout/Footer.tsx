@@ -1,177 +1,169 @@
 
-import React from 'react';
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Facebook, Twitter, Instagram, Linkedin, Send, Mail, MapPin, Phone, ArrowRight } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
-import { toast } from "sonner";
+import { Link } from 'react-router-dom';
+import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-  
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      toast.success("Thanks for subscribing! You'll receive our latest updates soon.");
-      setTimeout(() => setSubscribed(false), 3000);
-      setEmail("");
-    }
-  };
-  
+
+  const quickLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
+    { name: 'Categories', href: '/category/tech' },
+    { name: 'Videos', href: '/videos' },
+  ];
+
+  const categories = [
+    { name: 'Technology', href: '/category/tech' },
+    { name: 'Automotive', href: '/category/auto' },
+    { name: 'Health', href: '/category/health' },
+    { name: 'Entertainment', href: '/category/entertainment' },
+    { name: 'Business', href: '/category/business' },
+    { name: 'Sports', href: '/category/sports' },
+  ];
+
+  const socialLinks = [
+    { name: 'Facebook', icon: Facebook, href: '#', color: 'hover:text-blue-600' },
+    { name: 'Twitter', icon: Twitter, href: '#', color: 'hover:text-blue-400' },
+    { name: 'Instagram', icon: Instagram, href: '#', color: 'hover:text-pink-600' },
+    { name: 'Youtube', icon: Youtube, href: '#', color: 'hover:text-red-600' },
+  ];
+
   return (
-    <footer className="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-12 relative">
-      {/* CTA Banner */}
-      <div className="container mb-12">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-6 md:p-8 relative overflow-hidden shadow-xl">
-          {/* Background pattern */}
-          <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgMkgyMFYyMEgyVjIiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIwLjUiIGZpbGw9Im5vbmUiLz4KPC9zdmc+')]"></div>
-          
-          <div className="grid md:grid-cols-3 gap-6 items-center relative z-10">
-            <div className="md:col-span-2 space-y-4">
-              <h2 className="text-2xl md:text-3xl font-bold">Stay Ahead with Our Newsletter</h2>
-              <p className="text-white/80">Get the latest news, trends, and updates delivered straight to your inbox</p>
-            </div>
-            <div>
-              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2">
-                <Input 
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50 flex-1" 
-                  placeholder="Your email" 
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <Button 
-                  type="submit" 
-                  size="sm"
-                  className="bg-white text-blue-600 hover:bg-white/90"
-                  disabled={subscribed}
-                >
-                  {subscribed ? 'Done ✓' : (
-                    <>
-                      <Send className="h-4 w-4 mr-1" /> Subscribe
-                    </>
-                  )}
-                </Button>
-              </form>
+    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+      {/* Newsletter Section */}
+      <div className="border-b border-gray-700">
+        <div className="container px-4 lg:px-8 py-12">
+          <div className="max-w-4xl mx-auto text-center">
+            <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
+              Stay Updated with Moretori Naija
+            </h3>
+            <p className="text-gray-300 mb-6 text-lg">
+              Get the latest news, reviews, and insights delivered straight to your inbox
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500"
+              />
+              <Button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold px-8">
+                Subscribe
+              </Button>
             </div>
           </div>
         </div>
       </div>
-      
-      <div className="container">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {/* Brand Column */}
-          <div className="space-y-4 col-span-2 md:col-span-1">
-            <Link to="/" className="flex items-center space-x-3">
-              <img 
-                src="/lovable-uploads/f9e07f20-f02d-4c0a-af0c-0ac7050a9b97.png" 
-                alt="Moretori Naija Logo" 
-                className="h-10 w-auto"
-              />
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 via-green-400 to-orange-400 bg-clip-text text-transparent">
+
+      {/* Main Footer Content */}
+      <div className="container px-4 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Brand Section */}
+          <div className="lg:col-span-1">
+            <Link to="/" className="flex items-center space-x-3 mb-6 group">
+              <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
+                <span className="text-white font-bold text-xl">MN</span>
+              </div>
+              <span className="text-2xl font-black bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
                 Moretori Naija
               </span>
             </Link>
-            <p className="text-white/70 text-sm">
-              Your source for the latest Nigerian news and trends
+            <p className="text-gray-300 mb-6 leading-relaxed">
+              Your premier destination for technology news, automotive reviews, health tips, and entertainment updates in Nigeria and beyond.
             </p>
-            
-            <div className="flex space-x-3">
-              <SocialButton href="https://facebook.com" icon={<Facebook />} label="Facebook" />
-              <SocialButton href="https://twitter.com" icon={<Twitter />} label="Twitter" />
-              <SocialButton href="https://instagram.com" icon={<Instagram />} label="Instagram" />
-              <SocialButton href="https://linkedin.com" icon={<Linkedin />} label="LinkedIn" />
-            </div>
-          </div>
-          
-          {/* Quick Links */}
-          <div className="space-y-3">
-            <h3 className="text-base font-medium">Categories</h3>
-            <div className="grid grid-cols-1 gap-1">
-              {["Tech", "Auto", "Health", "Entertainment", "Business", "Sports"].map((category) => (
-                <FooterLink key={category} to={`/category/${category.toLowerCase()}`}>
-                  {category}
-                </FooterLink>
+            <div className="flex space-x-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  className={`p-2 rounded-full bg-gray-800 text-gray-400 transition-all duration-300 ${social.color} hover:bg-gray-700 hover:scale-110`}
+                  aria-label={social.name}
+                >
+                  <social.icon className="h-5 w-5" />
+                </a>
               ))}
             </div>
           </div>
-          
+
           {/* Quick Links */}
-          <div className="space-y-3">
-            <h3 className="text-base font-medium">Quick Links</h3>
-            <div className="space-y-1">
-              <FooterLink to="/about">About Us</FooterLink>
-              <FooterLink to="/contact">Contact</FooterLink>
-              <FooterLink to="/privacy">Privacy Policy</FooterLink>
-              <FooterLink to="/terms">Terms of Service</FooterLink>
-            </div>
+          <div>
+            <h4 className="text-lg font-semibold mb-6 text-orange-400">Quick Links</h4>
+            <ul className="space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.href}
+                    className="text-gray-300 hover:text-orange-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-          
-          {/* Contact */}
-          <div className="space-y-3">
-            <h3 className="text-base font-medium">Contact</h3>
-            <div className="text-sm text-white/70 space-y-2">
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4" />
-                <a href="mailto:info@moretorinaija.com" className="hover:text-white">info@moretorinaija.com</a>
+
+          {/* Categories */}
+          <div>
+            <h4 className="text-lg font-semibold mb-6 text-orange-400">Categories</h4>
+            <ul className="space-y-3">
+              {categories.map((category) => (
+                <li key={category.name}>
+                  <Link
+                    to={category.href}
+                    className="text-gray-300 hover:text-orange-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    {category.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="text-lg font-semibold mb-6 text-orange-400">Contact Info</h4>
+            <div className="space-y-4">
+              <div className="flex items-center text-gray-300">
+                <Mail className="h-5 w-5 text-orange-500 mr-3" />
+                <span>info@moretorinaija.com</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4" />
-                <a href="tel:+2341234567890" className="hover:text-white">+234 123 456 7890</a>
+              <div className="flex items-center text-gray-300">
+                <Phone className="h-5 w-5 text-orange-500 mr-3" />
+                <span>+234 (0) 123 456 7890</span>
               </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
+              <div className="flex items-start text-gray-300">
+                <MapPin className="h-5 w-5 text-orange-500 mr-3 mt-1 flex-shrink-0" />
                 <span>Lagos, Nigeria</span>
               </div>
             </div>
           </div>
         </div>
-        
-        <Separator className="my-6 opacity-25 bg-white/20" />
-        
-        {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center pt-2 text-sm">
-          <p className="text-white/70 mb-2 md:mb-0">
-            &copy; {currentYear} Moretori Naija. All rights reserved.
-          </p>
-          <div className="flex gap-4 text-xs text-white/70">
-            <Link to="/privacy" className="hover:text-white">Privacy</Link>
-            <Link to="/terms" className="hover:text-white">Terms</Link>
-            <Link to="/sitemap" className="hover:text-white">Sitemap</Link>
+      </div>
+
+      {/* Bottom Footer */}
+      <div className="border-t border-gray-700">
+        <div className="container px-4 lg:px-8 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="text-gray-400 text-sm">
+              © {currentYear} Moretori Naija. All rights reserved.
+            </div>
+            <div className="flex space-x-6 text-sm">
+              <Link to="/privacy" className="text-gray-400 hover:text-orange-400 transition-colors">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="text-gray-400 hover:text-orange-400 transition-colors">
+                Terms of Service
+              </Link>
+              <Link to="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">
+                Contact Us
+              </Link>
+            </div>
           </div>
         </div>
       </div>
     </footer>
   );
 }
-
-// Helper component for social media buttons
-const SocialButton = ({ href, icon, label }: { href: string, icon: React.ReactNode, label: string }) => (
-  <a 
-    href={href} 
-    target="_blank" 
-    rel="noreferrer"
-    className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-    aria-label={label}
-  >
-    <span className="sr-only">{label}</span>
-    {React.cloneElement(icon as React.ReactElement, { className: "h-4 w-4" })}
-  </a>
-);
-
-// Helper component for footer links
-const FooterLink = ({ to, children }: { to: string, children: React.ReactNode }) => (
-  <Link
-    to={to}
-    className="text-sm text-white/70 hover:text-white flex items-center gap-1 group"
-  >
-    <ArrowRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-    {children}
-  </Link>
-);

@@ -5,10 +5,10 @@ import { CategoryHeader } from "@/components/blog/category/CategoryHeader";
 import { GridPostList } from "@/components/blog/category/GridPostList";
 import { ListPostList } from "@/components/blog/category/ListPostList";
 import { EmptyState } from "@/components/blog/category/EmptyState";
-import { getPostsByCategory, getCategoryBySlug } from "@/lib/blog";
 import { PostCategory, Post } from "@/types/blog";
 import AdBanner from "@/components/blog/advertising/AdBanner";
 import { toast } from "sonner";
+import { supabasePosts } from "@/lib/supabase/posts";
 
 export default function CategoryPage() {
   const { category } = useParams<{ category: string }>();
@@ -16,6 +16,8 @@ export default function CategoryPage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [compactView, setCompactView] = useState(false);
   const [savedPosts, setSavedPosts] = useState<string[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const categories: PostCategory[] = ['tech', 'auto', 'health', 'entertainment', 'business', 'sports'];
 
@@ -26,14 +28,60 @@ export default function CategoryPage() {
     }
   }, [category]);
 
+  useEffect(() => {
+    loadPosts();
+  }, [activeCategory]);
+
+  const loadPosts = async () => {
+    try {
+      setLoading(true);
+      const categoryPosts = await supabasePosts.getAllPosts({ 
+        category: activeCategory, 
+        published: true 
+      });
+      
+      // Transform Supabase data to match our Post type
+      const transformedPosts = categoryPosts.map(post => ({
+        id: String(post.id),
+        title: post.title,
+        slug: post.slug,
+        excerpt: post.excerpt || '',
+        content: post.content,
+        coverImage: post.cover_image || `https://images.unsplash.com/photo-${Math.floor(Math.random() * (599999999 - 500000000) + 500000000)}?auto=format&fit=crop&w=800&q=80`,
+        category: post.category as PostCategory,
+        author: post.author || 'Unknown',
+        publishedAt: post.created_at || new Date().toISOString(),
+        featured: post.featured || false,
+        video: post.video_url,
+        tags: post.tags || []
+      })) as Post[];
+
+      setPosts(transformedPosts);
+    } catch (error) {
+      console.error('Error loading posts:', error);
+      setPosts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleCategoryChange = (value: string) => {
     setActiveCategory(value as PostCategory);
     window.history.pushState(null, '', `/category/${value}`);
   };
 
   const getCategoryTitle = (category: PostCategory): string => {
-    const categoryData = getCategoryBySlug(category);
-    return categoryData?.name || category.charAt(0).toUpperCase() + category.slice(1);
+    const categoryMap: Record<PostCategory, string> = {
+      tech: 'Technology',
+      auto: 'Automotive',
+      health: 'Health',
+      entertainment: 'Entertainment',
+      business: 'Business',
+      sports: 'Sports',
+      news: 'News',
+      lifestyle: 'Lifestyle'
+    };
+    return categoryMap[category] || category.charAt(0).toUpperCase() + category.slice(1);
   };
 
   const handleSavePost = (postId: string) => {
@@ -48,14 +96,13 @@ export default function CategoryPage() {
     });
   };
 
-  // Get posts for the active category
-  const posts = getPostsByCategory(activeCategory).map(post => ({
-    ...post,
-    id: String(post.id),
-    category: activeCategory,
-    coverImage: post.image_url,
-    publishedAt: post.published_at
-  })) as Post[];
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-background to-background/95 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">

@@ -1,5 +1,5 @@
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Post, PostCategory } from "@/types/blog";
 import { toast } from "sonner";
 import { AiPostGenerator } from "@/components/admin/AiPostGenerator";
-import { AlertCircle, Image, Save, Send, Upload, X, FileText, Code } from "lucide-react";
+import { Save, Send, Upload, X, FileText, Code, Image } from "lucide-react";
+import { supabasePosts } from "@/lib/supabase/posts";
 
 interface PostFormProps {
   post?: Post;
@@ -32,9 +33,12 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
   const [author, setAuthor] = useState(post?.author || "");
   const [featured, setFeatured] = useState(post?.featured || false);
   const [video, setVideo] = useState(post?.video || "");
+  const [tags, setTags] = useState(post?.tags?.join(', ') || "");
   const [isDraft, setIsDraft] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(post?.coverImage || null);
   const [activeTab, setActiveTab] = useState("content");
+  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState<any[]>([]);
   
   const [errors, setErrors] = useState<{
     title?: string;
@@ -43,6 +47,19 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
     coverImage?: string;
     author?: string;
   }>({});
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = async () => {
+    try {
+      const data = await supabasePosts.getCategories();
+      setCategories(data);
+    } catch (error) {
+      console.error('Error loading categories:', error);
+    }
+  };
 
   const validate = () => {
     const newErrors: {
@@ -63,7 +80,7 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent, asDraft = false) => {
+  const handleSubmit = async (e: React.FormEvent, asDraft = false) => {
     e.preventDefault();
     
     if (!validate()) {
@@ -71,34 +88,52 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
       return;
     }
     
-    const slug = title
-      .toLowerCase()
-      .replace(/[^\w\s]/gi, '')
-      .replace(/\s+/g, '-');
+    setLoading(true);
     
-    const formData: Partial<Post> = {
-      title,
-      slug,
-      content,
-      excerpt,
-      coverImage,
-      category,
-      author,
-      featured,
-      ...(video && { video }),
-    };
-    
-    if (!isEditing) {
-      formData.publishedAt = asDraft ? "" : new Date().toISOString();
-    }
-    
-    onSubmit(formData);
-    
-    // Show appropriate toast message
-    if (asDraft) {
-      toast.success("Post saved as draft");
-    } else {
-      toast.success(isEditing ? "Post updated successfully" : "Post published successfully");
+    try {
+      const slug = title
+        .toLowerCase()
+        .replace(/[^\w\s]/gi, '')
+        .replace(/\s+/g, '-');
+      
+      const formData: Partial<Post> = {
+        title,
+        slug,
+        content,
+        excerpt,
+        coverImage,
+        category,
+        author,
+        featured,
+        tags: tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+        ...(video && { video }),
+      };
+      
+      if (!isEditing) {
+        formData.publishedAt = asDraft ? "" : new Date().toISOString();
+      }
+      
+      if (isEditing && post) {
+        await supabasePosts.updatePost(String(post.id), formData);
+      } else {
+        await supabasePosts.createPost(formData as Omit<Post, 'id' | 'created_at' | 'updated_at'>);
+      }
+      
+      onSubmit(formData);
+      
+      // Show appropriate toast message
+      if (asDraft) {
+        toast.success("Post saved as draft");
+      } else {
+        toast.success(isEditing ? "Post updated successfully" : "Post published successfully");
+      }
+      
+      navigate("/admin");
+    } catch (error) {
+      console.error('Error saving post:', error);
+      toast.error("Failed to save post");
+    } finally {
+      setLoading(false);
     }
   };
   
@@ -110,8 +145,6 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // In a real app, this would upload to a server and get a URL back
-      // Here we'll create a local object URL for preview
       const imageUrl = URL.createObjectURL(file);
       setPreviewImage(imageUrl);
       setCoverImage(imageUrl);
@@ -122,7 +155,6 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
   const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Similar to image upload, in a real app this would be uploaded to a server
       const videoUrl = URL.createObjectURL(file);
       setVideo(videoUrl);
       toast.success("Video uploaded successfully");
@@ -204,11 +236,11 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="tech">Tech</SelectItem>
-                    <SelectItem value="auto">Auto</SelectItem>
-                    <SelectItem value="health">Health</SelectItem>
-                    <SelectItem value="entertainment">Entertainment</SelectItem>
-                    <SelectItem value="news">News</SelectItem>
+                    {categories.map((cat) => (
+                      <SelectItem key={cat.slug} value={cat.slug}>
+                        {cat.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -228,6 +260,16 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
                 placeholder="Brief summary of the post"
                 rows={3}
                 className={errors.excerpt ? "border-destructive" : ""}
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="tags">Tags (comma-separated)</Label>
+              <Input
+                id="tags"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                placeholder="tech, review, cars, etc."
               />
             </div>
             
@@ -362,8 +404,13 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
           <Button 
             type="submit" 
             className="bg-blue-600 hover:bg-blue-700"
+            disabled={loading}
           >
-            <Send className="h-4 w-4 mr-2" />
+            {loading ? (
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+            ) : (
+              <Send className="h-4 w-4 mr-2" />
+            )}
             {isEditing ? "Update Post" : "Publish Post"}
           </Button>
           
@@ -372,6 +419,7 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
             variant="outline"
             onClick={handleSaveAsDraft}
             className="border-green-600/30 text-green-600 hover:bg-green-600 hover:text-white"
+            disabled={loading}
           >
             <Save className="h-4 w-4 mr-2" />
             Save as Draft
