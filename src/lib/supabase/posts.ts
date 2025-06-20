@@ -43,7 +43,7 @@ export const supabasePosts = {
     const { data, error } = await supabase
       .from('posts')
       .select('*')
-      .eq('id', id)
+      .eq('id', parseInt(id))
       .single();
 
     if (error) throw error;
@@ -92,7 +92,7 @@ export const supabasePosts = {
         video_url: post.video,
         tags: post.tags,
       })
-      .eq('id', id)
+      .eq('id', parseInt(id))
       .select()
       .single();
 
@@ -105,7 +105,7 @@ export const supabasePosts = {
     const { error } = await supabase
       .from('posts')
       .delete()
-      .eq('id', id);
+      .eq('id', parseInt(id));
 
     if (error) throw error;
   },
