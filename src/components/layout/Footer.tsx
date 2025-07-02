@@ -62,12 +62,8 @@ export function Footer() {
           {/* Brand Section */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center space-x-3 mb-6 group">
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow overflow-hidden">
-                <img 
-                  src="/lovable-uploads/0d5f121b-be39-414c-818b-109e0a3fbf92.png" 
-                  alt="Moretori Naija" 
-                  className="w-full h-full object-contain"
-                />
+              <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
+                <span className="text-white font-bold text-xl">MN</span>
               </div>
               <span className="text-2xl font-black bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
                 Moretori Naija
@@ -91,9 +87,9 @@ export function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div className="flex flex-col">
+          <div>
             <h4 className="text-lg font-semibold mb-6 text-orange-400">Quick Links</h4>
-            <ul className="space-y-3 flex-1">
+            <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
@@ -109,9 +105,9 @@ export function Footer() {
           </div>
 
           {/* Categories */}
-          <div className="flex flex-col">
+          <div>
             <h4 className="text-lg font-semibold mb-6 text-orange-400">Categories</h4>
-            <ul className="space-y-3 flex-1">
+            <ul className="space-y-3">
               {categories.map((category) => (
                 <li key={category.name}>
                   <Link
@@ -127,15 +123,15 @@ export function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div className="flex flex-col">
+          <div>
             <h4 className="text-lg font-semibold mb-6 text-orange-400">Contact Info</h4>
-            <div className="space-y-4 flex-1">
+            <div className="space-y-4">
               <div className="flex items-center text-gray-300">
-                <Mail className="h-5 w-5 text-orange-500 mr-3 flex-shrink-0" />
-                <span className="break-all">info@moretorinaija.com</span>
+                <Mail className="h-5 w-5 text-orange-500 mr-3" />
+                <span>info@moretorinaija.com</span>
               </div>
               <div className="flex items-center text-gray-300">
-                <Phone className="h-5 w-5 text-orange-500 mr-3 flex-shrink-0" />
+                <Phone className="h-5 w-5 text-orange-500 mr-3" />
                 <span>+234 (0) 123 456 7890</span>
               </div>
               <div className="flex items-start text-gray-300">
@@ -150,11 +146,11 @@ export function Footer() {
       {/* Bottom Footer */}
       <div className="border-t border-gray-700">
         <div className="container px-4 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-center md:text-left">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
               © {currentYear} Moretori Naija. All rights reserved.
             </div>
-            <div className="flex flex-col sm:flex-row sm:space-x-6 space-y-2 sm:space-y-0 text-sm">
+            <div className="flex space-x-6 text-sm">
               <Link to="/privacy" className="text-gray-400 hover:text-orange-400 transition-colors">
                 Privacy Policy
               </Link>

@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
+
+import { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Play, Clock, Eye, ThumbsUp, Share, BookmarkPlus, Search, Filter, Grid, List, Heart, Star } from "lucide-react";
+import { Play, Clock, Eye, ThumbsUp, Share, BookmarkPlus } from "lucide-react";
 import AdBanner from "@/components/blog/advertising/AdBanner";
-import { cn } from "@/lib/utils";
 
 interface Video {
   id: string;
@@ -19,16 +18,13 @@ interface Video {
   category: string;
   uploadDate: string;
   author: string;
-  rating: number;
-  featured: boolean;
-  tags: string[];
 }
 
 const videos: Video[] = [
   {
     id: '1',
     title: 'The Future of Technology in Nigeria',
-    synopsis: 'Exploring emerging technologies and their impact on Nigerian society, from AI to blockchain innovations that are reshaping our digital landscape.',
+    synopsis: 'Exploring emerging technologies and their impact on Nigerian society, from AI to blockchain innovations.',
     duration: '12:45',
     views: '2.3M',
     likes: '45K',
@@ -36,15 +32,12 @@ const videos: Video[] = [
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     category: 'Technology',
     uploadDate: '2 days ago',
-    author: 'Tech Nigeria',
-    rating: 4.8,
-    featured: true,
-    tags: ['AI', 'Blockchain', 'Innovation']
+    author: 'Tech Nigeria'
   },
   {
     id: '2',
     title: 'Nigerian Entertainment Industry Growth',
-    synopsis: 'A deep dive into Nollywood\'s evolution and the rise of Nigerian music on the global stage, showcasing our cultural impact worldwide.',
+    synopsis: 'A deep dive into Nollywood\'s evolution and the rise of Nigerian music on the global stage.',
     duration: '15:30',
     views: '1.8M',
     likes: '32K',
@@ -52,15 +45,12 @@ const videos: Video[] = [
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     category: 'Entertainment',
     uploadDate: '4 days ago',
-    author: 'Nollywood Today',
-    rating: 4.6,
-    featured: true,
-    tags: ['Nollywood', 'Music', 'Culture']
+    author: 'Nollywood Today'
   },
   {
     id: '3',
     title: 'Health and Wellness in Modern Nigeria',
-    synopsis: 'Discussing healthcare innovations and wellness trends shaping the future of Nigerian health systems and personal well-being.',
+    synopsis: 'Discussing healthcare innovations and wellness trends shaping the future of Nigerian health systems.',
     duration: '18:20',
     views: '980K',
     likes: '28K',
@@ -68,206 +58,174 @@ const videos: Video[] = [
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     category: 'Health',
     uploadDate: '1 week ago',
-    author: 'Health Nigeria',
-    rating: 4.7,
-    featured: false,
-    tags: ['Healthcare', 'Wellness', 'Innovation']
+    author: 'Health Nigeria'
+  },
+  {
+    id: '4',
+    title: 'Business Opportunities in Lagos',
+    synopsis: 'Exploring the booming business scene in Lagos and opportunities for entrepreneurs across Nigeria.',
+    duration: '14:15',
+    views: '1.2M',
+    likes: '35K',
+    thumbnail: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    category: 'Business',
+    uploadDate: '3 days ago',
+    author: 'Business Lagos'
+  },
+  {
+    id: '5',
+    title: 'Nigerian Sports: Rising Stars',
+    synopsis: 'Celebrating Nigerian athletes making waves internationally and the future of sports in the country.',
+    duration: '11:45',
+    views: '750K',
+    likes: '22K',
+    thumbnail: 'https://images.unsplash.com/photo-1544275020-85dd6c3dcb8a?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    category: 'Sports',
+    uploadDate: '5 days ago',
+    author: 'Sports Nigeria'
+  },
+  {
+    id: '6',
+    title: 'Nigerian Fashion & Lifestyle Trends',
+    synopsis: 'The latest in Nigerian fashion, lifestyle trends, and cultural expressions making global impact.',
+    duration: '16:30',
+    views: '1.5M',
+    likes: '41K',
+    thumbnail: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    category: 'Lifestyle',
+    uploadDate: '1 day ago',
+    author: 'Style Nigeria'
+  },
+  {
+    id: '7',
+    title: 'Breaking News: Economic Updates',
+    synopsis: 'Latest economic developments and their impact on Nigerian citizens and businesses.',
+    duration: '13:20',
+    views: '2.1M',
+    likes: '38K',
+    thumbnail: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    category: 'News',
+    uploadDate: '6 hours ago',
+    author: 'Nigeria News'
+  },
+  {
+    id: '8',
+    title: 'Auto Industry in Nigeria',
+    synopsis: 'The growing automotive sector in Nigeria, from local manufacturing to electric vehicle adoption.',
+    duration: '19:45',
+    views: '890K',
+    likes: '26K',
+    thumbnail: 'https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    category: 'Auto',
+    uploadDate: '1 week ago',
+    author: 'Auto Nigeria'
+  },
+  {
+    id: '9',
+    title: 'Cultural Heritage and Traditions',
+    synopsis: 'Preserving Nigerian cultural heritage while embracing modernity in the 21st century.',
+    duration: '22:10',
+    views: '1.3M',
+    likes: '44K',
+    thumbnail: 'https://images.unsplash.com/photo-1529258283598-8d6fe60b27f4?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    category: 'Culture',
+    uploadDate: '3 days ago',
+    author: 'Culture Nigeria'
+  },
+  {
+    id: '10',
+    title: 'Education Revolution in Nigeria',
+    synopsis: 'How technology and innovation are transforming education across Nigeria.',
+    duration: '17:55',
+    views: '1.1M',
+    likes: '33K',
+    thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    category: 'Education',
+    uploadDate: '2 days ago',
+    author: 'Edu Nigeria'
   }
 ];
 
 export default function VideosPage() {
   const [currentVideo, setCurrentVideo] = useState(videos[0]);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [filteredVideos, setFilteredVideos] = useState(videos);
-  const [favorites, setFavorites] = useState<string[]>([]);
-
-  const categories = ['All', 'Technology', 'Entertainment', 'Health', 'Business', 'Sports', 'Lifestyle', 'News', 'Auto', 'Culture', 'Education'];
-
-  useEffect(() => {
-    let filtered = videos;
-    
-    if (searchTerm) {
-      filtered = filtered.filter(video => 
-        video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        video.synopsis.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        video.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
-    }
-    
-    if (selectedCategory !== 'All') {
-      filtered = filtered.filter(video => video.category === selectedCategory);
-    }
-    
-    setFilteredVideos(filtered);
-  }, [searchTerm, selectedCategory]);
 
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
-      Technology: 'bg-blue-100 text-blue-800 border-blue-200',
-      Entertainment: 'bg-purple-100 text-purple-800 border-purple-200',
-      Health: 'bg-green-100 text-green-800 border-green-200',
-      Business: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-      Sports: 'bg-orange-100 text-orange-800 border-orange-200',
-      Lifestyle: 'bg-pink-100 text-pink-800 border-pink-200',
-      News: 'bg-red-100 text-red-800 border-red-200',
-      Auto: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-      Culture: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-      Education: 'bg-cyan-100 text-cyan-800 border-cyan-200'
+      Technology: 'bg-blue-100 text-blue-800',
+      Entertainment: 'bg-purple-100 text-purple-800',
+      Health: 'bg-green-100 text-green-800',
+      Business: 'bg-indigo-100 text-indigo-800',
+      Sports: 'bg-orange-100 text-orange-800',
+      Lifestyle: 'bg-pink-100 text-pink-800',
+      News: 'bg-red-100 text-red-800',
+      Auto: 'bg-yellow-100 text-yellow-800',
+      Culture: 'bg-emerald-100 text-emerald-800',
+      Education: 'bg-cyan-100 text-cyan-800'
     };
-    return colors[category] || 'bg-gray-100 text-gray-800 border-gray-200';
-  };
-
-  const toggleFavorite = (videoId: string) => {
-    setFavorites(prev => 
-      prev.includes(videoId) 
-        ? prev.filter(id => id !== videoId)
-        : [...prev, videoId]
-    );
-  };
-
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star 
-        key={i} 
-        className={cn(
-          "w-3 h-3",
-          i < Math.floor(rating) ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
-        )} 
-      />
-    ));
+    return colors[category] || 'bg-gray-100 text-gray-800';
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Enhanced Header Section */}
-      <div className="relative bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-700 text-white overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-black/20"></div>
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
-        </div>
-        <div className="relative container py-16">
-          <div className="max-w-4xl">
-            <h1 className="text-5xl md:text-7xl font-black mb-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
+      {/* Header Section */}
+      <div className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-700 text-white">
+        <div className="container py-12">
+          <div className="max-w-3xl">
+            <h1 className="text-4xl md:text-6xl font-black mb-4">
               Video <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">Hub</span>
             </h1>
-            <p className="text-xl text-white/90 mb-8 leading-relaxed">
-              Discover engaging video content that inspires, informs, and entertains. 
-              From cutting-edge technology to vibrant culture, explore Nigeria and beyond.
+            <p className="text-xl text-white/90 mb-6">
+              Discover engaging video content covering technology, entertainment, news, and more from Nigeria and beyond.
             </p>
-            <div className="flex flex-wrap items-center gap-4 mb-8">
-              <Badge variant="secondary" className="bg-white/20 text-white border-white/30 px-4 py-2">
-                <Play className="w-4 h-4 mr-2" />
+            <div className="flex items-center gap-4">
+              <Badge variant="secondary" className="bg-white/20 text-white">
                 {videos.length} Videos Available
               </Badge>
-              <Badge variant="secondary" className="bg-white/20 text-white border-white/30 px-4 py-2">
-                <Eye className="w-4 h-4 mr-2" />
+              <Badge variant="secondary" className="bg-white/20 text-white">
                 HD Quality
               </Badge>
-              <Badge variant="secondary" className="bg-white/20 text-white border-white/30 px-4 py-2">
-                <Star className="w-4 h-4 mr-2" />
-                Premium Content
-              </Badge>
             </div>
-            
-            {/* Enhanced Search and Filters */}
-            <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
-              <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <Input
-                  placeholder="Search videos, topics, or tags..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-white/90 backdrop-blur-sm border-white/20 h-12"
-                />
-              </div>
-              <div className="flex gap-2 flex-wrap">
-                <Button
-                  variant={viewMode === 'grid' ? 'secondary' : 'outline'}
-                  size="sm"
-                  onClick={() => setViewMode('grid')}
-                  className="bg-white/20 border-white/30 text-white hover:bg-white/30"
-                >
-                  <Grid className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant={viewMode === 'list' ? 'secondary' : 'outline'}
-                  size="sm"
-                  onClick={() => setViewMode('list')}
-                  className="bg-white/20 border-white/30 text-white hover:bg-white/30"
-                >
-                  <List className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Category Filter */}
-      <div className="bg-white/70 backdrop-blur-sm border-b sticky top-0 z-20">
-        <div className="container py-4">
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setSelectedCategory(category)}
-                className={cn(
-                  "whitespace-nowrap transition-all duration-200",
-                  selectedCategory === category
-                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
-                    : "hover:bg-gray-100"
-                )}
-              >
-                {category}
-              </Button>
-            ))}
           </div>
         </div>
       </div>
 
       {/* Ad Banner */}
-      <div className="container py-6">
+      <div className="container py-4">
         <AdBanner size="large" />
       </div>
 
       <div className="container py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Enhanced Main Video Player */}
+          {/* Main Video Player */}
           <div className="lg:col-span-2">
-            <Card className="overflow-hidden shadow-2xl bg-gradient-to-br from-white to-gray-50 border-0">
-              <div className="relative aspect-video bg-black rounded-t-lg overflow-hidden">
+            <Card className="overflow-hidden shadow-2xl">
+              <div className="relative aspect-video bg-black">
                 {!isPlaying ? (
                   <div className="relative group cursor-pointer" onClick={() => setIsPlaying(true)}>
                     <img 
                       src={currentVideo.thumbnail}
                       alt={currentVideo.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 flex items-center justify-center group-hover:bg-black/70 transition-all duration-300">
-                      <div className="w-20 h-20 bg-white/95 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-2xl">
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/50 transition-colors">
+                      <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Play className="w-8 h-8 text-gray-800 ml-1" />
                       </div>
                     </div>
                     <div className="absolute bottom-4 right-4">
-                      <Badge className="bg-black/80 text-white border-0 px-3 py-1">
+                      <Badge className="bg-black/70 text-white">
                         <Clock className="w-3 h-3 mr-1" />
                         {currentVideo.duration}
                       </Badge>
                     </div>
-                    {currentVideo.featured && (
-                      <div className="absolute top-4 left-4">
-                        <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white border-0 px-3 py-1">
-                          <Star className="w-3 h-3 mr-1" />
-                          Featured
-                        </Badge>
-                      </div>
-                    )}
                   </div>
                 ) : (
                   <iframe
@@ -279,133 +237,96 @@ export default function VideosPage() {
                 )}
               </div>
               
-              <CardContent className="p-8">
-                <div className="flex items-start justify-between mb-4">
-                  <Badge className={cn(getCategoryColor(currentVideo.category), "border")} variant="secondary">
-                    {currentVideo.category}
-                  </Badge>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => toggleFavorite(currentVideo.id)}
-                    className="text-gray-500 hover:text-red-500"
-                  >
-                    <Heart className={cn("w-4 h-4", favorites.includes(currentVideo.id) && "fill-red-500 text-red-500")} />
-                  </Button>
-                </div>
+              <CardContent className="p-6">
+                <Badge className={getCategoryColor(currentVideo.category)} variant="secondary">
+                  {currentVideo.category}
+                </Badge>
+                <h1 className="text-2xl font-bold mt-3 mb-2">{currentVideo.title}</h1>
+                <p className="text-gray-600 mb-4">{currentVideo.synopsis}</p>
                 
-                <h1 className="text-3xl font-bold mb-3 text-gray-900 leading-tight">{currentVideo.title}</h1>
-                <p className="text-gray-600 mb-6 leading-relaxed text-lg">{currentVideo.synopsis}</p>
-                
-                <div className="flex items-center justify-between mb-6 pb-6 border-b">
-                  <div className="flex items-center gap-6 text-sm text-gray-500">
-                    <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-4 text-sm text-gray-500">
+                    <div className="flex items-center gap-1">
                       <Eye className="w-4 h-4" />
-                      <span className="font-medium">{currentVideo.views} views</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <ThumbsUp className="w-4 h-4" />
-                      <span className="font-medium">{currentVideo.likes}</span>
+                      {currentVideo.views} views
                     </div>
                     <div className="flex items-center gap-1">
-                      {renderStars(currentVideo.rating)}
-                      <span className="ml-1 font-medium">{currentVideo.rating}</span>
+                      <ThumbsUp className="w-4 h-4" />
+                      {currentVideo.likes}
                     </div>
                     <span>{currentVideo.uploadDate}</span>
                   </div>
-                  <div className="flex gap-3">
-                    <Button variant="outline" size="sm" className="hover:bg-blue-50 hover:border-blue-300">
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm">
                       <Share className="w-4 h-4 mr-2" />
                       Share
                     </Button>
-                    <Button variant="outline" size="sm" className="hover:bg-green-50 hover:border-green-300">
+                    <Button variant="outline" size="sm">
                       <BookmarkPlus className="w-4 h-4 mr-2" />
                       Save
                     </Button>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-4 pt-2">
-                  <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                <div className="flex items-center gap-3 pt-4 border-t">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
                     {currentVideo.author.charAt(0)}
                   </div>
                   <div>
-                    <p className="font-bold text-lg text-gray-900">{currentVideo.author}</p>
-                    <p className="text-sm text-gray-500">Content Creator • Verified</p>
+                    <p className="font-semibold">{currentVideo.author}</p>
+                    <p className="text-sm text-gray-500">Content Creator</p>
                   </div>
-                </div>
-                
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mt-6">
-                  {currentVideo.tags.map((tag, index) => (
-                    <Badge key={index} variant="outline" className="text-xs">
-                      #{tag}
-                    </Badge>
-                  ))}
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Enhanced Video Playlist */}
+          {/* Video Playlist */}
           <div className="lg:col-span-1">
-            <Card className="shadow-xl bg-gradient-to-br from-white to-gray-50 border-0">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                    <Play className="w-4 h-4 text-white" />
-                  </div>
+            <Card className="shadow-lg">
+              <CardContent className="p-4">
+                <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                  <Play className="w-5 h-5 text-blue-600" />
                   Video Playlist
                 </h2>
-                <div className="space-y-4 max-h-[700px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                  {filteredVideos.map((video) => (
+                <div className="space-y-3 max-h-[600px] overflow-y-auto">
+                  {videos.map((video) => (
                     <div
                       key={video.id}
-                      className={cn(
-                        "p-4 rounded-xl cursor-pointer transition-all duration-300 hover:shadow-lg group",
+                      className={`p-3 rounded-lg cursor-pointer transition-all hover:shadow-md ${
                         currentVideo.id === video.id 
-                          ? 'bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 shadow-md' 
-                          : 'bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300'
-                      )}
+                          ? 'bg-blue-50 border-2 border-blue-200' 
+                          : 'bg-gray-50 hover:bg-gray-100'
+                      }`}
                       onClick={() => {
                         setCurrentVideo(video);
                         setIsPlaying(false);
                       }}
                     >
-                      <div className="flex gap-4">
+                      <div className="flex gap-3">
                         <div className="relative flex-shrink-0">
                           <img 
                             src={video.thumbnail}
                             alt={video.title}
-                            className="w-28 h-20 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+                            className="w-24 h-16 object-cover rounded"
                           />
                           <div className="absolute bottom-1 right-1">
-                            <Badge className="bg-black/80 text-white text-xs px-2 py-0.5">
+                            <Badge className="bg-black/70 text-white text-xs px-1">
                               {video.duration}
                             </Badge>
                           </div>
-                          {video.featured && (
-                            <div className="absolute top-1 left-1">
-                              <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-                            </div>
-                          )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-bold text-sm line-clamp-2 mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
+                          <h3 className="font-semibold text-sm line-clamp-2 mb-1">
                             {video.title}
                           </h3>
-                          <p className="text-xs text-gray-600 line-clamp-2 mb-3 leading-relaxed">
+                          <p className="text-xs text-gray-500 line-clamp-2 mb-2">
                             {video.synopsis}
                           </p>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3 text-xs text-gray-400">
-                              <span>{video.views} views</span>
-                              <span>•</span>
-                              <span>{video.uploadDate}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              {renderStars(video.rating)}
-                            </div>
+                          <div className="flex items-center gap-2 text-xs text-gray-400">
+                            <span>{video.views} views</span>
+                            <span>•</span>
+                            <span>{video.uploadDate}</span>
                           </div>
                         </div>
                       </div>
