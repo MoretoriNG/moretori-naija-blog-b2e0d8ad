@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AdminNav } from "@/components/admin/AdminNav";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { Loader2 } from "lucide-react";
@@ -27,14 +27,16 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="min-h-screen flex w-full bg-background">
-      <AdminSidebar />
-      <div className="flex-1 flex flex-col">
-        <AdminNav />
-        <main className="flex-1 p-4 md:p-6 overflow-auto">
-          <Outlet />
-        </main>
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-background">
+        <AdminSidebar />
+        <div className="flex-1 flex flex-col">
+          <AdminNav />
+          <main className="flex-1 p-4 md:p-6 overflow-auto">
+            <Outlet />
+          </main>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }

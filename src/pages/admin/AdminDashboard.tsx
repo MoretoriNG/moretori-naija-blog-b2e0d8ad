@@ -1,13 +1,15 @@
+
 import { useState, useEffect } from "react";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { PostList } from "@/components/admin/PostList";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Plus, TrendingUp, Users, FileText } from "lucide-react";
+import { Plus, TrendingUp, Users, FileText, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { Post } from "@/types/blog";
 import { supabasePosts } from "@/lib/supabase/posts";
 import { useAuth } from "@/contexts/AuthContext";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function AdminDashboard() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -21,7 +23,7 @@ export default function AdminDashboard() {
   const { user, profile } = useAuth();
 
   useEffect(() => {
-    if (user && profile?.role === 'admin') {
+    if (user && (profile?.role === 'admin' || user?.user_metadata?.role === 'admin')) {
       loadPosts();
     }
   }, [user, profile]);
@@ -89,7 +91,7 @@ export default function AdminDashboard() {
   }
   
   return (
-    <div className="container py-8">
+    <div className="space-y-8">
       <AdminHeader
         title="Dashboard"
         description="Manage your blog posts and content"
@@ -103,52 +105,66 @@ export default function AdminDashboard() {
         }
       />
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-card shadow rounded-lg p-6 border border-blue-200">
-          <div className="flex items-center">
-            <FileText className="h-8 w-8 text-blue-600" />
-            <div className="ml-4">
-              <h3 className="font-medium text-muted-foreground mb-1">Total Posts</h3>
-              <p className="text-3xl font-bold text-blue-600">{stats.totalPosts}</p>
-            </div>
-          </div>
-        </div>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Card className="border-l-4 border-l-blue-500">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Total Posts
+            </CardTitle>
+            <FileText className="h-4 w-4 text-blue-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-blue-600">{stats.totalPosts}</div>
+          </CardContent>
+        </Card>
         
-        <div className="bg-card shadow rounded-lg p-6 border border-green-200">
-          <div className="flex items-center">
-            <TrendingUp className="h-8 w-8 text-green-600" />
-            <div className="ml-4">
-              <h3 className="font-medium text-muted-foreground mb-1">Featured Posts</h3>
-              <p className="text-3xl font-bold text-green-600">{stats.featuredPosts}</p>
-            </div>
-          </div>
-        </div>
+        <Card className="border-l-4 border-l-green-500">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Featured Posts
+            </CardTitle>
+            <TrendingUp className="h-4 w-4 text-green-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">{stats.featuredPosts}</div>
+          </CardContent>
+        </Card>
         
-        <div className="bg-card shadow rounded-lg p-6 border border-purple-200">
-          <div className="flex items-center">
-            <Users className="h-8 w-8 text-purple-600" />
-            <div className="ml-4">
-              <h3 className="font-medium text-muted-foreground mb-1">Published</h3>
-              <p className="text-3xl font-bold text-purple-600">{stats.publishedPosts}</p>
-            </div>
-          </div>
-        </div>
+        <Card className="border-l-4 border-l-purple-500">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Published
+            </CardTitle>
+            <Eye className="h-4 w-4 text-purple-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-purple-600">{stats.publishedPosts}</div>
+          </CardContent>
+        </Card>
         
-        <div className="bg-card shadow rounded-lg p-6 border border-orange-200">
-          <div className="flex items-center">
-            <FileText className="h-8 w-8 text-orange-600" />
-            <div className="ml-4">
-              <h3 className="font-medium text-muted-foreground mb-1">Drafts</h3>
-              <p className="text-3xl font-bold text-orange-600">{stats.draftPosts}</p>
-            </div>
-          </div>
-        </div>
+        <Card className="border-l-4 border-l-orange-500">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Drafts
+            </CardTitle>
+            <FileText className="h-4 w-4 text-orange-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-orange-600">{stats.draftPosts}</div>
+          </CardContent>
+        </Card>
       </div>
       
-      <div className="bg-card shadow rounded-lg border p-6">
-        <h2 className="text-xl font-bold mb-4">Recent Posts</h2>
-        <PostList posts={posts} onDelete={handleDeletePost} />
-      </div>
+      {/* Recent Posts */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl font-bold">Recent Posts</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <PostList posts={posts} onDelete={handleDeletePost} />
+        </CardContent>
+      </Card>
     </div>
   );
 }

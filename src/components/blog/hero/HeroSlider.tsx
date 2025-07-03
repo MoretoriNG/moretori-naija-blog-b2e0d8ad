@@ -14,7 +14,7 @@ import {
   CarouselNext,
   CarouselApi
 } from "@/components/ui/carousel";
-import { getPostsByCategory, getAllPosts } from "@/lib/blog";
+import { getPostsByCategory } from "@/lib/blog";
 import Autoplay from "embla-carousel-autoplay";
 
 interface HeroSliderProps {
@@ -50,7 +50,7 @@ export function HeroSlider({ posts }: HeroSliderProps) {
     setIsLoaded(true);
     
     // Get latest posts from different categories for playlists
-    const categories: PostCategory[] = ['tech', 'health', 'entertainment', 'business', 'sports', 'lifestyle'];
+    const categories: PostCategory[] = ['tech', 'health', 'entertainment', 'business', 'sports', 'auto'];
     const playlists: {[key: string]: Post[]} = {};
     
     categories.forEach(category => {
@@ -78,7 +78,14 @@ export function HeroSlider({ posts }: HeroSliderProps) {
   }, [api, setActiveIndex]);
   
   if (posts.length === 0) {
-    return null;
+    return (
+      <div className="bg-gradient-to-r from-gray-900 to-black h-[400px] md:h-[500px] flex items-center justify-center">
+        <div className="text-white text-center">
+          <h2 className="text-2xl font-bold mb-2">Welcome to Moretori Naija</h2>
+          <p className="text-gray-300">Loading latest stories...</p>
+        </div>
+      </div>
+    );
   }
   
   const enhancedPosts = shufflePosts(posts).slice(0, 6).map((post, index) => ({
