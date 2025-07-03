@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -19,6 +18,16 @@ interface PostFormProps {
   onSubmit: (post: Partial<Post>) => void;
 }
 
+// Predefined categories that match the homepage
+const PREDEFINED_CATEGORIES = [
+  { name: 'Tech', slug: 'tech' },
+  { name: 'Auto', slug: 'auto' },
+  { name: 'Health', slug: 'health' },
+  { name: 'Entertainment', slug: 'entertainment' },
+  { name: 'Business', slug: 'business' },
+  { name: 'Sports', slug: 'sports' },
+];
+
 export function PostForm({ post, onSubmit }: PostFormProps) {
   const navigate = useNavigate();
   const imageInputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +47,6 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
   const [previewImage, setPreviewImage] = useState<string | null>(post?.coverImage || null);
   const [activeTab, setActiveTab] = useState("content");
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState<any[]>([]);
   
   const [errors, setErrors] = useState<{
     title?: string;
@@ -47,19 +55,6 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
     coverImage?: string;
     author?: string;
   }>({});
-
-  useEffect(() => {
-    loadCategories();
-  }, []);
-
-  const loadCategories = async () => {
-    try {
-      const data = await supabasePosts.getCategories();
-      setCategories(data);
-    } catch (error) {
-      console.error('Error loading categories:', error);
-    }
-  };
 
   const validate = () => {
     const newErrors: {
@@ -236,7 +231,7 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.map((cat) => (
+                    {PREDEFINED_CATEGORIES.map((cat) => (
                       <SelectItem key={cat.slug} value={cat.slug}>
                         {cat.name}
                       </SelectItem>
