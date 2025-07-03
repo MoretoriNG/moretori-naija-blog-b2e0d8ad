@@ -1,37 +1,23 @@
-import { useState, useRef, useEffect } from "react";
+
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Post, PostCategory } from "@/types/blog";
 import { toast } from "sonner";
-import { AiPostGenerator } from "@/components/admin/AiPostGenerator";
-import { Save, Send, Upload, X, FileText, Code, Image } from "lucide-react";
+import { Save, Send, FileText, Image, Code } from "lucide-react";
 import { supabasePosts } from "@/lib/supabase/posts";
+import { AiPostGenerator } from "@/components/admin/AiPostGenerator";
+import { PostFormContent } from "./post-form/PostFormContent";
+import { MediaUpload } from "./post-form/MediaUpload";
 
 interface PostFormProps {
   post?: Post;
   onSubmit: (post: Partial<Post>) => void;
 }
 
-// Predefined categories that match the homepage
-const PREDEFINED_CATEGORIES = [
-  { name: 'Tech', slug: 'tech' },
-  { name: 'Auto', slug: 'auto' },
-  { name: 'Health', slug: 'health' },
-  { name: 'Entertainment', slug: 'entertainment' },
-  { name: 'Business', slug: 'business' },
-  { name: 'Sports', slug: 'sports' },
-];
-
 export function PostForm({ post, onSubmit }: PostFormProps) {
   const navigate = useNavigate();
-  const imageInputRef = useRef<HTMLInputElement>(null);
-  const videoInputRef = useRef<HTMLInputElement>(null);
   const isEditing = !!post;
   
   const [title, setTitle] = useState(post?.title || "");
@@ -116,7 +102,6 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
       
       onSubmit(formData);
       
-      // Show appropriate toast message
       if (asDraft) {
         toast.success("Post saved as draft");
       } else {
@@ -135,33 +120,6 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
   const handleSaveAsDraft = (e: React.FormEvent) => {
     setIsDraft(true);
     handleSubmit(e, true);
-  };
-  
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setPreviewImage(imageUrl);
-      setCoverImage(imageUrl);
-      toast.success("Image uploaded successfully");
-    }
-  };
-  
-  const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const videoUrl = URL.createObjectURL(file);
-      setVideo(videoUrl);
-      toast.success("Video uploaded successfully");
-    }
-  };
-  
-  const handleRemoveImage = () => {
-    setCoverImage("");
-    setPreviewImage(null);
-    if (imageInputRef.current) {
-      imageInputRef.current.value = "";
-    }
   };
   
   const handleApplyAiContent = (aiContent: Partial<{ title: string; excerpt: string; content: string }>) => {
@@ -190,205 +148,37 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
       
       <form onSubmit={(e) => handleSubmit(e, isDraft)}>
         <TabsContent value="content" className="space-y-6">
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="title" className={errors.title ? "text-destructive" : ""}>
-                Title {errors.title && <span className="text-xs">({errors.title})</span>}
-              </Label>
-              <Input
-                id="title"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                  if (errors.title) setErrors({ ...errors, title: undefined });
-                }}
-                placeholder="Enter post title"
-                className={errors.title ? "border-destructive" : ""}
-              />
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="author" className={errors.author ? "text-destructive" : ""}>
-                  Author {errors.author && <span className="text-xs">({errors.author})</span>}
-                </Label>
-                <Input
-                  id="author"
-                  value={author}
-                  onChange={(e) => {
-                    setAuthor(e.target.value);
-                    if (errors.author) setErrors({ ...errors, author: undefined });
-                  }}
-                  placeholder="Author name"
-                  className={errors.author ? "border-destructive" : ""}
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="category">Category</Label>
-                <Select value={category} onValueChange={(value) => setCategory(value as PostCategory)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {PREDEFINED_CATEGORIES.map((cat) => (
-                      <SelectItem key={cat.slug} value={cat.slug}>
-                        {cat.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            
-            <div>
-              <Label htmlFor="excerpt" className={errors.excerpt ? "text-destructive" : ""}>
-                Excerpt {errors.excerpt && <span className="text-xs">({errors.excerpt})</span>}
-              </Label>
-              <Textarea
-                id="excerpt"
-                value={excerpt}
-                onChange={(e) => {
-                  setExcerpt(e.target.value);
-                  if (errors.excerpt) setErrors({ ...errors, excerpt: undefined });
-                }}
-                placeholder="Brief summary of the post"
-                rows={3}
-                className={errors.excerpt ? "border-destructive" : ""}
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="tags">Tags (comma-separated)</Label>
-              <Input
-                id="tags"
-                value={tags}
-                onChange={(e) => setTags(e.target.value)}
-                placeholder="tech, review, cars, etc."
-              />
-            </div>
-            
-            <div>
-              <Label htmlFor="content" className={errors.content ? "text-destructive" : ""}>
-                Content {errors.content && <span className="text-xs">({errors.content})</span>}
-              </Label>
-              <Textarea
-                id="content"
-                value={content}
-                onChange={(e) => {
-                  setContent(e.target.value);
-                  if (errors.content) setErrors({ ...errors, content: undefined });
-                }}
-                placeholder="Full content with HTML support"
-                rows={15}
-                className={errors.content ? "border-destructive" : ""}
-              />
-              <p className="text-xs text-muted-foreground mt-1">HTML formatting is supported</p>
-            </div>
-            
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="featured"
-                checked={featured}
-                onCheckedChange={setFeatured}
-              />
-              <Label htmlFor="featured">Featured Post</Label>
-            </div>
-          </div>
+          <PostFormContent
+            title={title}
+            setTitle={setTitle}
+            author={author}
+            setAuthor={setAuthor}
+            category={category}
+            setCategory={setCategory}
+            excerpt={excerpt}
+            setExcerpt={setExcerpt}
+            tags={tags}
+            setTags={setTags}
+            content={content}
+            setContent={setContent}
+            featured={featured}
+            setFeatured={setFeatured}
+            errors={errors}
+            setErrors={setErrors}
+          />
         </TabsContent>
         
         <TabsContent value="media" className="space-y-6">
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="coverImage" className={errors.coverImage ? "text-destructive" : ""}>
-                Cover Image {errors.coverImage && <span className="text-xs">({errors.coverImage})</span>}
-              </Label>
-              <div className="flex gap-2">
-                <Input
-                  id="coverImageUrl"
-                  value={coverImage}
-                  onChange={(e) => {
-                    setCoverImage(e.target.value);
-                    setPreviewImage(e.target.value);
-                    if (errors.coverImage) setErrors({ ...errors, coverImage: undefined });
-                  }}
-                  placeholder="https://example.com/image.jpg"
-                  className={`flex-1 ${errors.coverImage ? "border-destructive" : ""}`}
-                />
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  onClick={() => imageInputRef.current?.click()}
-                >
-                  <Upload className="h-4 w-4 mr-2" />
-                  Browse
-                </Button>
-                <input
-                  ref={imageInputRef}
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleImageUpload}
-                />
-              </div>
-            </div>
-            
-            {previewImage && (
-              <div className="relative">
-                <img 
-                  src={previewImage} 
-                  alt="Cover preview" 
-                  className="w-full h-48 object-cover rounded-md" 
-                />
-                <Button
-                  type="button"
-                  variant="destructive"
-                  size="icon"
-                  className="absolute top-2 right-2 h-8 w-8"
-                  onClick={handleRemoveImage}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-            )}
-            
-            <div>
-              <Label htmlFor="video">Video URL (optional)</Label>
-              <div className="flex gap-2">
-                <Input
-                  id="video"
-                  value={video}
-                  onChange={(e) => setVideo(e.target.value)}
-                  placeholder="https://example.com/video.mp4"
-                  className="flex-1"
-                />
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  onClick={() => videoInputRef.current?.click()}
-                >
-                  <Upload className="h-4 w-4 mr-2" />
-                  Browse
-                </Button>
-                <input
-                  ref={videoInputRef}
-                  type="file"
-                  accept="video/*"
-                  className="hidden"
-                  onChange={handleVideoUpload}
-                />
-              </div>
-            </div>
-            
-            {video && video.startsWith("blob:") && (
-              <div>
-                <video controls className="w-full rounded-md">
-                  <source src={video} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            )}
-          </div>
+          <MediaUpload
+            coverImage={coverImage}
+            setCoverImage={setCoverImage}
+            previewImage={previewImage}
+            setPreviewImage={setPreviewImage}
+            video={video}
+            setVideo={setVideo}
+            errors={errors}
+            setErrors={setErrors}
+          />
         </TabsContent>
         
         <TabsContent value="ai" className="space-y-6">

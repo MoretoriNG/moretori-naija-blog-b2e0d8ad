@@ -77,7 +77,7 @@ export function HeroSlider({ posts }: HeroSliderProps) {
     });
   }, [api, setActiveIndex]);
   
-  if (posts.length === 0) {
+  if (!posts || posts.length === 0) {
     return (
       <div className="bg-gradient-to-r from-gray-900 to-black h-[400px] md:h-[500px] flex items-center justify-center">
         <div className="text-white text-center">
@@ -92,6 +92,18 @@ export function HeroSlider({ posts }: HeroSliderProps) {
     ...post,
     coverImage: post.coverImage || post.image_url || heroBackgroundImages[index % heroBackgroundImages.length]
   }));
+  
+  // Fallback to show at least something if no enhanced posts
+  if (!enhancedPosts || enhancedPosts.length === 0) {
+    return (
+      <div className="bg-gradient-to-r from-blue-900 to-purple-900 h-[400px] md:h-[500px] flex items-center justify-center">
+        <div className="text-white text-center">
+          <h2 className="text-2xl font-bold mb-2">Welcome to Moretori Naija</h2>
+          <p className="text-gray-300">Your latest stories will appear here</p>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <section className="relative bg-black overflow-hidden">

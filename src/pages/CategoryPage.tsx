@@ -6,6 +6,8 @@ import { GridPostList } from "@/components/blog/category/GridPostList";
 import { ListPostList } from "@/components/blog/category/ListPostList";
 import { EmptyState } from "@/components/blog/category/EmptyState";
 import { PostCategory, Post } from "@/types/blog";
+import { Button } from "@/components/ui/button";
+import { Grid, List, Layers } from "lucide-react";
 import AdBanner from "@/components/blog/advertising/AdBanner";
 import { toast } from "sonner";
 import { supabasePosts } from "@/lib/supabase/posts";
@@ -114,6 +116,42 @@ export default function CategoryPage() {
           getCategoryTitle={getCategoryTitle}
           handleCategoryChange={handleCategoryChange}
         />
+
+        {/* View Mode Controls */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-2">
+            <Button
+              variant={viewMode === 'grid' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setViewMode('grid')}
+            >
+              <Grid className="h-4 w-4 mr-2" />
+              Grid
+            </Button>
+            <Button
+              variant={viewMode === 'list' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setViewMode('list')}
+            >
+              <List className="h-4 w-4 mr-2" />
+              List
+            </Button>
+            {viewMode === 'grid' && (
+              <Button
+                variant={compactView ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setCompactView(!compactView)}
+              >
+                <Layers className="h-4 w-4 mr-2" />
+                Compact
+              </Button>
+            )}
+          </div>
+          
+          <div className="text-sm text-muted-foreground">
+            {posts.length} articles found
+          </div>
+        </div>
 
         {/* Ad Banner */}
         <AdBanner size="large" id="category-top" className="mb-8" />
