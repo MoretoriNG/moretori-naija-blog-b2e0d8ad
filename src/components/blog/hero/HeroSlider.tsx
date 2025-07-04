@@ -79,10 +79,17 @@ export function HeroSlider({ posts }: HeroSliderProps) {
   
   if (!posts || posts.length === 0) {
     return (
-      <div className="bg-gradient-to-r from-gray-900 to-black h-[400px] md:h-[500px] flex items-center justify-center">
-        <div className="text-white text-center">
-          <h2 className="text-2xl font-bold mb-2">Welcome to Moretori Naija</h2>
-          <p className="text-gray-300">Loading latest stories...</p>
+      <div className="bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 h-[400px] md:h-[500px] flex items-center justify-center">
+        <div className="text-white text-center px-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Welcome to Moretori Naija</h2>
+          <p className="text-gray-300 text-lg mb-6">Your premier destination for the latest news and insights</p>
+          <div className="animate-pulse">
+            <div className="flex justify-center space-x-2">
+              <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -96,10 +103,10 @@ export function HeroSlider({ posts }: HeroSliderProps) {
   // Fallback to show at least something if no enhanced posts
   if (!enhancedPosts || enhancedPosts.length === 0) {
     return (
-      <div className="bg-gradient-to-r from-blue-900 to-purple-900 h-[400px] md:h-[500px] flex items-center justify-center">
-        <div className="text-white text-center">
-          <h2 className="text-2xl font-bold mb-2">Welcome to Moretori Naija</h2>
-          <p className="text-gray-300">Your latest stories will appear here</p>
+      <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 h-[400px] md:h-[500px] flex items-center justify-center">
+        <div className="text-white text-center px-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Welcome to Moretori Naija</h2>
+          <p className="text-gray-300 text-lg">Your latest stories will appear here</p>
         </div>
       </div>
     );
