@@ -9,7 +9,7 @@ import AdBanner from "./advertising/AdBanner";
 
 // Import refactored components
 import { CategoryHeader } from "./category/CategoryHeader";
-import { ListPostList } from "./category/ListPostList";
+import { GridPostList } from "./category/GridPostList";
 import { EmptyState } from "./category/EmptyState";
 
 interface CategoryPostsProps {
@@ -91,8 +91,9 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
         
         <div className={`transition-opacity duration-300 ${loading ? 'opacity-50' : 'opacity-100'}`}>
           {categoryPosts.length > 0 ? (
-            <ListPostList 
+            <GridPostList 
               posts={categoryPosts}
+              compactView={false}
               handleSavePost={handleSavePost}
               savedPosts={savedPosts}
             />

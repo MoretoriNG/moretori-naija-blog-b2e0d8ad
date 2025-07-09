@@ -1,11 +1,15 @@
 
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { toast } from "sonner";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState("");
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   const quickLinks = [
     { name: 'Home', href: '/' },
@@ -30,12 +34,35 @@ export function Footer() {
     { name: 'Youtube', icon: Youtube, href: '#', color: 'hover:text-red-600' },
   ];
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      setIsSubscribed(true);
+      toast.success("Thank you for subscribing! You'll receive our newsletter soon.");
+      setTimeout(() => setIsSubscribed(false), 3000);
+      setEmail("");
+    }
+  };
+
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
       {/* Newsletter Section */}
       <div className="border-b border-gray-700">
         <div className="container px-4 lg:px-8 py-12">
           <div className="max-w-4xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <img 
+                src="/lovable-uploads/b806c6e4-d29d-4771-83f8-042153c725d3.png" 
+                alt="Moretori Naija Logo" 
+                className="h-10 w-auto"
+              />
+              <div className="inline-block rounded-lg bg-blue-500/30 px-3 py-1 text-sm">
+                <span className="flex items-center gap-1">
+                  <Mail className="h-3.5 w-3.5" />
+                  <span>Newsletter</span>
+                </span>
+              </div>
+            </div>
             <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
               Stay Updated with Moretori Naija
             </h3>
@@ -43,14 +70,36 @@ export function Footer() {
               Get the latest news, reviews, and insights delivered straight to your inbox
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500"
-              />
-              <Button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold px-8">
-                Subscribe
-              </Button>
+              <form onSubmit={handleSubmit} className="flex gap-2 w-full">
+                <div className="relative flex-1">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="bg-white/10 border-white/20 focus:bg-white/20 text-white pl-10"
+                  />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/60" />
+                </div>
+                <Button 
+                  type="submit" 
+                  className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold px-8"
+                  disabled={isSubscribed}
+                >
+                  {isSubscribed ? (
+                    <>
+                      <CheckCircle className="h-4 w-4 mr-2" />
+                      Done
+                    </>
+                  ) : (
+                    <>
+                      <Send className="h-4 w-4 mr-2" />
+                      Subscribe
+                    </>
+                  )}
+                </Button>
+              </form>
             </div>
           </div>
         </div>
@@ -62,16 +111,13 @@ export function Footer() {
           {/* Brand Section */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center space-x-3 mb-6 group">
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow overflow-hidden">
+              <div className="h-12 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow overflow-hidden">
                 <img 
-                  src="/lovable-uploads/0d5f121b-be39-414c-818b-109e0a3fbf92.png" 
+                  src="/lovable-uploads/b806c6e4-d29d-4771-83f8-042153c725d3.png" 
                   alt="Moretori Naija" 
-                  className="w-full h-full object-contain"
+                  className="h-full w-auto object-contain"
                 />
               </div>
-              <span className="text-2xl font-black bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
-                Moretori Naija
-              </span>
             </Link>
             <p className="text-gray-300 mb-6 leading-relaxed">
               Your premier destination for technology news, automotive reviews, health tips, and entertainment updates in Nigeria and beyond.

@@ -39,17 +39,14 @@ export function Header() {
       {/* Main header */}
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-            <div className="w-12 h-12 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
+          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
+            <div className="h-12 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
               <img 
-                src="/lovable-uploads/0d5f121b-be39-414c-818b-109e0a3fbf92.png" 
+                src="/lovable-uploads/b806c6e4-d29d-4771-83f8-042153c725d3.png" 
                 alt="Moretori Naija" 
-                className="w-full h-full object-contain"
+                className="h-full w-auto object-contain"
               />
             </div>
-            <span className="text-2xl font-black text-orange-500 tracking-tight">
-              Moretori Naija
-            </span>
           </Link>
           
           {/* Enhanced Desktop Navigation with Functional Categories */}
