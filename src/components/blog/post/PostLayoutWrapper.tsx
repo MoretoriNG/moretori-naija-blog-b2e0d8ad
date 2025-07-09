@@ -1,10 +1,9 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ArrowUp, Share2, BookOpen, Clock } from "lucide-react";
+import { ArrowUp, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { toast } from "sonner";
 import AdBanner from "@/components/blog/advertising/AdBanner";
 
 interface PostLayoutWrapperProps {
@@ -45,26 +44,6 @@ export function PostLayoutWrapper({ children }: PostLayoutWrapperProps) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: document.title,
-          url: window.location.href,
-        });
-      } catch (error) {
-        copyToClipboard();
-      }
-    } else {
-      copyToClipboard();
-    }
-  };
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(window.location.href);
-    toast.success('Link copied to clipboard!');
-  };
-
   return (
     <div className="bg-gradient-to-b from-white to-gray-50 min-h-screen">
       {/* Reading Progress Bar */}
@@ -74,15 +53,6 @@ export function PostLayoutWrapper({ children }: PostLayoutWrapperProps) {
 
       {/* Floating Action Buttons */}
       <div className="fixed right-6 bottom-6 z-40 flex flex-col gap-3">
-        {/* Share Button */}
-        <Button
-          size="icon"
-          className="rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg transition-all duration-300 hover:scale-110"
-          onClick={handleShare}
-        >
-          <Share2 className="h-4 w-4" />
-        </Button>
-
         {/* Reading Time Indicator */}
         {readingTime > 0 && (
           <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg border flex items-center gap-2 text-sm">
@@ -101,23 +71,6 @@ export function PostLayoutWrapper({ children }: PostLayoutWrapperProps) {
             <ArrowUp className="h-4 w-4" />
           </Button>
         )}
-      </div>
-
-      {/* Table of Contents Sidebar (for larger screens) */}
-      <div className="hidden xl:block fixed left-6 top-1/2 transform -translate-y-1/2 z-30">
-        <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg border max-w-xs">
-          <div className="flex items-center gap-2 mb-3 text-sm font-semibold text-gray-700">
-            <BookOpen className="h-4 w-4" />
-            <span>Table of Contents</span>
-          </div>
-          <div className="text-sm text-gray-600">
-            <div className="space-y-1">
-              <div className="hover:text-blue-600 cursor-pointer transition-colors">Introduction</div>
-              <div className="hover:text-blue-600 cursor-pointer transition-colors">Main Content</div>
-              <div className="hover:text-blue-600 cursor-pointer transition-colors">Conclusion</div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Leaderboard ad banner after navbar */}
