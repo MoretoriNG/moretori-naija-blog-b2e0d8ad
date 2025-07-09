@@ -10,6 +10,9 @@ import CategoryPage from "@/pages/CategoryPage";
 import PostPage from "@/pages/PostPage";
 import VideosPage from "@/pages/VideosPage";
 import AboutPage from "@/pages/AboutPage";
+import PrivacyPage from "@/pages/PrivacyPage";
+import TermsPage from "@/pages/TermsPage";
+import ContactPage from "@/pages/ContactPage";
 import NotFound from "@/pages/NotFound";
 import UserAuthPage from "@/pages/auth/UserAuthPage";
 import AdminAuthPage from "@/pages/auth/AdminAuthPage";
@@ -43,6 +46,9 @@ function App() {
               <Route path="post/:slug" element={<PostPage />} />
               <Route path="videos" element={<VideosPage />} />
               <Route path="about" element={<AboutPage />} />
+              <Route path="privacy" element={<PrivacyPage />} />
+              <Route path="terms" element={<TermsPage />} />
+              <Route path="contact" element={<ContactPage />} />
               <Route path="profile" element={<UserProfilePage />} />
             </Route>
             
