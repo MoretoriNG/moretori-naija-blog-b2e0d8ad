@@ -91,6 +91,7 @@ export const supabasePosts = {
         published: post.publishedAt ? true : false,
         video_url: post.video,
         tags: post.tags,
+        updated_at: new Date().toISOString()
       })
       .eq('id', parseInt(id))
       .select()
@@ -110,6 +111,29 @@ export const supabasePosts = {
     if (error) throw error;
   },
 
+  // Bulk delete posts
+  async bulkDeletePosts(ids: string[]) {
+    const { error } = await supabase
+      .from('posts')
+      .delete()
+      .in('id', ids.map(id => parseInt(id)));
+
+    if (error) throw error;
+  },
+
+  // Toggle post status
+  async togglePostStatus(id: string, published: boolean) {
+    const { data, error } = await supabase
+      .from('posts')
+      .update({ published, updated_at: new Date().toISOString() })
+      .eq('id', parseInt(id))
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
   // Get categories
   async getCategories() {
     const { data, error } = await supabase
@@ -119,5 +143,212 @@ export const supabasePosts = {
 
     if (error) throw error;
     return data || [];
+  },
+
+  // Create category
+  async createCategory(category: { name: string; slug: string; description?: string; color?: string }) {
+    const { data, error } = await supabase
+      .from('categories')
+      .insert(category)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  // Get dashboard stats
+  async getDashboardStats() {
+    try {
+      const [postsData, categoriesData] = await Promise.all([
+        supabase.from('posts').select('id, published, featured, created_at'),
+        supabase.from('categories').select('id')
+      ]);
+
+      const posts = postsData.data || [];
+      const categories = categoriesData.data || [];
+
+      const now = new Date();
+      const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      const lastMonth = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+      const recentPosts = posts.filter(post => new Date(post.created_at) >= lastWeek);
+      const monthlyPosts = posts.filter(post => new Date(post.created_at) >= lastMonth);
+
+      return {
+        totalPosts: posts.length,
+        publishedPosts: posts.filter(post => post.published).length,
+        draftPosts: posts.filter(post => !post.published).length,
+        featuredPosts: posts.filter(post => post.featured).length,
+        totalCategories: categories.length,
+        recentPosts: recentPosts.length,
+        monthlyPosts: monthlyPosts.length,
+        growthRate: monthlyPosts.length > 0 ? ((recentPosts.length / monthlyPosts.length) * 100) : 0
+      };
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error);
+      throw error;
+    }
+  },
+
+  // Create sample posts from internet-like data
+  async createSamplePosts() {
+    const samplePosts = [
+      {
+        title: "The Future of Artificial Intelligence in 2024",
+        slug: "future-ai-2024",
+        excerpt: "Exploring the latest developments and trends in AI technology that will shape our future.",
+        content: `# The Future of Artificial Intelligence in 2024
+
+Artificial Intelligence continues to evolve at an unprecedented pace, with 2024 marking significant milestones in machine learning, natural language processing, and autonomous systems.
+
+## Key Developments
+
+### Machine Learning Advances
+The integration of advanced neural networks has revolutionized how we approach complex problem-solving...
+
+### Natural Language Processing
+Large language models have become more sophisticated, enabling better human-computer interactions...
+
+## Industry Impact
+AI is transforming industries from healthcare to finance, creating new opportunities and challenges...`,
+        cover_image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop",
+        category: "Technology",
+        author: "Dr. Sarah Chen",
+        featured: true,
+        published: true,
+        tags: ["AI", "Technology", "Future", "Innovation"]
+      },
+      {
+        title: "Sustainable Living: Simple Changes for a Better Planet",
+        slug: "sustainable-living-guide",
+        excerpt: "Practical tips and strategies for adopting eco-friendly practices in your daily life.",
+        content: `# Sustainable Living: Simple Changes for a Better Planet
+
+Making sustainable choices doesn't have to be overwhelming. Here are practical steps you can take today.
+
+## Energy Conservation
+- Switch to LED lighting
+- Unplug devices when not in use
+- Use programmable thermostats
+
+## Waste Reduction
+- Implement the 3 R's: Reduce, Reuse, Recycle
+- Compost organic waste
+- Choose products with minimal packaging`,
+        cover_image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=400&fit=crop",
+        category: "Lifestyle",
+        author: "Emma Rodriguez",
+        featured: false,
+        published: true,
+        tags: ["Sustainability", "Environment", "Lifestyle", "Green Living"]
+      },
+      {
+        title: "Breaking: Major Scientific Discovery Reshapes Physics",
+        slug: "physics-discovery-breakthrough",
+        excerpt: "Scientists announce groundbreaking findings that could revolutionize our understanding of quantum mechanics.",
+        content: `# Breaking: Major Scientific Discovery Reshapes Physics
+
+In a unprecedented breakthrough, researchers at leading institutions have made discoveries that challenge fundamental assumptions in quantum physics.
+
+## The Discovery
+The research team has identified new quantum phenomena that suggest...
+
+## Implications
+This discovery could lead to revolutionary advances in:
+- Quantum computing
+- Energy storage
+- Telecommunications`,
+        cover_image: "https://images.unsplash.com/photo-1636953056323-9c09fdd74fa6?w=800&h=400&fit=crop",
+        category: "News",
+        author: "Prof. Michael Thompson",
+        featured: true,
+        published: true,
+        tags: ["Science", "Physics", "Research", "Discovery"]
+      },
+      {
+        title: "Global Markets React to Economic Policy Changes",
+        slug: "global-markets-economic-policy",
+        excerpt: "Analysis of market movements following recent economic policy announcements.",
+        content: `# Global Markets React to Economic Policy Changes
+
+Financial markets worldwide are responding to significant policy shifts announced by major economies.
+
+## Market Overview
+- Asian markets showed mixed results
+- European indices gained momentum
+- US futures indicate positive opening
+
+## Key Factors
+Several factors are driving current market movements...`,
+        cover_image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=400&fit=crop",
+        category: "Business",
+        author: "James Wilson",
+        featured: false,
+        published: true,
+        tags: ["Finance", "Markets", "Economy", "Business"]
+      },
+      {
+        title: "Championship Finals: Historic Match Breaks Records",
+        slug: "championship-finals-historic-match",
+        excerpt: "An unforgettable championship final that set new attendance and viewership records.",
+        content: `# Championship Finals: Historic Match Breaks Records
+
+Last night's championship final will be remembered as one of the greatest matches in sports history.
+
+## Match Highlights
+- Record-breaking attendance of 95,000 spectators
+- Over 2.5 billion global viewers
+- Dramatic finish with overtime victory
+
+## Player Performances
+Outstanding individual performances highlighted the evening...`,
+        cover_image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=400&fit=crop",
+        category: "Sports",
+        author: "Maria Garcia",
+        featured: true,
+        published: true,
+        tags: ["Sports", "Championship", "Records", "Competition"]
+      },
+      {
+        title: "Mental Health Awareness: Breaking the Stigma",
+        slug: "mental-health-awareness-stigma",
+        excerpt: "Understanding the importance of mental health awareness and support in our communities.",
+        content: `# Mental Health Awareness: Breaking the Stigma
+
+Mental health is as important as physical health, yet stigma continues to prevent many from seeking help.
+
+## Understanding Mental Health
+Mental health encompasses our emotional, psychological, and social well-being...
+
+## Breaking Down Barriers
+- Education and awareness campaigns
+- Open conversations about mental health
+- Accessible support services
+
+## Resources and Support
+If you or someone you know needs support...`,
+        cover_image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=400&fit=crop",
+        category: "Health",
+        author: "Dr. Lisa Park",
+        featured: false,
+        published: true,
+        tags: ["Mental Health", "Wellness", "Support", "Awareness"]
+      }
+    ];
+
+    const results = [];
+    for (const post of samplePosts) {
+      try {
+        const result = await this.createPost({
+          ...post,
+          publishedAt: new Date().toISOString()
+        });
+        results.push(result);
+      } catch (error) {
+        console.error(`Error creating post ${post.title}:`, error);
+      }
+    }
+    return results;
   }
 };

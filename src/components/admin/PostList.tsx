@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Pencil, Trash, Plus, Search, Eye, Calendar, Filter, MoreVertical, ExternalLink, Copy, Archive } from "lucide-react";
+import { Pencil, Trash, Plus, Search, Eye, Calendar, Filter, MoreVertical, ExternalLink, Copy, Archive, ToggleLeft, ToggleRight } from "lucide-react";
 import { Post } from "@/types/blog";
 import { getCategoryColor } from "@/lib/blog";
 import { Badge } from "@/components/ui/badge";
@@ -13,30 +13,35 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
+import { supabasePosts } from "@/lib/supabase/posts";
 
 interface PostListProps {
   posts: Post[];
   onDelete: (id: string) => void;
+  onBulkDelete?: (ids: string[]) => void;
 }
 
-export function PostList({ posts, onDelete }: PostListProps) {
+export function PostList({ posts, onDelete, onBulkDelete }: PostListProps) {
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("date");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [togglingStatus, setTogglingStatus] = useState<string | null>(null);
   
   // Enhanced filtering logic
   let filteredPosts = posts.filter((post) => {
     const matchesSearch = post.title.toLowerCase().includes(search.toLowerCase()) || 
                          post.category.toLowerCase().includes(search.toLowerCase()) ||
-                         post.author.toLowerCase().includes(search.toLowerCase());
+                         post.author.toLowerCase().includes(search.toLowerCase()) ||
+                         (post.tags && post.tags.some(tag => tag.toLowerCase().includes(search.toLowerCase())));
     
     const matchesCategory = categoryFilter === "all" || post.category === categoryFilter;
     const matchesStatus = statusFilter === "all" || 
                          (statusFilter === "featured" && post.featured) ||
-                         (statusFilter === "draft" && !post.featured);
+                         (statusFilter === "draft" && !post.featured) ||
+                         (statusFilter === "published" && !post.featured);
                          
     return matchesSearch && matchesCategory && matchesStatus;
   });
@@ -94,9 +99,10 @@ export function PostList({ posts, onDelete }: PostListProps) {
   };
 
   const handleBulkDelete = () => {
-    selectedPosts.forEach(postId => onDelete(postId));
-    setSelectedPosts([]);
-    toast.success(`${selectedPosts.length} posts deleted successfully`);
+    if (onBulkDelete) {
+      onBulkDelete(selectedPosts);
+      setSelectedPosts([]);
+    }
   };
 
   const handleCopyLink = (post: Post) => {
@@ -107,7 +113,21 @@ export function PostList({ posts, onDelete }: PostListProps) {
 
   const handleDeletePost = (postId: string) => {
     onDelete(postId);
-    toast.success("Post deleted successfully");
+    setSelectedPosts(selectedPosts.filter(id => id !== postId));
+  };
+
+  const handleToggleStatus = async (postId: string, currentStatus: boolean) => {
+    try {
+      setTogglingStatus(postId);
+      await supabasePosts.togglePostStatus(postId, !currentStatus);
+      toast.success(`Post ${!currentStatus ? 'published' : 'unpublished'} successfully`);
+      // Note: Parent component should refresh data
+    } catch (error) {
+      console.error('Error toggling post status:', error);
+      toast.error("Failed to update post status");
+    } finally {
+      setTogglingStatus(null);
+    }
   };
   
   return (
@@ -119,7 +139,7 @@ export function PostList({ posts, onDelete }: PostListProps) {
           <div className="relative w-full sm:w-80">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search posts by title, category, or author..."
+              placeholder="Search posts by title, category, tags, or author..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-10"
@@ -148,6 +168,7 @@ export function PostList({ posts, onDelete }: PostListProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Posts</SelectItem>
+                <SelectItem value="published">Published</SelectItem>
                 <SelectItem value="featured">Featured</SelectItem>
                 <SelectItem value="draft">Drafts</SelectItem>
               </SelectContent>
@@ -331,9 +352,24 @@ export function PostList({ posts, onDelete }: PostListProps) {
                           Featured
                         </Badge>
                       )}
-                      <Badge variant="outline" className="text-xs w-fit">
-                        Published
-                      </Badge>
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline" className="text-xs w-fit">
+                          Published
+                        </Badge>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 w-6 p-0"
+                          onClick={() => handleToggleStatus(post.id, true)}
+                          disabled={togglingStatus === post.id}
+                        >
+                          {togglingStatus === post.id ? (
+                            <div className="animate-spin h-3 w-3 border border-current border-t-transparent rounded-full" />
+                          ) : (
+                            <ToggleRight className="h-3 w-3 text-green-600" />
+                          )}
+                        </Button>
+                      </div>
                     </div>
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
@@ -382,6 +418,14 @@ export function PostList({ posts, onDelete }: PostListProps) {
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
+                          <DropdownMenuItem onClick={() => handleToggleStatus(post.id, true)}>
+                            {togglingStatus === post.id ? (
+                              <div className="animate-spin h-4 w-4 border border-current border-t-transparent rounded-full mr-2" />
+                            ) : (
+                              <ToggleLeft className="h-4 w-4 mr-2" />
+                            )}
+                            Toggle Status
+                          </DropdownMenuItem>
                           <DropdownMenuItem>
                             <Archive className="h-4 w-4 mr-2" />
                             Archive
@@ -426,7 +470,7 @@ export function PostList({ posts, onDelete }: PostListProps) {
         </Table>
       </div>
 
-      {/* Enhanced Footer with Pagination-like Info */}
+      {/* Enhanced Footer with Statistics */}
       {filteredPosts.length > 0 && (
         <div className="flex items-center justify-between text-sm text-muted-foreground border-t pt-4">
           <div className="flex items-center gap-4">

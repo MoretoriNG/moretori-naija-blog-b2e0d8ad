@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { PostList } from "@/components/admin/PostList";
@@ -21,7 +20,11 @@ import {
   Target,
   Zap,
   Filter,
-  RefreshCw
+  RefreshCw,
+  Download,
+  Upload,
+  Database,
+  Sparkles
 } from "lucide-react";
 import { toast } from "sonner";
 import { Post } from "@/types/blog";
@@ -32,34 +35,40 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 export default function AdminDashboard() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [creatingPosts, setCreatingPosts] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState("30");
-  const [stats, setStats] = useState({
+  const [dashboardStats, setDashboardStats] = useState({
     totalPosts: 0,
-    featuredPosts: 0,
     publishedPosts: 0,
     draftPosts: 0,
-    totalViews: 12580,
-    totalComments: 89,
-    totalSubscribers: 1247,
-    engagementRate: 8.4
+    featuredPosts: 0,
+    totalCategories: 0,
+    recentPosts: 0,
+    monthlyPosts: 0,
+    growthRate: 0
   });
+  
   const { user, profile } = useAuth();
 
   useEffect(() => {
     if (user && (profile?.role === 'admin' || user?.user_metadata?.role === 'admin')) {
-      loadPosts();
+      loadDashboardData();
     }
   }, [user, profile]);
 
-  const loadPosts = async () => {
+  const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const allPosts = await supabasePosts.getAllPosts();
+      const [allPosts, stats] = await Promise.all([
+        supabasePosts.getAllPosts(),
+        supabasePosts.getDashboardStats()
+      ]);
       
       const transformedPosts = allPosts.map(post => ({
         id: String(post.id),
@@ -77,17 +86,10 @@ export default function AdminDashboard() {
       }));
 
       setPosts(transformedPosts);
-      
-      setStats(prev => ({
-        ...prev,
-        totalPosts: transformedPosts.length,
-        featuredPosts: transformedPosts.filter(post => post.featured).length,
-        publishedPosts: allPosts.filter(post => post.published).length,
-        draftPosts: allPosts.filter(post => !post.published).length
-      }));
+      setDashboardStats(stats);
     } catch (error) {
-      console.error('Error loading posts:', error);
-      toast.error("Failed to load posts");
+      console.error('Error loading dashboard data:', error);
+      toast.error("Failed to load dashboard data");
     } finally {
       setLoading(false);
     }
@@ -95,9 +97,27 @@ export default function AdminDashboard() {
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    await loadPosts();
+    await loadDashboardData();
     setTimeout(() => setRefreshing(false), 500);
     toast.success("Dashboard refreshed");
+  };
+
+  const handleCreateSamplePosts = async () => {
+    try {
+      setCreatingPosts(true);
+      toast.info("Creating sample posts...");
+      
+      const createdPosts = await supabasePosts.createSamplePosts();
+      toast.success(`Successfully created ${createdPosts.length} sample posts`);
+      
+      // Reload dashboard data
+      await loadDashboardData();
+    } catch (error) {
+      console.error('Error creating sample posts:', error);
+      toast.error("Failed to create sample posts");
+    } finally {
+      setCreatingPosts(false);
+    }
   };
   
   const handleDeletePost = async (id: string) => {
@@ -105,29 +125,54 @@ export default function AdminDashboard() {
       await supabasePosts.deletePost(id);
       setPosts(posts.filter(post => post.id !== id));
       toast.success("Post deleted successfully");
-      await loadPosts();
+      await loadDashboardData();
     } catch (error) {
       console.error('Error deleting post:', error);
       toast.error("Failed to delete post");
     }
   };
 
-  // Enhanced mock data for better analytics
-  const recentActivity = [
-    { action: "New post published", item: "Understanding AI in 2024", time: "2 hours ago", type: "publish", trend: "up" },
-    { action: "Comment received", item: "Tech Trends Post", time: "4 hours ago", type: "comment", trend: "up" },
-    { action: "Post updated", item: "Best Practices Guide", time: "1 day ago", type: "update", trend: "neutral" },
-    { action: "New subscriber", item: "john@example.com", time: "2 days ago", type: "user", trend: "up" },
-    { action: "Post viewed 50+ times", item: "JavaScript Guide", time: "3 days ago", type: "view", trend: "up" },
-  ];
-
-  const topPosts = posts.slice(0, 5);
+  const handleBulkDelete = async (ids: string[]) => {
+    try {
+      await supabasePosts.bulkDeletePosts(ids);
+      setPosts(posts.filter(post => !ids.includes(post.id)));
+      toast.success(`Successfully deleted ${ids.length} posts`);
+      await loadDashboardData();
+    } catch (error) {
+      console.error('Error bulk deleting posts:', error);
+      toast.error("Failed to delete posts");
+    }
+  };
 
   const performanceMetrics = [
-    { label: "Page Views", value: "15.2K", change: "+12.5%", trend: "up" },
-    { label: "Bounce Rate", value: "34.2%", change: "-5.1%", trend: "up" },
-    { label: "Avg. Session", value: "4m 32s", change: "+8.3%", trend: "up" },
-    { label: "Conversion", value: "2.8%", change: "+1.2%", trend: "up" },
+    { 
+      label: "Growth Rate", 
+      value: `+${dashboardStats.growthRate.toFixed(1)}%`, 
+      change: "+12.5%", 
+      trend: "up",
+      description: "Weekly post growth"
+    },
+    { 
+      label: "Engagement", 
+      value: "8.4%", 
+      change: "+2.1%", 
+      trend: "up",
+      description: "Average engagement rate"
+    },
+    { 
+      label: "Categories", 
+      value: dashboardStats.totalCategories.toString(), 
+      change: "+3", 
+      trend: "up",
+      description: "Active categories"
+    },
+    { 
+      label: "This Month", 
+      value: dashboardStats.monthlyPosts.toString(), 
+      change: `+${dashboardStats.recentPosts}`, 
+      trend: "up",
+      description: "Posts this month"
+    },
   ];
 
   if (loading) {
@@ -158,6 +203,34 @@ export default function AdminDashboard() {
                 <SelectItem value="90">Last 90 days</SelectItem>
               </SelectContent>
             </Select>
+            
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  disabled={creatingPosts}
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0 hover:from-purple-600 hover:to-pink-600"
+                >
+                  <Sparkles className={`h-4 w-4 mr-2 ${creatingPosts ? 'animate-spin' : ''}`} />
+                  Create Sample Posts
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Create Sample Posts</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will create 6 sample blog posts with different categories (Technology, Lifestyle, News, Business, Sports, Health). These posts will help you test the blog functionality.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleCreateSamplePosts}>
+                    Create Posts
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
             
             <Button 
               variant="outline" 
@@ -205,12 +278,13 @@ export default function AdminDashboard() {
                 <FileText className="h-4 w-4 text-blue-500" />
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="text-2xl font-bold text-blue-600">{stats.totalPosts}</div>
+                <div className="text-2xl font-bold text-blue-600">{dashboardStats.totalPosts}</div>
                 <div className="flex items-center text-xs text-muted-foreground mt-1">
                   <ArrowUpRight className="h-3 w-3 text-green-500 mr-1" />
-                  <span className="text-green-600 font-medium">+12%</span>
-                  <span className="ml-1">from last month</span>
+                  <span className="text-green-600 font-medium">+{dashboardStats.recentPosts}</span>
+                  <span className="ml-1">this week</span>
                 </div>
+                <Progress value={(dashboardStats.totalPosts / 100) * 100} className="mt-2 h-1" />
               </CardContent>
             </Card>
             
@@ -222,45 +296,45 @@ export default function AdminDashboard() {
                 <Eye className="h-4 w-4 text-green-500" />
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="text-2xl font-bold text-green-600">{stats.publishedPosts}</div>
-                <Progress value={(stats.publishedPosts / stats.totalPosts) * 100} className="mt-2 h-2" />
+                <div className="text-2xl font-bold text-green-600">{dashboardStats.publishedPosts}</div>
+                <Progress value={dashboardStats.totalPosts > 0 ? (dashboardStats.publishedPosts / dashboardStats.totalPosts) * 100 : 0} className="mt-2 h-2" />
                 <p className="text-xs text-muted-foreground mt-1">
-                  {Math.round((stats.publishedPosts / stats.totalPosts) * 100)}% of total posts
+                  {dashboardStats.totalPosts > 0 ? Math.round((dashboardStats.publishedPosts / dashboardStats.totalPosts) * 100) : 0}% of total posts
                 </p>
               </CardContent>
             </Card>
             
-            <Card className="border-l-4 border-l-purple-500 shadow-sm hover:shadow-md transition-all duration-200">
+            <Card className="border-l-4 border-l-yellow-500 shadow-sm hover:shadow-md transition-all duration-200">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-semibold text-muted-foreground">
-                  Total Views
+                  Featured
                 </CardTitle>
-                <TrendingUp className="h-4 w-4 text-purple-500" />
+                <Target className="h-4 w-4 text-yellow-500" />
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="text-2xl font-bold text-purple-600">{stats.totalViews.toLocaleString()}</div>
+                <div className="text-2xl font-bold text-yellow-600">{dashboardStats.featuredPosts}</div>
                 <div className="flex items-center text-xs text-muted-foreground mt-1">
-                  <ArrowUpRight className="h-3 w-3 text-green-500 mr-1" />
-                  <span className="text-green-600 font-medium">+24%</span>
-                  <span className="ml-1">this week</span>
+                  <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
+                  <span className="text-green-600 font-medium">High engagement</span>
                 </div>
+                <Progress value={dashboardStats.totalPosts > 0 ? (dashboardStats.featuredPosts / dashboardStats.totalPosts) * 100 : 0} className="mt-2 h-1" />
               </CardContent>
             </Card>
             
             <Card className="border-l-4 border-l-orange-500 shadow-sm hover:shadow-md transition-all duration-200">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-semibold text-muted-foreground">
-                  Engagement
+                  Drafts
                 </CardTitle>
-                <Target className="h-4 w-4 text-orange-500" />
+                <Clock className="h-4 w-4 text-orange-500" />
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="text-2xl font-bold text-orange-600">{stats.engagementRate}%</div>
+                <div className="text-2xl font-bold text-orange-600">{dashboardStats.draftPosts}</div>
                 <div className="flex items-center text-xs text-muted-foreground mt-1">
-                  <ArrowUpRight className="h-3 w-3 text-green-500 mr-1" />
-                  <span className="text-green-600 font-medium">+2.1%</span>
-                  <span className="ml-1">avg. rate</span>
+                  <Clock className="h-3 w-3 text-orange-500 mr-1" />
+                  <span className="text-orange-600 font-medium">Pending review</span>
                 </div>
+                <Progress value={dashboardStats.totalPosts > 0 ? (dashboardStats.draftPosts / dashboardStats.totalPosts) * 100 : 0} className="mt-2 h-1" />
               </CardContent>
             </Card>
           </div>
@@ -274,6 +348,7 @@ export default function AdminDashboard() {
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">{metric.label}</p>
                       <p className="text-lg font-bold">{metric.value}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{metric.description}</p>
                     </div>
                     <div className={`flex items-center text-xs font-medium ${
                       metric.trend === 'up' ? 'text-green-600' : 'text-red-600'
@@ -303,7 +378,7 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {topPosts.map((post, index) => (
+                  {posts.slice(0, 5).map((post, index) => (
                     <div key={post.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
                       <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 text-white rounded-full text-sm font-bold">
                         {index + 1}
@@ -341,7 +416,13 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {recentActivity.map((activity, index) => (
+                  [
+                    { action: "New post published", item: "Understanding AI in 2024", time: "2 hours ago", type: "publish", trend: "up" },
+                    { action: "Comment received", item: "Tech Trends Post", time: "4 hours ago", type: "comment", trend: "up" },
+                    { action: "Post updated", item: "Best Practices Guide", time: "1 day ago", type: "update", trend: "neutral" },
+                    { action: "New subscriber", item: "john@example.com", time: "2 days ago", type: "user", trend: "up" },
+                    { action: "Post viewed 50+ times", item: "JavaScript Guide", time: "3 days ago", type: "view", trend: "up" },
+                  ].map((activity, index) => (
                     <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
                       <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
                         activity.type === 'publish' ? 'bg-green-500' :
@@ -370,12 +451,16 @@ export default function AdminDashboard() {
           <Card className="shadow-sm">
             <CardHeader>
               <CardTitle className="text-xl font-bold flex items-center gap-2">
-                <FileText className="h-5 w-5" />
+                <Database className="h-5 w-5" />
                 Content Management
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <PostList posts={posts} onDelete={handleDeletePost} />
+              <PostList 
+                posts={posts} 
+                onDelete={handleDeletePost}
+                onBulkDelete={handleBulkDelete}
+              />
             </CardContent>
           </Card>
         </TabsContent>
@@ -422,11 +507,11 @@ export default function AdminDashboard() {
               <CardContent className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-muted-foreground">Total Subscribers</span>
-                  <span className="font-semibold">{stats.totalSubscribers}</span>
+                  <span className="font-semibold">1247</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-muted-foreground">Comments</span>
-                  <span className="font-semibold">{stats.totalComments}</span>
+                  <span className="font-semibold">89</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-muted-foreground">Avg. Session</span>
@@ -448,7 +533,7 @@ export default function AdminDashboard() {
                   <p className="text-sm text-muted-foreground">Posts this week</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-lg font-semibold">{stats.draftPosts}</p>
+                  <p className="text-lg font-semibold">{dashboardStats.draftPosts}</p>
                   <p className="text-sm text-muted-foreground">Drafts ready</p>
                 </div>
               </CardContent>
