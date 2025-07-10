@@ -181,7 +181,7 @@ export default function AdminDashboard() {
         title="Dashboard Overview"
         description="Monitor your blog's performance and manage content efficiently"
         actions={
-          <divClassName="flex items-center gap-3">
+          <div className="flex items-center gap-3">
             <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
               <SelectTrigger className="w-32">
                 <SelectValue />
