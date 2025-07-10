@@ -321,6 +321,7 @@ export default function AdminDashboard() {
                 posts={posts} 
                 onDelete={handleDeletePost}
                 onBulkDelete={handleBulkDelete}
+                onRefresh={loadDashboardData}
               />
             </CardContent>
           </Card>

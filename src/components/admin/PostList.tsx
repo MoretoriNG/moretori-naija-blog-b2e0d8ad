@@ -19,9 +19,10 @@ interface PostListProps {
   posts: Post[];
   onDelete: (id: string) => void;
   onBulkDelete?: (ids: string[]) => void;
+  onRefresh?: () => void;
 }
 
-export function PostList({ posts, onDelete, onBulkDelete }: PostListProps) {
+export function PostList({ posts, onDelete, onBulkDelete, onRefresh }: PostListProps) {
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -121,7 +122,9 @@ export function PostList({ posts, onDelete, onBulkDelete }: PostListProps) {
       setTogglingStatus(postId);
       await supabasePosts.togglePostStatus(postId, !currentStatus);
       toast.success(`Post ${!currentStatus ? 'published' : 'unpublished'} successfully`);
-      // Note: Parent component should refresh data
+      if (onRefresh) {
+        onRefresh();
+      }
     } catch (error) {
       console.error('Error toggling post status:', error);
       toast.error("Failed to update post status");
