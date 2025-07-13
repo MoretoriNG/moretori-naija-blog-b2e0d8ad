@@ -9,9 +9,7 @@ import {
   FileText, 
   Eye,
   Globe,
-  RefreshCw,
-  Sparkles,
-  Database
+  RefreshCw
 } from "lucide-react";
 import { toast } from "sonner";
 import { Post } from "@/types/blog";
@@ -31,7 +29,7 @@ export default function AdminDashboard() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [creatingPosts, setCreatingPosts] = useState(false);
+  
   const [selectedPeriod, setSelectedPeriod] = useState("30");
   const [dashboardStats, setDashboardStats] = useState({
     totalPosts: 0,
@@ -92,22 +90,6 @@ export default function AdminDashboard() {
     toast.success("Dashboard refreshed");
   };
 
-  const handleCreateSamplePosts = async () => {
-    try {
-      setCreatingPosts(true);
-      toast.info("Creating sample posts...");
-      
-      const createdPosts = await supabasePosts.createSamplePosts();
-      toast.success(`Successfully created ${createdPosts.length} sample posts`);
-      
-      await loadDashboardData();
-    } catch (error) {
-      console.error('Error creating sample posts:', error);
-      toast.error("Failed to create sample posts");
-    } finally {
-      setCreatingPosts(false);
-    }
-  };
   
   const handleDeletePost = async (id: string) => {
     try {
@@ -193,33 +175,6 @@ export default function AdminDashboard() {
               </SelectContent>
             </Select>
             
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  disabled={creatingPosts}
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0 hover:from-purple-600 hover:to-pink-600"
-                >
-                  <Sparkles className={`h-4 w-4 mr-2 ${creatingPosts ? 'animate-spin' : ''}`} />
-                  Create Sample Posts
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Create Sample Posts</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This will create 6 sample blog posts with different categories (Technology, Lifestyle, News, Business, Sports, Health). These posts will help you test the blog functionality.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleCreateSamplePosts}>
-                    Create Posts
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
             
             <Button 
               variant="outline" 

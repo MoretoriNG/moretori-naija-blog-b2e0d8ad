@@ -193,9 +193,9 @@ export function AdminSidebar() {
               key={item.title}
               variant="ghost"
               asChild
-              className={cn(
+                className={cn(
                 "w-full justify-start h-12 px-4 text-sm font-medium transition-all duration-200 hover:bg-blue-50 hover:text-blue-700 group relative",
-                location.pathname === item.href && "bg-blue-100 text-blue-700 shadow-sm border-r-2 border-blue-500"
+                (location.pathname === item.href || (item.href === "/admin" && location.pathname === "/admin")) && "bg-blue-100 text-blue-700 shadow-sm border-r-2 border-blue-500"
               )}
             >
               <Link to={item.href} className="flex items-center">
