@@ -18,7 +18,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { StatsCard } from "@/components/admin/dashboard/StatsCard";
 import { PerformanceMetrics } from "@/components/admin/dashboard/PerformanceMetrics";
 import { TopPerformingPosts } from "@/components/admin/dashboard/TopPerformingPosts";
@@ -29,7 +28,6 @@ export default function AdminDashboard() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  
   const [selectedPeriod, setSelectedPeriod] = useState("30");
   const [dashboardStats, setDashboardStats] = useState({
     totalPosts: 0,
