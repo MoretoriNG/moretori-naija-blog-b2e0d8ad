@@ -96,7 +96,7 @@ export function Header() {
               Home
             </Link>
             
-            <CategoryMenu categories={categories} />
+            <CategoryMenu />
             
             <Link 
               to="/videos" 
