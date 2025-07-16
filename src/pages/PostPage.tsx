@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { toast } from 'sonner';
 import { Post, PostCategory } from '@/types/blog';
 import { useState, useEffect } from 'react';
-import { PostHeader } from '@/components/blog/post/PostHeader';
+import { EnhancedPostHeader } from '@/components/blog/post/EnhancedPostHeader';
 import { PostNavigation } from '@/components/blog/post/PostNavigation';
 import { PostLayoutWrapper } from '@/components/blog/post/PostLayoutWrapper';
 import { PostArticle } from '@/components/blog/post/PostArticle';
+import { PostEngagement } from '@/components/blog/post/PostEngagement';
 
 // High-quality placeholder images
 const placeholderImages = [
@@ -109,14 +110,16 @@ export default function PostPage() {
 
   return (
     <PostLayoutWrapper>
-      {/* Featured Image Header with cool effect */}
-      <PostHeader
+      {/* Enhanced Featured Image Header */}
+      <EnhancedPostHeader
         title={post.title}
         imageUrl={post.image_url || placeholderImages[0]}
         category={categorySlug as PostCategory}
         author={post.author}
         publishedAt={post.published_at}
         readingTimeMinutes={readingTimeMinutes}
+        postId={String(post.id)}
+        slug={post.slug}
       />
       
       <div className="container max-w-4xl">
@@ -133,6 +136,15 @@ export default function PostPage() {
           onHideCommentForm={() => setShowCommentForm(false)}
           handleShare={handleShare}
         />
+        
+        {/* Enhanced Engagement Section */}
+        <div className="my-8">
+          <PostEngagement 
+            postId={String(post.id)}
+            postTitle={post.title}
+            postSlug={post.slug}
+          />
+        </div>
         
         {/* Return to blog button */}
         <div className="mt-8 flex justify-center">

@@ -28,7 +28,8 @@ export function FeaturedPosts({ posts = [] }: FeaturedPostsProps) {
       if (width < 640) {
         setVisiblePosts(1);
       } else if (width < 1024) {
-        setVisiblePosts(2);
+        // Tablet: show 3 cards
+        setVisiblePosts(3);
       } else if (width < 1280) {
         setVisiblePosts(3);
       } else {

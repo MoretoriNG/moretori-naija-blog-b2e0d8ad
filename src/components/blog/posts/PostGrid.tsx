@@ -34,7 +34,7 @@ export function PostGrid({ posts, visiblePosts }: PostGridProps) {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 animate-fade-in">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 animate-fade-in">
         {currentPosts.map((post) => (
           <FeaturedPostCard key={post.id} post={post} />
         ))}
@@ -58,7 +58,7 @@ export function PostGrid({ posts, visiblePosts }: PostGridProps) {
               <div
                 key={index}
                 className={cn(
-                  "w-2 h-2 rounded-full transition-colors",
+                  "w-2 h-2 rounded-full transition-colors cursor-pointer",
                   currentPage === index ? "bg-blue-500" : "bg-gray-300"
                 )}
                 onClick={() => setCurrentPage(index)}

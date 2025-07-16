@@ -1,167 +1,250 @@
 
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Search, Menu, X, Bell, User, Bookmark, TrendingUp, Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { Menu, X, TrendingUp, Clock } from 'lucide-react';
-import { SearchBar } from './navigation/SearchBar';
-import { UserMenu, MobileUserMenu } from './navigation/UserMenu';
-import { TopBar } from './navigation/TopBar';
-import { useAuth } from '@/contexts/AuthContext';
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { CategoryMenu } from "./navigation/CategoryMenu";
+import { UserMenu } from "./navigation/UserMenu";
+import { SearchBar } from "./navigation/SearchBar";
+
+const categories = [
+  { name: "Technology", slug: "tech", icon: "💻" },
+  { name: "Automotive", slug: "auto", icon: "🚗" },
+  { name: "Health", slug: "health", icon: "🏥" },
+  { name: "Entertainment", slug: "entertainment", icon: "🎬" },
+  { name: "Business", slug: "business", icon: "💼" },
+  { name: "Sports", slug: "sports", icon: "⚽" },
+];
 
 export function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [notifications] = useState(3); // Mock notification count
   const location = useLocation();
-  const { user } = useAuth();
-  
-  const categories = [
-    { name: "Tech", slug: "tech", color: "bg-blue-500", hoverColor: "hover:bg-blue-50 hover:text-blue-600" },
-    { name: "Auto", slug: "auto", color: "bg-red-500", hoverColor: "hover:bg-red-50 hover:text-red-600" },
-    { name: "Health", slug: "health", color: "bg-green-500", hoverColor: "hover:bg-green-50 hover:text-green-600" },
-    { name: "Entertainment", slug: "entertainment", color: "bg-purple-500", hoverColor: "hover:bg-purple-50 hover:text-purple-600" },
-    { name: "Business", slug: "business", color: "bg-indigo-500", hoverColor: "hover:bg-indigo-50 hover:text-indigo-600" },
-    { name: "Sports", slug: "sports", color: "bg-orange-500", hoverColor: "hover:bg-orange-50 hover:text-orange-600" }
-  ];
-  
+
   useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
-  
-  const handleMenuClose = () => {
-    setIsOpen(false);
-  };
-  
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const isActive = (path: string) => location.pathname === path;
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-md shadow-sm">
-      {/* Top bar with date */}
-      <TopBar />
-      
+    <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200' 
+        : 'bg-white border-b border-gray-100'
+    }`}>
+      {/* Top bar with quick links */}
+      <div className="hidden md:block bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div className="container px-4 py-2">
+          <div className="flex justify-between items-center text-sm">
+            <div className="flex items-center gap-4">
+              <Link to="/trending" className="flex items-center gap-1 hover:text-blue-200 transition-colors">
+                <TrendingUp size={14} />
+                Trending
+              </Link>
+              <Link to="/newsletter" className="flex items-center gap-1 hover:text-blue-200 transition-colors">
+                <Rss size={14} />
+                Newsletter
+              </Link>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <span>📍 Lagos, Nigeria</span>
+              <span>•</span>
+              <span>{new Date().toLocaleDateString()}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main header */}
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-6">
-          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
-            <div className="h-12 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
-              <img 
-                src="/lovable-uploads/b806c6e4-d29d-4771-83f8-042153c725d3.png" 
-                alt="Moretori Naija" 
-                className="h-full w-auto object-contain"
-              />
+      <div className="container px-4 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2 group">
+            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center transform group-hover:scale-105 transition-transform">
+              <span className="text-white font-bold text-lg">M</span>
+            </div>
+            <div className="hidden sm:block">
+              <h1 className="text-xl font-bold text-gray-900">MoreTori</h1>
+              <p className="text-xs text-gray-500 -mt-1">Naija Blog</p>
             </div>
           </Link>
-          
-          {/* Enhanced Desktop Navigation with Functional Categories */}
-          <nav className="hidden md:flex items-center gap-1">
-            {categories.map((category) => (
-              <Link
-                key={category.slug}
-                to={`/category/${category.slug}`}
-                className={cn(
-                  "relative px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg group",
-                  category.hoverColor,
-                  location.pathname.includes(category.slug) && `bg-gradient-to-r from-${category.color.split('-')[1]}-100 to-${category.color.split('-')[1]}-50 text-${category.color.split('-')[1]}-700 shadow-sm`
-                )}
-              >
-                <div className="flex items-center gap-1">
-                  <div className={cn("w-2 h-2 rounded-full", category.color, "opacity-70 group-hover:opacity-100")}></div>
-                  {category.name}
-                </div>
-                {location.pathname.includes(category.slug) && (
-                  <div className={cn("absolute bottom-0 left-0 right-0 h-0.5 rounded-full", category.color)}></div>
-                )}
-              </Link>
-            ))}
-            <Link
-              to="/videos"
-              className={cn(
-                "px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg hover:bg-gradient-to-r hover:from-pink-50 hover:to-pink-100 hover:text-pink-600 relative group",
-                location.pathname === "/videos" && "bg-gradient-to-r from-pink-100 to-pink-50 text-pink-700 shadow-sm"
-              )}
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link 
+              to="/" 
+              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+                isActive('/') ? 'text-blue-600 border-b-2 border-blue-600 pb-1' : 'text-gray-700'
+              }`}
             >
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-pink-500 opacity-70 group-hover:opacity-100"></div>
-                Videos
-              </div>
-              {location.pathname === "/videos" && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 rounded-full"></div>
-              )}
+              Home
+            </Link>
+            
+            <CategoryMenu categories={categories} />
+            
+            <Link 
+              to="/videos" 
+              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+                isActive('/videos') ? 'text-blue-600 border-b-2 border-blue-600 pb-1' : 'text-gray-700'
+              }`}
+            >
+              Videos
+            </Link>
+            
+            <Link 
+              to="/about" 
+              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+                isActive('/about') ? 'text-blue-600 border-b-2 border-blue-600 pb-1' : 'text-gray-700'
+              }`}
+            >
+              About
             </Link>
           </nav>
-        </div>
-        
-        <div className="flex items-center gap-4">
-          {/* Enhanced Search */}
-          <SearchBar />
-          
-          {/* Auth Section */}
-          <div className="hidden md:flex items-center gap-2">
-            {user ? (
-              <UserMenu onMenuItemClick={handleMenuClose} />
-            ) : (
-              <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white font-medium">
-                <Link to="/auth/user">Sign In</Link>
-              </Button>
-            )}
-          </div>
-          
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
-        </div>
-      </div>
-      
-      {/* Enhanced Mobile menu */}
-      <div 
-        className={cn(
-          "container md:hidden overflow-hidden transition-all duration-300 bg-white/95 backdrop-blur-sm",
-          isOpen ? "max-h-[600px] py-6 border-t" : "max-h-0"
-        )}
-      >
-        <nav className="flex flex-col space-y-4 mb-6">
-          {categories.map((category) => (
-            <Link
-              key={category.slug}
-              to={`/category/${category.slug}`}
-              className={cn(
-                "text-sm font-medium transition-colors py-3 px-4 rounded-lg flex items-center gap-2",
-                location.pathname.includes(category.slug) 
-                  ? `bg-gradient-to-r from-${category.color.split('-')[1]}-100 to-${category.color.split('-')[1]}-50 text-${category.color.split('-')[1]}-700` 
-                  : category.hoverColor
-              )}
-              onClick={handleMenuClose}
+
+          {/* Search and Actions */}
+          <div className="flex items-center space-x-3">
+            {/* Enhanced Search */}
+            <div className="hidden lg:block">
+              <SearchBar />
+            </div>
+
+            {/* Notifications */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative">
+                  <Bell size={20} />
+                  {notifications > 0 && (
+                    <Badge 
+                      variant="destructive" 
+                      className="absolute -top-1 -right-1 h-5 w-5 text-xs flex items-center justify-center"
+                    >
+                      {notifications}
+                    </Badge>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-80">
+                <div className="p-4">
+                  <h3 className="font-semibold mb-2">Notifications</h3>
+                  <div className="space-y-2 text-sm">
+                    <div className="p-2 bg-blue-50 rounded">
+                      <p className="font-medium">New article in Technology</p>
+                      <p className="text-gray-600 text-xs">2 hours ago</p>
+                    </div>
+                    <div className="p-2 bg-green-50 rounded">
+                      <p className="font-medium">Weekly digest available</p>
+                      <p className="text-gray-600 text-xs">1 day ago</p>
+                    </div>
+                  </div>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Bookmarks */}
+            <Button variant="ghost" size="icon" asChild>
+              <Link to="/bookmarks">
+                <Bookmark size={20} />
+              </Link>
+            </Button>
+
+            {/* User Menu */}
+            <UserMenu />
+
+            {/* Mobile menu button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <div className={cn("w-2 h-2 rounded-full", category.color)}></div>
-              {category.name}
-            </Link>
-          ))}
-          <Link
-            to="/videos"
-            className={cn(
-              "text-sm font-medium transition-colors py-3 px-4 rounded-lg flex items-center gap-2",
-              location.pathname === "/videos"
-                ? "bg-gradient-to-r from-pink-100 to-pink-50 text-pink-700" 
-                : "hover:bg-pink-50 hover:text-pink-600"
-            )}
-            onClick={handleMenuClose}
-          >
-            <div className="w-2 h-2 rounded-full bg-pink-500"></div>
-            Videos
-          </Link>
-        </nav>
-        
-        {/* Mobile Auth */}
-        {user ? (
-          <MobileUserMenu onMenuItemClick={handleMenuClose} />
-        ) : (
-          <Button asChild className="w-full bg-orange-500 hover:bg-orange-600 text-white">
-            <Link to="/auth/user" onClick={handleMenuClose}>Sign In</Link>
-          </Button>
-        )}
+              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </Button>
+          </div>
+        </div>
+
+        {/* Mobile Search */}
+        <div className="lg:hidden mt-4">
+          <SearchBar />
+        </div>
       </div>
+
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="md:hidden border-t bg-white">
+          <nav className="container px-4 py-4 space-y-4">
+            <Link 
+              to="/" 
+              className="block text-sm font-medium text-gray-700 hover:text-blue-600"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </Link>
+            
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Categories</p>
+              {categories.map((category) => (
+                <Link
+                  key={category.slug}
+                  to={`/category/${category.slug}`}
+                  className="block text-sm text-gray-700 hover:text-blue-600 pl-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {category.icon} {category.name}
+                </Link>
+              ))}
+            </div>
+            
+            <Link 
+              to="/videos" 
+              className="block text-sm font-medium text-gray-700 hover:text-blue-600"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Videos
+            </Link>
+            
+            <Link 
+              to="/about" 
+              className="block text-sm font-medium text-gray-700 hover:text-blue-600"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About
+            </Link>
+            
+            <div className="pt-4 border-t space-y-2">
+              <Link 
+                to="/auth/user" 
+                className="block text-sm text-blue-600 hover:text-blue-800"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Sign In
+              </Link>
+              <Link 
+                to="/bookmarks" 
+                className="block text-sm text-gray-700 hover:text-blue-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                My Bookmarks
+              </Link>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
