@@ -1,9 +1,8 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Search, Menu, X, Bell, User, Bookmark, TrendingUp, Rss } from "lucide-react";
+import { Menu, X, Bell, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
@@ -15,6 +14,8 @@ import {
 import { CategoryMenu } from "./navigation/CategoryMenu";
 import { UserMenu } from "./navigation/UserMenu";
 import { SearchBar } from "./navigation/SearchBar";
+import { TopBar } from "./navigation/TopBar";
+// import logoImage from "@/assets/logo.png";
 
 const categories = [
   { name: "Technology", slug: "tech", icon: "💻" },
@@ -43,41 +44,21 @@ export function Header() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200' 
-        : 'bg-white border-b border-gray-100'
-    }`}>
-      {/* Top bar with quick links */}
-      <div className="hidden md:block bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-        <div className="container px-4 py-2">
-          <div className="flex justify-between items-center text-sm">
-            <div className="flex items-center gap-4">
-              <Link to="/trending" className="flex items-center gap-1 hover:text-blue-200 transition-colors">
-                <TrendingUp size={14} />
-                Trending
-              </Link>
-              <Link to="/newsletter" className="flex items-center gap-1 hover:text-blue-200 transition-colors">
-                <Rss size={14} />
-                Newsletter
-              </Link>
-            </div>
-            <div className="flex items-center gap-2 text-xs">
-              <span>📍 Lagos, Nigeria</span>
-              <span>•</span>
-              <span>{new Date().toLocaleDateString()}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+    <>
+      <TopBar />
+      <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200' 
+          : 'bg-white border-b border-gray-100'
+      }`}>
 
       {/* Main header */}
       <div className="container px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center transform group-hover:scale-105 transition-transform">
-              <span className="text-white font-bold text-lg">M</span>
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-red-500 rounded-xl flex items-center justify-center transform group-hover:scale-105 transition-transform shadow-lg">
+              <span className="text-white font-bold text-xl">MT</span>
             </div>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold text-gray-900">MoreTori</h1>
@@ -107,14 +88,6 @@ export function Header() {
               Videos
             </Link>
             
-            <Link 
-              to="/about" 
-              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
-                isActive('/about') ? 'text-blue-600 border-b-2 border-blue-600 pb-1' : 'text-gray-700'
-              }`}
-            >
-              About
-            </Link>
           </nav>
 
           {/* Search and Actions */}
@@ -156,15 +129,13 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Bookmarks */}
-            <Button variant="ghost" size="icon" asChild>
-              <Link to="/bookmarks">
-                <Bookmark size={20} />
+            {/* Sign In Button */}
+            <Button variant="outline" size="sm" asChild>
+              <Link to="/auth/user" className="flex items-center gap-2">
+                <User size={16} />
+                <span className="hidden sm:inline">Sign In</span>
               </Link>
             </Button>
-
-            {/* User Menu */}
-            <UserMenu />
 
             {/* Mobile menu button */}
             <Button
@@ -218,15 +189,8 @@ export function Header() {
               Videos
             </Link>
             
-            <Link 
-              to="/about" 
-              className="block text-sm font-medium text-gray-700 hover:text-blue-600"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              About
-            </Link>
             
-            <div className="pt-4 border-t space-y-2">
+            <div className="pt-4 border-t">
               <Link 
                 to="/auth/user" 
                 className="block text-sm text-blue-600 hover:text-blue-800"
@@ -234,17 +198,11 @@ export function Header() {
               >
                 Sign In
               </Link>
-              <Link 
-                to="/bookmarks" 
-                className="block text-sm text-gray-700 hover:text-blue-600"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                My Bookmarks
-              </Link>
             </div>
           </nav>
         </div>
       )}
-    </header>
+      </header>
+    </>
   );
 }

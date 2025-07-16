@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { Calendar, Mail } from 'lucide-react';
+import { Calendar, Mail, Info } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function TopBar() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -24,15 +25,29 @@ export function TopBar() {
   
   return (
     <div className="bg-gradient-to-r from-blue-700 to-blue-600 text-white py-1.5">
-      <div className="container flex justify-between items-center">
-        <div className="flex items-center text-sm">
-          <Calendar className="h-3.5 w-3.5 mr-1.5" />
-          <span>{formattedDate}</span>
-        </div>
+      <div className="container flex justify-between items-center text-sm">
         <div className="flex items-center">
-          <a href="mailto:contact@moretorinaija.com" className="flex items-center text-xs hover:text-blue-200 transition-colors">
+          <Calendar className="h-3.5 w-3.5 mr-1.5" />
+          <span className="hidden sm:inline">{formattedDate}</span>
+          <span className="sm:hidden">{currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <Link 
+            to="/about" 
+            className="flex items-center hover:text-blue-200 transition-colors"
+          >
+            <Info className="h-3.5 w-3.5 mr-1" />
+            <span className="hidden md:inline">About</span>
+          </Link>
+          
+          <a 
+            href="mailto:contact@moretorinaija.com" 
+            className="flex items-center hover:text-blue-200 transition-colors"
+          >
             <Mail className="h-3.5 w-3.5 mr-1" />
             <span className="hidden sm:inline">contact@moretorinaija.com</span>
+            <span className="sm:hidden">Contact</span>
           </a>
         </div>
       </div>

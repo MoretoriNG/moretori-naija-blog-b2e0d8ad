@@ -3,7 +3,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Play, Clock, Eye, ThumbsUp, Share, BookmarkPlus, Search, Filter, Grid, List, Heart, Star } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  Play, Clock, Eye, ThumbsUp, Share, BookmarkPlus, Search, Filter, Grid, List, 
+  Heart, Star, Download, MessageCircle, Bookmark, TrendingUp, Award, Users,
+  Calendar, Volume2, Settings, ExternalLink, Copy
+} from "lucide-react";
 import AdBanner from "@/components/blog/advertising/AdBanner";
 import { cn } from "@/lib/utils";
 
@@ -83,6 +88,11 @@ export default function VideosPage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [filteredVideos, setFilteredVideos] = useState(videos);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [bookmarked, setBookmarked] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState<'recent' | 'popular' | 'rating'>('recent');
+  const [showComments, setShowComments] = useState(false);
+  const [videoQuality, setVideoQuality] = useState('1080p');
+  const [autoplay, setAutoplay] = useState(false);
 
   const categories = ['All', 'Technology', 'Entertainment', 'Health', 'Business', 'Sports', 'Lifestyle', 'News', 'Auto', 'Culture', 'Education'];
 
@@ -128,6 +138,42 @@ export default function VideosPage() {
     );
   };
 
+  const toggleBookmark = (videoId: string) => {
+    setBookmarked(prev => 
+      prev.includes(videoId) 
+        ? prev.filter(id => id !== videoId)
+        : [...prev, videoId]
+    );
+  };
+
+  const handleShare = async (video: Video) => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: video.title,
+          text: video.synopsis,
+          url: window.location.href
+        });
+      } catch (error) {
+        console.log('Error sharing:', error);
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+    }
+  };
+
+  const getSortedVideos = () => {
+    let sorted = [...filteredVideos];
+    switch (sortBy) {
+      case 'popular':
+        return sorted.sort((a, b) => parseInt(b.views.replace(/[^\d]/g, '')) - parseInt(a.views.replace(/[^\d]/g, '')));
+      case 'rating':
+        return sorted.sort((a, b) => b.rating - a.rating);
+      default:
+        return sorted;
+    }
+  };
+
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star 
@@ -171,6 +217,10 @@ export default function VideosPage() {
                 <Star className="w-4 h-4 mr-2" />
                 Premium Content
               </Badge>
+              <Badge variant="secondary" className="bg-white/20 text-white border-white/30 px-4 py-2">
+                <Users className="w-4 h-4 mr-2" />
+                Expert Creators
+              </Badge>
             </div>
             
             {/* Enhanced Search and Filters */}
@@ -185,6 +235,15 @@ export default function VideosPage() {
                 />
               </div>
               <div className="flex gap-2 flex-wrap">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as any)}
+                  className="px-3 py-2 bg-white/20 border border-white/30 text-white rounded-md text-sm"
+                >
+                  <option value="recent" className="text-gray-900">Recent</option>
+                  <option value="popular" className="text-gray-900">Popular</option>
+                  <option value="rating" className="text-gray-900">Top Rated</option>
+                </select>
                 <Button
                   variant={viewMode === 'grid' ? 'secondary' : 'outline'}
                   size="sm"
@@ -314,13 +373,33 @@ export default function VideosPage() {
                     <span>{currentVideo.uploadDate}</span>
                   </div>
                   <div className="flex gap-3">
-                    <Button variant="outline" size="sm" className="hover:bg-blue-50 hover:border-blue-300">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => handleShare(currentVideo)}
+                      className="hover:bg-blue-50 hover:border-blue-300"
+                    >
                       <Share className="w-4 h-4 mr-2" />
                       Share
                     </Button>
-                    <Button variant="outline" size="sm" className="hover:bg-green-50 hover:border-green-300">
-                      <BookmarkPlus className="w-4 h-4 mr-2" />
-                      Save
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => toggleBookmark(currentVideo.id)}
+                      className={cn(
+                        "hover:bg-green-50 hover:border-green-300",
+                        bookmarked.includes(currentVideo.id) && "bg-green-50 border-green-300"
+                      )}
+                    >
+                      <Bookmark className={cn(
+                        "w-4 h-4 mr-2",
+                        bookmarked.includes(currentVideo.id) && "fill-green-600"
+                      )} />
+                      {bookmarked.includes(currentVideo.id) ? 'Saved' : 'Save'}
+                    </Button>
+                    <Button variant="outline" size="sm" className="hover:bg-purple-50 hover:border-purple-300">
+                      <Download className="w-4 h-4 mr-2" />
+                      Download
                     </Button>
                   </div>
                 </div>
@@ -336,12 +415,87 @@ export default function VideosPage() {
                 </div>
                 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2 mt-6">
+                <div className="flex flex-wrap gap-2 mt-6 pt-6 border-t">
                   {currentVideo.tags.map((tag, index) => (
-                    <Badge key={index} variant="outline" className="text-xs">
+                    <Badge key={index} variant="outline" className="text-xs cursor-pointer hover:bg-blue-50">
                       #{tag}
                     </Badge>
                   ))}
+                </div>
+
+                {/* Enhanced Comments Section */}
+                <div className="mt-8 pt-6 border-t">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold flex items-center gap-2">
+                      <MessageCircle className="w-5 h-5" />
+                      Comments (12)
+                    </h3>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowComments(!showComments)}
+                    >
+                      {showComments ? 'Hide' : 'Show'} Comments
+                    </Button>
+                  </div>
+                  
+                  {showComments && (
+                    <div className="space-y-4">
+                      <div className="p-4 bg-gray-50 rounded-lg">
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm">
+                            J
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">John Doe</p>
+                            <p className="text-gray-600 text-sm mt-1">Great content! Really enjoyed this video.</p>
+                            <p className="text-xs text-gray-500 mt-2">2 hours ago</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Video Settings Panel */}
+            <Card className="mt-6 shadow-xl bg-gradient-to-br from-white to-gray-50 border-0">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <Settings className="w-5 h-5" />
+                  Video Settings
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">Quality</span>
+                    <select
+                      value={videoQuality}
+                      onChange={(e) => setVideoQuality(e.target.value)}
+                      className="px-3 py-1 border rounded text-sm"
+                    >
+                      <option value="1080p">1080p HD</option>
+                      <option value="720p">720p</option>
+                      <option value="480p">480p</option>
+                    </select>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">Autoplay Next</span>
+                    <Button
+                      variant={autoplay ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setAutoplay(!autoplay)}
+                    >
+                      {autoplay ? 'On' : 'Off'}
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">Volume</span>
+                    <div className="flex items-center gap-2">
+                      <Volume2 className="w-4 h-4" />
+                      <input type="range" min="0" max="100" defaultValue="75" className="w-20" />
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -349,71 +503,183 @@ export default function VideosPage() {
 
           {/* Enhanced Video Playlist */}
           <div className="lg:col-span-1">
-            <Card className="shadow-xl bg-gradient-to-br from-white to-gray-50 border-0">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                    <Play className="w-4 h-4 text-white" />
-                  </div>
-                  Video Playlist
-                </h2>
-                <div className="space-y-4 max-h-[700px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                  {filteredVideos.map((video) => (
-                    <div
-                      key={video.id}
-                      className={cn(
-                        "p-4 rounded-xl cursor-pointer transition-all duration-300 hover:shadow-lg group",
-                        currentVideo.id === video.id 
-                          ? 'bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 shadow-md' 
-                          : 'bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300'
-                      )}
-                      onClick={() => {
-                        setCurrentVideo(video);
-                        setIsPlaying(false);
-                      }}
-                    >
-                      <div className="flex gap-4">
-                        <div className="relative flex-shrink-0">
-                          <img 
-                            src={video.thumbnail}
-                            alt={video.title}
-                            className="w-28 h-20 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-                          />
-                          <div className="absolute bottom-1 right-1">
-                            <Badge className="bg-black/80 text-white text-xs px-2 py-0.5">
-                              {video.duration}
-                            </Badge>
-                          </div>
-                          {video.featured && (
-                            <div className="absolute top-1 left-1">
-                              <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-bold text-sm line-clamp-2 mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
-                            {video.title}
-                          </h3>
-                          <p className="text-xs text-gray-600 line-clamp-2 mb-3 leading-relaxed">
-                            {video.synopsis}
-                          </p>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3 text-xs text-gray-400">
-                              <span>{video.views} views</span>
-                              <span>•</span>
-                              <span>{video.uploadDate}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              {renderStars(video.rating)}
-                            </div>
-                          </div>
-                        </div>
+            <Tabs defaultValue="playlist" className="w-full">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="playlist">Playlist</TabsTrigger>
+                <TabsTrigger value="trending">Trending</TabsTrigger>
+                <TabsTrigger value="favorites">Favorites</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="playlist">
+                <Card className="shadow-xl bg-gradient-to-br from-white to-gray-50 border-0">
+                  <CardContent className="p-6">
+                    <h2 className="text-xl font-bold mb-4 flex items-center gap-3">
+                      <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <Play className="w-3 h-3 text-white" />
                       </div>
+                      Video Queue ({getSortedVideos().length})
+                    </h2>
+                    <div className="space-y-3 max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                      {getSortedVideos().map((video) => (
+                        <div
+                          key={video.id}
+                          className={cn(
+                            "p-4 rounded-xl cursor-pointer transition-all duration-300 hover:shadow-lg group",
+                            currentVideo.id === video.id 
+                              ? 'bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 shadow-md' 
+                              : 'bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300'
+                          )}
+                          onClick={() => {
+                            setCurrentVideo(video);
+                            setIsPlaying(false);
+                          }}
+                        >
+                          <div className="flex gap-4">
+                            <div className="relative flex-shrink-0">
+                              <img 
+                                src={video.thumbnail}
+                                alt={video.title}
+                                className="w-28 h-20 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+                              />
+                              <div className="absolute bottom-1 right-1">
+                                <Badge className="bg-black/80 text-white text-xs px-2 py-0.5">
+                                  {video.duration}
+                                </Badge>
+                              </div>
+                              {video.featured && (
+                                <div className="absolute top-1 left-1">
+                                  <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                                </div>
+                              )}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-bold text-sm line-clamp-2 mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
+                                {video.title}
+                              </h3>
+                              <p className="text-xs text-gray-600 line-clamp-2 mb-3 leading-relaxed">
+                                {video.synopsis}
+                              </p>
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3 text-xs text-gray-400">
+                                  <span>{video.views} views</span>
+                                  <span>•</span>
+                                  <span>{video.uploadDate}</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  {renderStars(video.rating)}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              <TabsContent value="trending">
+                <Card className="shadow-xl bg-gradient-to-br from-white to-gray-50 border-0">
+                  <CardContent className="p-6">
+                    <h2 className="text-xl font-bold mb-4 flex items-center gap-3">
+                      <TrendingUp className="w-5 h-5 text-orange-500" />
+                      Trending Now
+                    </h2>
+                    <div className="space-y-3">
+                      {videos.filter(v => v.featured).map((video, index) => (
+                        <div key={video.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer">
+                          <div className="w-8 h-8 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                            {index + 1}
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-medium text-sm line-clamp-1">{video.title}</p>
+                            <p className="text-xs text-gray-500">{video.views} views • {video.author}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              <TabsContent value="favorites">
+                <Card className="shadow-xl bg-gradient-to-br from-white to-gray-50 border-0">
+                  <CardContent className="p-6">
+                    <h2 className="text-xl font-bold mb-4 flex items-center gap-3">
+                      <Heart className="w-5 h-5 text-red-500" />
+                      My Favorites ({favorites.length})
+                    </h2>
+                    <div className="space-y-3">
+                      {favorites.length === 0 ? (
+                        <div className="text-center py-8 text-gray-500">
+                          <Heart className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                          <p>No favorites yet</p>
+                          <p className="text-sm">Like videos to add them here</p>
+                        </div>
+                      ) : (
+                        videos.filter(v => favorites.includes(v.id)).map((video) => (
+                          <div key={video.id} className="flex gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <img src={video.thumbnail} alt={video.title} className="w-16 h-12 rounded object-cover" />
+                            <div className="flex-1">
+                              <p className="font-medium text-sm line-clamp-2">{video.title}</p>
+                              <p className="text-xs text-gray-500 mt-1">{video.duration} • {video.views} views</p>
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
+        </div>
+
+        {/* Enhanced Video Grid for Related Content */}
+        <div className="mt-12">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-3xl font-bold text-gray-900">Related Videos</h2>
+            <Button variant="outline" asChild>
+              <a href="#top" className="flex items-center gap-2">
+                <ExternalLink className="w-4 h-4" />
+                View All
+              </a>
+            </Button>
+          </div>
+          
+          <div className={cn(
+            "grid gap-6",
+            viewMode === 'grid' 
+              ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+              : "grid-cols-1"
+          )}>
+            {videos.slice(0, 8).map((video) => (
+              <Card key={video.id} className="group hover:shadow-xl transition-all duration-300 overflow-hidden">
+                <div className="relative aspect-video">
+                  <img 
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute bottom-2 right-2">
+                    <Badge className="bg-black/80 text-white text-xs">{video.duration}</Badge>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
+                <CardContent className="p-4">
+                  <Badge className={cn(getCategoryColor(video.category), "mb-2")} variant="secondary">
+                    {video.category}
+                  </Badge>
+                  <h3 className="font-bold line-clamp-2 mb-2 group-hover:text-blue-600 transition-colors">
+                    {video.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 line-clamp-2 mb-3">{video.synopsis}</p>
+                  <div className="flex items-center justify-between text-xs text-gray-500">
+                    <span>{video.views} views</span>
+                    <span>{video.uploadDate}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </div>
