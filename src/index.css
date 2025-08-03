@@ -120,6 +120,16 @@
     @apply my-8;
   }
 
+  /* Animation utilities for Hero Carousel */
+  @keyframes progress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
+
+  .animate-progress {
+    animation: progress 5s linear infinite;
+  }
+
   .post-content figcaption {
     @apply text-center text-xs text-muted-foreground mt-2;
   }
