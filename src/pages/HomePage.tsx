@@ -67,7 +67,7 @@ export default function HomePage() {
     );
   }
 
-  const recentPosts = posts.slice(0, 4);
+  const recentPosts = posts.slice(0, 6);
   const allPostsForCarousel = posts.slice(0, 12);
   
   return (

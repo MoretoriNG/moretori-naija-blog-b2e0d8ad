@@ -98,7 +98,7 @@ export function CategoryMenu({ onCategoryClick }: CategoryMenuProps) {
                     if (onCategoryClick) onCategoryClick();
                   }}
                 >
-                  {category.name}
+                  All {category.name}
                 </Link>
                 <p className="text-xs text-muted-foreground mb-3">{category.description}</p>
                 <div className="space-y-1">

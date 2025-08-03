@@ -10,6 +10,8 @@ import { PostNavigation } from '@/components/blog/post/PostNavigation';
 import { PostLayoutWrapper } from '@/components/blog/post/PostLayoutWrapper';
 import { PostArticle } from '@/components/blog/post/PostArticle';
 import { PostEngagement } from '@/components/blog/post/PostEngagement';
+import { useAuth } from '@/contexts/AuthContext';
+import AdBanner from '@/components/blog/advertising/AdBanner';
 
 // High-quality placeholder images
 const placeholderImages = [
@@ -22,6 +24,7 @@ const placeholderImages = [
 export default function PostPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const post = getPostBySlug(slug || '');
   
   const [comments, setComments] = useState<{id: number, author: string, text: string, date: Date}[]>([]);
@@ -90,9 +93,14 @@ export default function PostPage() {
   };
   
   const handleAddComment = (text: string) => {
+    if (!user) {
+      toast.error('Please sign in to comment');
+      return;
+    }
+    
     const newCommentObj = {
       id: Date.now(),
-      author: 'Guest User',
+      author: user.email || 'Authenticated User',
       text,
       date: new Date()
     };
@@ -126,16 +134,24 @@ export default function PostPage() {
         {/* Breadcrumb */}
         <PostNavigation postTitle={post.title} categoryId={post.category_id} />
         
-        <PostArticle
-          post={post}
-          relatedPosts={mappedRelatedPosts}
-          comments={comments}
-          showCommentForm={showCommentForm}
-          onAddComment={handleAddComment}
-          onShowCommentForm={() => setShowCommentForm(true)}
-          onHideCommentForm={() => setShowCommentForm(false)}
-          handleShare={handleShare}
-        />
+        {/* Article content with left-aligned text */}
+        <div className="prose prose-lg max-w-none" style={{ textAlign: 'left' }}>
+          <PostArticle
+            post={post}
+            relatedPosts={mappedRelatedPosts}
+            comments={comments}
+            showCommentForm={showCommentForm && !!user}
+            onAddComment={handleAddComment}
+            onShowCommentForm={() => user ? setShowCommentForm(true) : toast.error('Please sign in to comment')}
+            onHideCommentForm={() => setShowCommentForm(false)}
+            handleShare={handleShare}
+          />
+        </div>
+        
+        {/* Ad Banner */}
+        <div className="my-8">
+          <AdBanner />
+        </div>
         
         {/* Enhanced Engagement Section */}
         <div className="my-8">

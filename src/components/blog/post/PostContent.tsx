@@ -62,7 +62,7 @@ export function PostContent({
   return (
     <div className="flex-1">
       {/* Post excerpt */}
-      <p className="text-base text-muted-foreground mb-6 font-medium italic border-l-4 border-blue-500 pl-4 py-2 bg-blue-50/50">
+      <p className="text-base text-muted-foreground mb-6 font-medium italic border-l-4 border-blue-500 pl-4 py-2 bg-blue-50/50" style={{ textIndent: '1.5rem', textAlign: 'left' }}>
         {excerpt}
       </p>
       
@@ -106,6 +106,7 @@ export function PostContent({
       {/* Post Content */}
       <div 
         className="post-content mb-12 prose prose-sm max-w-none prose-headings:text-foreground prose-a:text-blue-600 prose-img:rounded-lg" 
+        style={{ textAlign: 'left' }}
         dangerouslySetInnerHTML={{ __html: enhancedContent }}
       />
       

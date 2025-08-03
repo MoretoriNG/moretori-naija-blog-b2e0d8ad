@@ -22,6 +22,11 @@ import NewPostPage from "@/pages/admin/NewPostPage";
 import EditPostPage from "@/pages/admin/EditPostPage";
 import MediaLibraryPage from "@/pages/admin/MediaLibraryPage";
 import SettingsPage from "@/pages/admin/SettingsPage";
+import TechPage from "@/pages/category/TechPage";
+import AutoPage from "@/pages/category/AutoPage";
+import HealthPage from "@/pages/category/HealthPage";
+import EntertainmentPage from "@/pages/category/EntertainmentPage";
+import NewsPage from "@/pages/category/NewsPage";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import "./App.css";
 
@@ -43,6 +48,11 @@ function App() {
             <Route path="/" element={<MainLayout />}>
               <Route index element={<HomePage />} />
               <Route path="category/:category" element={<CategoryPage />} />
+              <Route path="category/tech" element={<TechPage />} />
+              <Route path="category/auto" element={<AutoPage />} />
+              <Route path="category/health" element={<HealthPage />} />
+              <Route path="category/entertainment" element={<EntertainmentPage />} />
+              <Route path="category/news" element={<NewsPage />} />
               <Route path="post/:slug" element={<PostPage />} />
               <Route path="videos" element={<VideosPage />} />
               <Route path="about" element={<AboutPage />} />

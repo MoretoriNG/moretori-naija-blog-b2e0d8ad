@@ -107,6 +107,9 @@
 
   .post-content p {
     @apply text-sm leading-relaxed;
+    text-align: left !important;
+    text-indent: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   .post-content img {
