@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { HeroSlider } from "@/components/blog/hero";
 import { CategoryHeader } from "@/components/blog/category/CategoryHeader";
 import { GridPostList } from "@/components/blog/category/GridPostList";
 import { ListPostList } from "@/components/blog/category/ListPostList";
@@ -19,6 +20,7 @@ export default function CategoryPage() {
   const [compactView, setCompactView] = useState(false);
   const [savedPosts, setSavedPosts] = useState<string[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
   const categories: PostCategory[] = ['tech', 'auto', 'health', 'entertainment', 'business', 'sports'];
@@ -37,13 +39,37 @@ export default function CategoryPage() {
   const loadPosts = async () => {
     try {
       setLoading(true);
-      const categoryPosts = await supabasePosts.getAllPosts({ 
-        category: activeCategory, 
-        published: true 
-      });
       
-      // Transform Supabase data to match our Post type
-      const transformedPosts = categoryPosts.map(post => ({
+      // Load all posts for the hero carousel
+      let allPostsData = await supabasePosts.getAllPosts({ published: true });
+      
+      // If no posts from Supabase, fallback to static data
+      if (allPostsData.length === 0) {
+        const { getAllPosts } = await import('@/lib/blog/posts');
+        const staticPosts = getAllPosts();
+        allPostsData = staticPosts.map(post => ({
+          id: Number(post.id),
+          title: post.title,
+          slug: post.slug,
+          excerpt: post.excerpt,
+          content: post.content,
+          category: post.category,
+          author: post.author,
+          created_at: post.publishedAt,
+          cover_image: post.coverImage,
+          image_url: post.coverImage,
+          featured: post.featured,
+          published: true,
+          summary: post.excerpt,
+          tags: post.tags || [],
+          video_url: post.video || '',
+          updated_at: post.publishedAt,
+          user_id: null
+        }));
+      }
+      
+      // Transform all posts
+      const transformedAllPosts = allPostsData.map(post => ({
         id: String(post.id),
         title: post.title,
         slug: post.slug,
@@ -58,10 +84,25 @@ export default function CategoryPage() {
         tags: post.tags || []
       })) as Post[];
 
-      setPosts(transformedPosts);
+      // Filter posts for current category
+      const categoryPosts = transformedAllPosts.filter(post => post.category === activeCategory);
+      
+      setAllPosts(transformedAllPosts);
+      setPosts(categoryPosts);
     } catch (error) {
       console.error('Error loading posts:', error);
-      setPosts([]);
+      // Fallback to static data
+      try {
+        const { getAllPosts, getPostsByCategory } = await import('@/lib/blog/posts');
+        const staticPosts = getAllPosts();
+        const categoryPosts = staticPosts.filter(post => post.category === activeCategory);
+        setAllPosts(staticPosts);
+        setPosts(categoryPosts);
+      } catch (fallbackError) {
+        console.error('Error loading fallback posts:', fallbackError);
+        setAllPosts([]);
+        setPosts([]);
+      }
     } finally {
       setLoading(false);
     }
@@ -108,6 +149,9 @@ export default function CategoryPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
+      {/* Hero Section with posts from all categories */}
+      {allPosts.length > 0 && <HeroSlider posts={allPosts.slice(0, 8)} />}
+      
       <div className="container px-4 lg:px-8 py-8">
         {/* Category Header */}
         <CategoryHeader

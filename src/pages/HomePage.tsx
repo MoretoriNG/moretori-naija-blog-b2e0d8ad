@@ -22,9 +22,36 @@ export default function HomePage() {
   const loadPosts = async () => {
     try {
       setLoading(true);
-      const allPosts = await supabasePosts.getAllPosts({ published: true });
       
-      // Transform Supabase data to match our Post type
+      // Try to load from Supabase first
+      let allPosts = await supabasePosts.getAllPosts({ published: true });
+      
+      // If no posts from Supabase, fallback to static data
+      if (allPosts.length === 0) {
+        const { getAllPosts } = await import('@/lib/blog/posts');
+        const staticPosts = getAllPosts();
+        allPosts = staticPosts.map(post => ({
+          id: Number(post.id),
+          title: post.title,
+          slug: post.slug,
+          excerpt: post.excerpt,
+          content: post.content,
+          category: post.category,
+          author: post.author,
+          created_at: post.publishedAt,
+          cover_image: post.coverImage,
+          image_url: post.coverImage,
+          featured: post.featured,
+          published: true,
+          summary: post.excerpt,
+          tags: post.tags || [],
+          video_url: post.video || '',
+          updated_at: post.publishedAt,
+          user_id: null
+        }));
+      }
+      
+      // Transform data to match our Post type
       const transformedPosts = allPosts.map(post => ({
         id: String(post.id),
         title: post.title,
@@ -50,9 +77,17 @@ export default function HomePage() {
       setIsLoaded(true);
     } catch (error) {
       console.error('Error loading posts:', error);
-      // Fallback to empty arrays if there's an error
-      setPosts([]);
-      setFeaturedPosts([]);
+      // Fallback to static data
+      try {
+        const { getAllPosts } = await import('@/lib/blog/posts');
+        const staticPosts = getAllPosts();
+        setPosts(staticPosts);
+        setFeaturedPosts(staticPosts.filter(post => post.featured));
+      } catch (fallbackError) {
+        console.error('Error loading fallback posts:', fallbackError);
+        setPosts([]);
+        setFeaturedPosts([]);
+      }
       setIsLoaded(true);
     } finally {
       setLoading(false);

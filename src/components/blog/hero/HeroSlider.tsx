@@ -53,23 +53,19 @@ export function HeroSlider({ posts }: HeroSliderProps) {
   useEffect(() => {
     setIsLoaded(true);
     
-    // Get latest posts from different categories for playlists
+    // Get posts by category from the props
     const categories: PostCategory[] = ['tech', 'health', 'entertainment', 'business', 'sports', 'auto'];
     const playlists: {[key: string]: Post[]} = {};
     
     categories.forEach(category => {
-      const categoryPosts = getPostsByCategory(category).slice(0, 6).map(post => ({
-        ...post,
-        id: String(post.id),
-        category,
-        coverImage: post.image_url,
-        publishedAt: post.published_at
-      })) as Post[];
+      const categoryPosts = posts
+        .filter(post => post.category === category)
+        .slice(0, 6);
       playlists[category] = categoryPosts;
     });
     
     setCategoryPlaylists(playlists);
-  }, []);
+  }, [posts]);
 
   useEffect(() => {
     if (!api) {
