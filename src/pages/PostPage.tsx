@@ -12,6 +12,7 @@ import { PostArticle } from '@/components/blog/post/PostArticle';
 import { PostEngagement } from '@/components/blog/post/PostEngagement';
 import { useAuth } from '@/contexts/AuthContext';
 import AdBanner from '@/components/blog/advertising/AdBanner';
+import { useEngagementTracker } from '@/hooks/useEngagementTracker';
 
 // High-quality placeholder images
 const placeholderImages = [
@@ -50,6 +51,14 @@ export default function PostPage() {
   const categorySlug = category?.slug || 'uncategorized';
   const relatedPosts = getRelatedPosts(post.id, post.category_id, 3);
   const readingTimeMinutes = Math.ceil(post.content.split(' ').length / 200);
+
+  const { recordPostView, recordCategoryView } = useEngagementTracker();
+  useEffect(() => {
+    if (post) {
+      recordPostView(post.id);
+      recordCategoryView(categorySlug);
+    }
+  }, [post, categorySlug, recordPostView, recordCategoryView]);
   
   const handleShare = (platform?: string) => {
     const shareUrl = window.location.href;

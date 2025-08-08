@@ -29,6 +29,7 @@ import EntertainmentPage from "@/pages/category/EntertainmentPage";
 import NewsPage from "@/pages/category/NewsPage";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import "./App.css";
+import BusinessDirectoryPage from "@/pages/BusinessDirectoryPage";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,7 @@ function App() {
               <Route path="category/news" element={<NewsPage />} />
               <Route path="post/:slug" element={<PostPage />} />
               <Route path="videos" element={<VideosPage />} />
+              <Route path="business-directory" element={<BusinessDirectoryPage />} />
               <Route path="about" element={<AboutPage />} />
               <Route path="privacy" element={<PrivacyPage />} />
               <Route path="terms" element={<TermsPage />} />

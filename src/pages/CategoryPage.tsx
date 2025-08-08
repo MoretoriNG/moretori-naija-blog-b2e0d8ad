@@ -12,6 +12,8 @@ import { Grid, List, Layers } from "lucide-react";
 import AdBanner from "@/components/blog/advertising/AdBanner";
 import { toast } from "sonner";
 import { supabasePosts } from "@/lib/supabase/posts";
+import RecommendedPosts from "@/components/recommendations/RecommendedPosts";
+import { useEngagementTracker } from "@/hooks/useEngagementTracker";
 
 export default function CategoryPage() {
   const { category } = useParams<{ category: string }>();
@@ -32,9 +34,12 @@ export default function CategoryPage() {
     }
   }, [category]);
 
+  const { recordCategoryView } = useEngagementTracker();
+
   useEffect(() => {
     loadPosts();
-  }, [activeCategory]);
+    recordCategoryView(activeCategory);
+  }, [activeCategory, recordCategoryView]);
 
   const loadPosts = async () => {
     try {
@@ -199,6 +204,9 @@ export default function CategoryPage() {
 
         {/* Ad Banner */}
         <AdBanner size="large" id="category-top" className="mb-8" />
+
+        {/* Recommended for You */}
+        <RecommendedPosts posts={allPosts} />
 
         {/* Posts Grid/List */}
         {posts.length > 0 ? (

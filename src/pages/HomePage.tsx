@@ -7,7 +7,7 @@ import { TrendingTopics } from "@/components/blog/TrendingTopics";
 import { Post } from "@/types/blog";
 import AdBanner from "@/components/blog/advertising/AdBanner";
 import { supabasePosts } from "@/lib/supabase/posts";
-import { BusinessDirectory } from "@/components/business/BusinessDirectory";
+import RecommendedPosts from "@/components/recommendations/RecommendedPosts";
 
 export default function HomePage() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -121,6 +121,9 @@ export default function HomePage() {
           {allPostsForCarousel.length > 0 && (
             <FeaturedPosts posts={allPostsForCarousel} />
           )}
+
+          {/* Recommended for You */}
+          <RecommendedPosts posts={posts} />
           
           {/* Category Posts with Tabs */}
           <CategoryPosts initialCategory="tech" />
@@ -146,9 +149,6 @@ export default function HomePage() {
           )}
         </div>
       </div>
-      
-      {/* Business Directory Section */}
-      <BusinessDirectory />
     </div>
   );
 }

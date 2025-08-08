@@ -1,10 +1,12 @@
 
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { useEngagementTracker } from '@/hooks/useEngagementTracker';
 
 export function usePostInteraction(postId: string | number) {
   const [likedPosts, setLikedPosts] = useState<Record<string, number>>({});
   const [savedPosts, setSavedPosts] = useState<string[]>([]);
+  const { recordLike, recordSave, removeSave } = useEngagementTracker();
   
   const postIdStr = String(postId);
   const isLiked = (likedPosts[postIdStr] || 0) > 0;
@@ -17,6 +19,7 @@ export function usePostInteraction(postId: string | number) {
       
       if (currentLikes === 0) {
         toast.success("You liked this post");
+        recordLike(postId);
       }
       
       return newValue;
@@ -27,9 +30,11 @@ export function usePostInteraction(postId: string | number) {
     setSavedPosts(prev => {
       if (prev.includes(postIdStr)) {
         toast.success("Removed from your reading list");
+        removeSave(postId);
         return prev.filter(id => id !== postIdStr);
       } else {
         toast.success("Added to your reading list");
+        recordSave(postId);
         return [...prev, postIdStr];
       }
     });

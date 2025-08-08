@@ -88,6 +88,14 @@ export function Header() {
               Videos
             </Link>
             
+            <Link 
+              to="/business-directory" 
+              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+                isActive('/business-directory') ? 'text-blue-600 border-b-2 border-blue-600 pb-1' : 'text-gray-700'
+              }`}
+            >
+              Directory
+            </Link>
           </nav>
 
           {/* Search and Actions */}
@@ -187,6 +195,14 @@ export function Header() {
               onClick={() => setIsMenuOpen(false)}
             >
               Videos
+            </Link>
+
+            <Link 
+              to="/business-directory" 
+              className="block text-sm font-medium text-gray-700 hover:text-blue-600"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Directory
             </Link>
             
             
