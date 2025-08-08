@@ -15,7 +15,6 @@ import { CategoryMenu } from "./navigation/CategoryMenu";
 import { UserMenu } from "./navigation/UserMenu";
 import { SearchBar } from "./navigation/SearchBar";
 import { TopBar } from "./navigation/TopBar";
-// import logoImage from "@/assets/logo.png";
 
 const categories = [
   { name: "Technology", slug: "tech", icon: "💻" },
@@ -29,7 +28,7 @@ const categories = [
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [notifications] = useState(3); // Mock notification count
+  const [notifications] = useState(3);
   const location = useLocation();
 
   useEffect(() => {
@@ -78,15 +77,6 @@ export function Header() {
             </Link>
             
             <CategoryMenu />
-            
-            <Link 
-              to="/videos" 
-              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
-                isActive('/videos') ? 'text-blue-600 border-b-2 border-blue-600 pb-1' : 'text-gray-700'
-              }`}
-            >
-              Videos
-            </Link>
             
             <Link 
               to="/business-directory" 
@@ -190,21 +180,12 @@ export function Header() {
             </div>
             
             <Link 
-              to="/videos" 
-              className="block text-sm font-medium text-gray-700 hover:text-blue-600"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Videos
-            </Link>
-
-            <Link 
               to="/business-directory" 
               className="block text-sm font-medium text-gray-700 hover:text-blue-600"
               onClick={() => setIsMenuOpen(false)}
             >
               Directory
             </Link>
-            
             
             <div className="pt-4 border-t">
               <Link 

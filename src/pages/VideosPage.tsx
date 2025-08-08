@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,10 +8,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Play, Clock, Eye, ThumbsUp, Share, BookmarkPlus, Search, Filter, Grid, List, 
   Heart, Star, Download, MessageCircle, Bookmark, TrendingUp, Award, Users,
-  Calendar, Volume2, Settings, ExternalLink, Copy
+  Calendar, Volume2, Settings, ExternalLink, Copy, PlayCircle, ArrowLeft
 } from "lucide-react";
+import { Link } from 'react-router-dom';
 import AdBanner from "@/components/blog/advertising/AdBanner";
 import { cn } from "@/lib/utils";
+import { Slider } from "@/components/ui/slider";
 
 interface Video {
   id: string;
@@ -77,6 +80,38 @@ const videos: Video[] = [
     rating: 4.7,
     featured: false,
     tags: ['Healthcare', 'Wellness', 'Innovation']
+  },
+  {
+    id: '4',
+    title: 'Nigerian Business Success Stories',
+    synopsis: 'Inspiring stories of Nigerian entrepreneurs and business leaders who are making waves in various industries.',
+    duration: '22:15',
+    views: '1.2M',
+    likes: '35K',
+    thumbnail: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    category: 'Business',
+    uploadDate: '3 days ago',
+    author: 'Business Today Nigeria',
+    rating: 4.5,
+    featured: true,
+    tags: ['Entrepreneurship', 'Success', 'Leadership']
+  },
+  {
+    id: '5',
+    title: 'Sports Culture in Nigeria',
+    synopsis: 'The passion and culture of sports across Nigerian communities, from football to athletics.',
+    duration: '16:40',
+    views: '850K',
+    likes: '22K',
+    thumbnail: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    category: 'Sports',
+    uploadDate: '5 days ago',
+    author: 'Sports Nigeria',
+    rating: 4.4,
+    featured: false,
+    tags: ['Football', 'Athletics', 'Culture']
   }
 ];
 
@@ -93,6 +128,8 @@ export default function VideosPage() {
   const [showComments, setShowComments] = useState(false);
   const [videoQuality, setVideoQuality] = useState('1080p');
   const [autoplay, setAutoplay] = useState(false);
+  const [volume, setVolume] = useState([75]);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
 
   const categories = ['All', 'Technology', 'Entertainment', 'Health', 'Business', 'Sports', 'Lifestyle', 'News', 'Auto', 'Culture', 'Education'];
 
@@ -196,6 +233,16 @@ export default function VideosPage() {
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
         </div>
         <div className="relative container py-16">
+          {/* Back Button */}
+          <div className="mb-6">
+            <Button variant="ghost" asChild className="text-white hover:bg-white/20">
+              <Link to="/" className="flex items-center gap-2">
+                <ArrowLeft className="w-4 h-4" />
+                Back to Home
+              </Link>
+            </Button>
+          </div>
+
           <div className="max-w-4xl">
             <h1 className="text-5xl md:text-7xl font-black mb-6">
               Video <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">Hub</span>
@@ -459,28 +506,29 @@ export default function VideosPage() {
               </CardContent>
             </Card>
 
-            {/* Video Settings Panel */}
+            {/* Enhanced Video Settings Panel */}
             <Card className="mt-6 shadow-xl bg-gradient-to-br from-white to-gray-50 border-0">
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                   <Settings className="w-5 h-5" />
                   Video Settings
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm">Quality</span>
+                    <span className="text-sm font-medium">Quality</span>
                     <select
                       value={videoQuality}
                       onChange={(e) => setVideoQuality(e.target.value)}
-                      className="px-3 py-1 border rounded text-sm"
+                      className="px-3 py-1 border rounded text-sm min-w-[100px]"
                     >
                       <option value="1080p">1080p HD</option>
                       <option value="720p">720p</option>
                       <option value="480p">480p</option>
+                      <option value="360p">360p</option>
                     </select>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm">Autoplay Next</span>
+                    <span className="text-sm font-medium">Autoplay Next</span>
                     <Button
                       variant={autoplay ? "default" : "outline"}
                       size="sm"
@@ -489,12 +537,36 @@ export default function VideosPage() {
                       {autoplay ? 'On' : 'Off'}
                     </Button>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Volume</span>
-                    <div className="flex items-center gap-2">
-                      <Volume2 className="w-4 h-4" />
-                      <input type="range" min="0" max="100" defaultValue="75" className="w-20" />
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Volume</span>
+                      <div className="flex items-center gap-2">
+                        <Volume2 className="w-4 h-4" />
+                        <span className="text-sm min-w-[30px]">{volume[0]}%</span>
+                      </div>
                     </div>
+                    <Slider
+                      value={volume}
+                      onValueChange={setVolume}
+                      max={100}
+                      step={1}
+                      className="w-full"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Playback Speed</span>
+                    <select
+                      value={playbackSpeed}
+                      onChange={(e) => setPlaybackSpeed(Number(e.target.value))}
+                      className="px-3 py-1 border rounded text-sm min-w-[80px]"
+                    >
+                      <option value={0.5}>0.5x</option>
+                      <option value={0.75}>0.75x</option>
+                      <option value={1}>1x</option>
+                      <option value={1.25}>1.25x</option>
+                      <option value={1.5}>1.5x</option>
+                      <option value={2}>2x</option>
+                    </select>
                   </div>
                 </div>
               </CardContent>
@@ -587,7 +659,11 @@ export default function VideosPage() {
                     </h2>
                     <div className="space-y-3">
                       {videos.filter(v => v.featured).map((video, index) => (
-                        <div key={video.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <div key={video.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                             onClick={() => {
+                               setCurrentVideo(video);
+                               setIsPlaying(false);
+                             }}>
                           <div className="w-8 h-8 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
                             {index + 1}
                           </div>
@@ -618,7 +694,11 @@ export default function VideosPage() {
                         </div>
                       ) : (
                         videos.filter(v => favorites.includes(v.id)).map((video) => (
-                          <div key={video.id} className="flex gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer">
+                          <div key={video.id} className="flex gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                               onClick={() => {
+                                 setCurrentVideo(video);
+                                 setIsPlaying(false);
+                               }}>
                             <img src={video.thumbnail} alt={video.title} className="w-16 h-12 rounded object-cover" />
                             <div className="flex-1">
                               <p className="font-medium text-sm line-clamp-2">{video.title}</p>
@@ -639,12 +719,15 @@ export default function VideosPage() {
         <div className="mt-12">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-3xl font-bold text-gray-900">Related Videos</h2>
-            <Button variant="outline" asChild>
-              <a href="#top" className="flex items-center gap-2">
-                <ExternalLink className="w-4 h-4" />
-                View All
-              </a>
-            </Button>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
+              >
+                {viewMode === 'grid' ? <List className="w-4 h-4" /> : <Grid className="w-4 h-4" />}
+              </Button>
+            </div>
           </div>
           
           <div className={cn(
@@ -653,29 +736,51 @@ export default function VideosPage() {
               ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
               : "grid-cols-1"
           )}>
-            {videos.slice(0, 8).map((video) => (
-              <Card key={video.id} className="group hover:shadow-xl transition-all duration-300 overflow-hidden">
+            {getSortedVideos().slice(0, 12).map((video) => (
+              <Card key={video.id} className="group hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+                    onClick={() => {
+                      setCurrentVideo(video);
+                      setIsPlaying(false);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}>
                 <div className="relative aspect-video">
                   <img 
                     src={video.thumbnail}
                     alt={video.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                    <PlayCircle className="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
                   <div className="absolute bottom-2 right-2">
                     <Badge className="bg-black/80 text-white text-xs">{video.duration}</Badge>
                   </div>
+                  {video.featured && (
+                    <div className="absolute top-2 left-2">
+                      <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs">
+                        <Star className="w-3 h-3 mr-1" />
+                        Featured
+                      </Badge>
+                    </div>
+                  )}
                 </div>
                 <CardContent className="p-4">
-                  <Badge className={cn(getCategoryColor(video.category), "mb-2")} variant="secondary">
+                  <Badge className={cn(getCategoryColor(video.category), "mb-2 text-xs")} variant="secondary">
                     {video.category}
                   </Badge>
                   <h3 className="font-bold line-clamp-2 mb-2 group-hover:text-blue-600 transition-colors">
                     {video.title}
                   </h3>
-                  <p className="text-sm text-gray-600 line-clamp-2 mb-3">{video.synopsis}</p>
+                  <p className="text-sm text-gray-600 line-clamp-2 mb-3 leading-relaxed">{video.synopsis}</p>
                   <div className="flex items-center justify-between text-xs text-gray-500">
-                    <span>{video.views} views</span>
-                    <span>{video.uploadDate}</span>
+                    <div className="flex items-center gap-2">
+                      <span>{video.views} views</span>
+                      <span>•</span>
+                      <span>{video.uploadDate}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      {renderStars(video.rating)}
+                    </div>
                   </div>
                 </CardContent>
               </Card>

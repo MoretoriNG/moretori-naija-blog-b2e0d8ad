@@ -5,9 +5,13 @@ import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { FooterAdBanner } from "@/components/blog/advertising/FooterAdBanner";
 import AdBanner from "@/components/blog/advertising/AdBanner";
+import VideoSlider from "@/components/videos/VideoSlider";
 
 export default function MainLayout() {
   const location = useLocation();
+  
+  // Only show video slider on homepage
+  const showVideoSlider = location.pathname === '/';
   
   return (
     <div className="flex min-h-screen flex-col">
@@ -23,6 +27,9 @@ export default function MainLayout() {
         id="footer-banner"
         className="container my-6"
       />
+      
+      {/* Video Slider - only on homepage */}
+      {showVideoSlider && <VideoSlider />}
       
       <FooterAdBanner />
       <Footer />
