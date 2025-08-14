@@ -129,7 +129,7 @@ export default function UserAuthPage() {
             <BookOpen className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">Join Our Community</h1>
-          <p className="text-white/80">Access articles, bookmark favorites, and download videos</p>
+          <p className="text-white/80">Join our community of readers and writers</p>
         </div>
 
         <Card className="backdrop-blur-md bg-white/90 border-white/20 shadow-2xl">
@@ -198,16 +198,16 @@ export default function UserAuthPage() {
               </TabsContent>
             </Tabs>
             
-            {/* User Features section */}
+            {/* Features section */}
             <div className="border-t pt-6">
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div className="flex flex-col items-center space-y-2">
-                  <BookOpen className="w-6 h-6 text-blue-500" />
-                  <span className="text-xs text-gray-600">Bookmark Articles</span>
+                  <Shield className="w-6 h-6 text-blue-500" />
+                  <span className="text-xs text-gray-600">Secure & Safe</span>
                 </div>
                 <div className="flex flex-col items-center space-y-2">
-                  <Download className="w-6 h-6 text-blue-500" />
-                  <span className="text-xs text-gray-600">Download Videos</span>
+                  <Users className="w-6 h-6 text-blue-500" />
+                  <span className="text-xs text-gray-600">Join Community</span>
                 </div>
               </div>
             </div>
