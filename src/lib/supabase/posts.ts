@@ -13,11 +13,17 @@ export const supabasePosts = {
     if (filters?.category) {
       query = query.eq('category', filters.category);
     }
-    if (filters?.featured !== undefined) {
-      query = query.eq('featured', filters.featured);
-    }
+      if (filters?.featured !== undefined) {
+        if (filters.featured) {
+          query = query.eq('status', 'published');
+        }
+      }
     if (filters?.published !== undefined) {
-      query = query.eq('published', filters.published);
+      if (filters.published) {
+        query = query.not('published_at', 'is', null);
+      } else {
+        query = query.is('published_at', null);
+      }
     }
 
     const { data, error } = await query;
@@ -31,7 +37,7 @@ export const supabasePosts = {
       .from('posts')
       .select('*')
       .eq('slug', slug)
-      .eq('published', true)
+      .not('published_at', 'is', null)
       .single();
 
     if (error) throw error;
@@ -59,14 +65,12 @@ export const supabasePosts = {
         slug: post.slug,
         excerpt: post.excerpt,
         content: post.content,
-        cover_image: post.coverImage,
-        category: post.category,
-        author: post.author,
-        featured: post.featured || false,
-        published: post.publishedAt ? true : false,
-        video_url: post.video,
-        tags: post.tags || [],
-        user_id: (await supabase.auth.getUser()).data.user?.id
+        featured_image: post.coverImage,
+        category_id: post.category,
+        author_id: post.author,
+        status: post.publishedAt ? 'published' : 'draft',
+        published_at: post.publishedAt || null,
+        tags: post.tags || []
       })
       .select()
       .single();
@@ -84,12 +88,11 @@ export const supabasePosts = {
         slug: post.slug,
         excerpt: post.excerpt,
         content: post.content,
-        cover_image: post.coverImage,
-        category: post.category,
-        author: post.author,
-        featured: post.featured,
-        published: post.publishedAt ? true : false,
-        video_url: post.video,
+        featured_image: post.coverImage,
+        category_id: post.category,
+        author_id: post.author,
+        status: post.publishedAt ? 'published' : 'draft',
+        published_at: post.publishedAt || null,
         tags: post.tags,
         updated_at: new Date().toISOString()
       })
@@ -125,7 +128,11 @@ export const supabasePosts = {
   async togglePostStatus(id: string, published: boolean) {
     const { data, error } = await supabase
       .from('posts')
-      .update({ published, updated_at: new Date().toISOString() })
+      .update({ 
+        published_at: published ? new Date().toISOString() : null,
+        status: published ? 'published' : 'draft',
+        updated_at: new Date().toISOString() 
+      })
       .eq('id', parseInt(id))
       .select()
       .single();
@@ -161,7 +168,7 @@ export const supabasePosts = {
   async getDashboardStats() {
     try {
       const [postsData, categoriesData] = await Promise.all([
-        supabase.from('posts').select('id, published, featured, created_at'),
+        supabase.from('posts').select('id, published_at, status, created_at'),
         supabase.from('categories').select('id')
       ]);
 
@@ -172,14 +179,14 @@ export const supabasePosts = {
       const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
       const lastMonth = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-      const recentPosts = posts.filter(post => new Date(post.created_at) >= lastWeek);
-      const monthlyPosts = posts.filter(post => new Date(post.created_at) >= lastMonth);
+      const recentPosts = posts.filter(post => post.created_at && new Date(post.created_at) >= lastWeek);
+      const monthlyPosts = posts.filter(post => post.created_at && new Date(post.created_at) >= lastMonth);
 
       return {
         totalPosts: posts.length,
-        publishedPosts: posts.filter(post => post.published).length,
-        draftPosts: posts.filter(post => !post.published).length,
-        featuredPosts: posts.filter(post => post.featured).length,
+        publishedPosts: posts.filter(post => post.published_at && post.status === 'published').length,
+        draftPosts: posts.filter(post => post.status === 'draft' || !post.published_at).length,
+        featuredPosts: posts.filter(post => post.status === 'published').length,
         totalCategories: categories.length,
         recentPosts: recentPosts.length,
         monthlyPosts: monthlyPosts.length,
@@ -212,11 +219,10 @@ Large language models have become more sophisticated, enabling better human-comp
 
 ## Industry Impact
 AI is transforming industries from healthcare to finance, creating new opportunities and challenges...`,
-        cover_image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop",
-        category: "Technology",
+        coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop",
+        category: "tech",
         author: "Dr. Sarah Chen",
         featured: true,
-        published: true,
         tags: ["AI", "Technology", "Future", "Innovation"]
       },
       {
@@ -236,11 +242,10 @@ Making sustainable choices doesn't have to be overwhelming. Here are practical s
 - Implement the 3 R's: Reduce, Reuse, Recycle
 - Compost organic waste
 - Choose products with minimal packaging`,
-        cover_image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=400&fit=crop",
-        category: "Lifestyle",
+        coverImage: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=400&fit=crop",
+        category: "lifestyle",
         author: "Emma Rodriguez",
         featured: false,
-        published: true,
         tags: ["Sustainability", "Environment", "Lifestyle", "Green Living"]
       },
       {
@@ -259,11 +264,10 @@ This discovery could lead to revolutionary advances in:
 - Quantum computing
 - Energy storage
 - Telecommunications`,
-        cover_image: "https://images.unsplash.com/photo-1636953056323-9c09fdd74fa6?w=800&h=400&fit=crop",
-        category: "News",
+        coverImage: "https://images.unsplash.com/photo-1636953056323-9c09fdd74fa6?w=800&h=400&fit=crop",
+        category: "news",
         author: "Prof. Michael Thompson",
         featured: true,
-        published: true,
         tags: ["Science", "Physics", "Research", "Discovery"]
       },
       {
@@ -281,11 +285,10 @@ Financial markets worldwide are responding to significant policy shifts announce
 
 ## Key Factors
 Several factors are driving current market movements...`,
-        cover_image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=400&fit=crop",
-        category: "Business",
+        coverImage: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=400&fit=crop",
+        category: "business",
         author: "James Wilson",
         featured: false,
-        published: true,
         tags: ["Finance", "Markets", "Economy", "Business"]
       },
       {
@@ -303,11 +306,10 @@ Last night's championship final will be remembered as one of the greatest matche
 
 ## Player Performances
 Outstanding individual performances highlighted the evening...`,
-        cover_image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=400&fit=crop",
-        category: "Sports",
+        coverImage: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=400&fit=crop",
+        category: "sports",
         author: "Maria Garcia",
         featured: true,
-        published: true,
         tags: ["Sports", "Championship", "Records", "Competition"]
       },
       {
@@ -328,11 +330,11 @@ Mental health encompasses our emotional, psychological, and social well-being...
 
 ## Resources and Support
 If you or someone you know needs support...`,
-        cover_image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=400&fit=crop",
-        category: "Health",
+        coverImage: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=400&fit=crop",
+        category: "health",
         author: "Dr. Lisa Park",
         featured: false,
-        published: true,
+        
         tags: ["Mental Health", "Wellness", "Support", "Awareness"]
       }
     ];
