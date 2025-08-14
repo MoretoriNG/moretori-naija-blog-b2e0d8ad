@@ -2,6 +2,27 @@
 import { supabase } from "@/integrations/supabase/client";
 import { Post } from "@/types/blog";
 
+// Transform database post to frontend Post type
+function transformPost(dbPost: any): Post {
+  return {
+    id: dbPost.id,
+    title: dbPost.title,
+    slug: dbPost.slug,
+    excerpt: dbPost.excerpt,
+    content: dbPost.content,
+    coverImage: dbPost.featured_image,
+    image_url: dbPost.featured_image, // Support both formats
+    category: dbPost.category_id,
+    category_id: dbPost.category_id, // Support both formats
+    author: dbPost.author_id,
+    publishedAt: dbPost.published_at,
+    published_at: dbPost.published_at, // Support both formats
+    featured: dbPost.status === 'published',
+    video: dbPost.video_url,
+    tags: dbPost.tags || []
+  };
+}
+
 export const supabasePosts = {
   // Get all posts with optional filtering
   async getAllPosts(filters?: { category?: string; featured?: boolean; published?: boolean }) {
@@ -11,24 +32,22 @@ export const supabasePosts = {
       .order('created_at', { ascending: false });
 
     if (filters?.category) {
-      query = query.eq('category', filters.category);
+      query = query.eq('category_id', filters.category);
     }
-      if (filters?.featured !== undefined) {
-        if (filters.featured) {
-          query = query.eq('status', 'published');
-        }
-      }
+    if (filters?.featured !== undefined) {
+      query = query.eq('status', 'published');
+    }
     if (filters?.published !== undefined) {
       if (filters.published) {
-        query = query.not('published_at', 'is', null);
+        query = query.eq('status', 'published');
       } else {
-        query = query.is('published_at', null);
+        query = query.eq('status', 'draft');
       }
     }
 
     const { data, error } = await query;
     if (error) throw error;
-    return data || [];
+    return (data || []).map(transformPost);
   },
 
   // Get post by slug
@@ -37,11 +56,11 @@ export const supabasePosts = {
       .from('posts')
       .select('*')
       .eq('slug', slug)
-      .not('published_at', 'is', null)
+      .eq('status', 'published')
       .single();
 
     if (error) throw error;
-    return data;
+    return transformPost(data);
   },
 
   // Get post by ID
@@ -49,11 +68,11 @@ export const supabasePosts = {
     const { data, error } = await supabase
       .from('posts')
       .select('*')
-      .eq('id', parseInt(id))
+      .eq('id', id)
       .single();
 
     if (error) throw error;
-    return data;
+    return transformPost(data);
   },
 
   // Create new post
@@ -76,7 +95,7 @@ export const supabasePosts = {
       .single();
 
     if (error) throw error;
-    return data;
+    return transformPost(data);
   },
 
   // Update post
@@ -96,12 +115,12 @@ export const supabasePosts = {
         tags: post.tags,
         updated_at: new Date().toISOString()
       })
-      .eq('id', parseInt(id))
+      .eq('id', id)
       .select()
       .single();
 
     if (error) throw error;
-    return data;
+    return transformPost(data);
   },
 
   // Delete post
@@ -109,7 +128,7 @@ export const supabasePosts = {
     const { error } = await supabase
       .from('posts')
       .delete()
-      .eq('id', parseInt(id));
+      .eq('id', id);
 
     if (error) throw error;
   },
@@ -119,7 +138,7 @@ export const supabasePosts = {
     const { error } = await supabase
       .from('posts')
       .delete()
-      .in('id', ids.map(id => parseInt(id)));
+      .in('id', ids);
 
     if (error) throw error;
   },
@@ -133,12 +152,12 @@ export const supabasePosts = {
         status: published ? 'published' : 'draft',
         updated_at: new Date().toISOString() 
       })
-      .eq('id', parseInt(id))
+      .eq('id', id)
       .select()
       .single();
 
     if (error) throw error;
-    return data;
+    return transformPost(data);
   },
 
   // Get categories
@@ -179,14 +198,24 @@ export const supabasePosts = {
       const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
       const lastMonth = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-      const recentPosts = posts.filter(post => post.created_at && new Date(post.created_at) >= lastWeek);
-      const monthlyPosts = posts.filter(post => post.created_at && new Date(post.created_at) >= lastMonth);
+      const recentPosts = posts.filter(post => 
+        post && post.created_at && new Date(post.created_at) >= lastWeek
+      );
+      const monthlyPosts = posts.filter(post => 
+        post && post.created_at && new Date(post.created_at) >= lastMonth
+      );
 
       return {
         totalPosts: posts.length,
-        publishedPosts: posts.filter(post => post.published_at && post.status === 'published').length,
-        draftPosts: posts.filter(post => post.status === 'draft' || !post.published_at).length,
-        featuredPosts: posts.filter(post => post.status === 'published').length,
+        publishedPosts: posts.filter(post => 
+          post && post.status === 'published'
+        ).length,
+        draftPosts: posts.filter(post => 
+          post && post.status === 'draft'
+        ).length,
+        featuredPosts: posts.filter(post => 
+          post && post.status === 'published'
+        ).length,
         totalCategories: categories.length,
         recentPosts: recentPosts.length,
         monthlyPosts: monthlyPosts.length,

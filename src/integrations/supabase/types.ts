@@ -7,99 +7,167 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "12.2.3 (519615d)"
+    PostgrestVersion: "12.2.12 (cd3cf9e)"
   }
   public: {
     Tables: {
+      authors: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          email: string
+          id: string
+          name: string
+          social_links: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          email: string
+          id: string
+          name: string
+          social_links?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          name?: string
+          social_links?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       categories: {
         Row: {
           color: string | null
-          created_at: string
+          created_at: string | null
           description: string | null
-          id: number
+          id: string
           name: string
           slug: string
+          updated_at: string | null
         }
         Insert: {
           color?: string | null
-          created_at?: string
+          created_at?: string | null
           description?: string | null
-          id?: number
+          id?: string
           name: string
           slug: string
+          updated_at?: string | null
         }
         Update: {
           color?: string | null
-          created_at?: string
+          created_at?: string | null
           description?: string | null
-          id?: number
+          id?: string
           name?: string
           slug?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      comments: {
+        Row: {
+          content: string
+          created_at: string
+          id: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: never
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: never
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
       posts: {
         Row: {
-          author: string | null
-          category: string | null
+          author_id: string | null
+          category_id: string | null
           content: string
-          cover_image: string | null
           created_at: string | null
           excerpt: string | null
-          featured: boolean | null
-          id: number
-          image_url: string | null
-          published: boolean | null
-          slug: string | null
-          summary: string | null
+          featured_image: string | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          published_at: string | null
+          reading_time: string | null
+          slug: string
+          status: string | null
           tags: string[] | null
           title: string
           updated_at: string | null
-          user_id: string | null
-          video_url: string | null
+          view_count: number | null
         }
         Insert: {
-          author?: string | null
-          category?: string | null
+          author_id?: string | null
+          category_id?: string | null
           content: string
-          cover_image?: string | null
           created_at?: string | null
           excerpt?: string | null
-          featured?: boolean | null
-          id?: never
-          image_url?: string | null
-          published?: boolean | null
-          slug?: string | null
-          summary?: string | null
+          featured_image?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          reading_time?: string | null
+          slug: string
+          status?: string | null
           tags?: string[] | null
           title: string
           updated_at?: string | null
-          user_id?: string | null
-          video_url?: string | null
+          view_count?: number | null
         }
         Update: {
-          author?: string | null
-          category?: string | null
+          author_id?: string | null
+          category_id?: string | null
           content?: string
-          cover_image?: string | null
           created_at?: string | null
           excerpt?: string | null
-          featured?: boolean | null
-          id?: never
-          image_url?: string | null
-          published?: boolean | null
-          slug?: string | null
-          summary?: string | null
+          featured_image?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          reading_time?: string | null
+          slug?: string
+          status?: string | null
           tags?: string[] | null
           title?: string
           updated_at?: string | null
-          user_id?: string | null
-          video_url?: string | null
+          view_count?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {

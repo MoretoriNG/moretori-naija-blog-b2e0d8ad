@@ -53,7 +53,7 @@ export default function CategoryPage() {
         const { getAllPosts } = await import('@/lib/blog/posts');
         const staticPosts = getAllPosts();
         allPostsData = staticPosts.map(post => ({
-          id: Number(post.id),
+          id: String(post.id),
           title: post.title,
           slug: post.slug,
           excerpt: post.excerpt,
@@ -73,26 +73,11 @@ export default function CategoryPage() {
         }));
       }
       
-      // Transform all posts
-      const transformedAllPosts = allPostsData.map(post => ({
-        id: String(post.id),
-        title: post.title,
-        slug: post.slug,
-        excerpt: post.excerpt || '',
-        content: post.content,
-        coverImage: post.cover_image || `https://images.unsplash.com/photo-${Math.floor(Math.random() * (599999999 - 500000000) + 500000000)}?auto=format&fit=crop&w=800&q=80`,
-        category: post.category as PostCategory,
-        author: post.author || 'Unknown',
-        publishedAt: post.created_at || new Date().toISOString(),
-        featured: post.featured || false,
-        video: post.video_url,
-        tags: post.tags || []
-      })) as Post[];
-
+      // Posts are already transformed by supabasePosts.getAllPosts()
       // Filter posts for current category
-      const categoryPosts = transformedAllPosts.filter(post => post.category === activeCategory);
+      const categoryPosts = allPostsData.filter(post => post.category === activeCategory);
       
-      setAllPosts(transformedAllPosts);
+      setAllPosts(allPostsData);
       setPosts(categoryPosts);
     } catch (error) {
       console.error('Error loading posts:', error);

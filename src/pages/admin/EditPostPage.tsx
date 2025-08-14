@@ -30,23 +30,8 @@ export default function EditPostPage() {
         return;
       }
 
-      // Transform Supabase data to match our Post type
-      const transformedPost: Post = {
-        id: String(foundPost.id),
-        title: foundPost.title,
-        slug: foundPost.slug,
-        excerpt: foundPost.excerpt || '',
-        content: foundPost.content,
-        coverImage: foundPost.cover_image || '',
-        category: foundPost.category as any,
-        author: foundPost.author || 'Unknown',
-        publishedAt: foundPost.created_at || new Date().toISOString(),
-        featured: foundPost.featured || false,
-        video: foundPost.video_url,
-        tags: foundPost.tags || []
-      };
-
-      setPost(transformedPost);
+      // Post is already transformed by supabasePosts.getPostById()
+      setPost(foundPost);
     } catch (error) {
       console.error('Error loading post:', error);
       toast.error("Failed to load post");

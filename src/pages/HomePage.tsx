@@ -31,8 +31,8 @@ export default function HomePage() {
       if (allPosts.length === 0) {
         const { getAllPosts } = await import('@/lib/blog/posts');
         const staticPosts = getAllPosts();
-        allPosts = staticPosts.map(post => ({
-          id: Number(post.id),
+         allPosts = staticPosts.map(post => ({
+          id: String(post.id),
           title: post.title,
           slug: post.slug,
           excerpt: post.excerpt,
@@ -52,27 +52,10 @@ export default function HomePage() {
         }));
       }
       
-      // Transform data to match our Post type
-      const transformedPosts = allPosts.map(post => ({
-        id: String(post.id),
-        title: post.title,
-        slug: post.slug,
-        excerpt: post.excerpt || '',
-        content: post.content,
-        coverImage: post.cover_image || `https://images.unsplash.com/photo-${Math.floor(Math.random() * (599999999 - 500000000) + 500000000)}?auto=format&fit=crop&w=800&q=80`,
-        category: post.category as any,
-        author: post.author || 'Unknown',
-        publishedAt: post.created_at || new Date().toISOString(),
-        featured: post.featured || false,
-        video: post.video_url,
-        tags: post.tags || []
-      })) as Post[];
-
-      // Sort by created date (most recent first)
-      const sortedPosts = transformedPosts.sort((a, b) => 
+      // Posts are already transformed by supabasePosts.getAllPosts()
+      const sortedPosts = allPosts.sort((a, b) => 
         new Date(b.publishedAt || '').getTime() - new Date(a.publishedAt || '').getTime()
       );
-
       setPosts(sortedPosts);
       setFeaturedPosts(sortedPosts.filter(post => post.featured));
       setIsLoaded(true);

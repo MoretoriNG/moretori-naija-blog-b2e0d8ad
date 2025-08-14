@@ -40,22 +40,8 @@ export function useDashboardData() {
         supabasePosts.getDashboardStats()
       ]);
       
-      const transformedPosts = allPosts.map(post => ({
-        id: String(post.id),
-        title: post.title,
-        slug: post.slug,
-        excerpt: post.excerpt || '',
-        content: post.content,
-        coverImage: post.cover_image || '',
-        category: post.category as any,
-        author: post.author || 'Unknown',
-        publishedAt: post.created_at || new Date().toISOString(),
-        featured: post.featured || false,
-        video: post.video_url,
-        tags: post.tags || []
-      }));
-
-      setPosts(transformedPosts);
+      // Posts are already transformed by supabasePosts.getAllPosts()
+      setPosts(allPosts);
       setDashboardStats(stats);
     } catch (error) {
       console.error('Error loading dashboard data:', error);
