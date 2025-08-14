@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Bell, User } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -28,7 +28,7 @@ const categories = [
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [notifications] = useState(3);
+  
   const location = useLocation();
 
   useEffect(() => {
@@ -77,15 +77,6 @@ export function Header() {
             </Link>
             
             <CategoryMenu />
-            
-            <Link 
-              to="/business-directory" 
-              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
-                isActive('/business-directory') ? 'text-blue-600 border-b-2 border-blue-600 pb-1' : 'text-gray-700'
-              }`}
-            >
-              Directory
-            </Link>
           </nav>
 
           {/* Search and Actions */}
@@ -95,37 +86,6 @@ export function Header() {
               <SearchBar />
             </div>
 
-            {/* Notifications */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative">
-                  <Bell size={20} />
-                  {notifications > 0 && (
-                    <Badge 
-                      variant="destructive" 
-                      className="absolute -top-1 -right-1 h-5 w-5 text-xs flex items-center justify-center"
-                    >
-                      {notifications}
-                    </Badge>
-                  )}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-80">
-                <div className="p-4">
-                  <h3 className="font-semibold mb-2">Notifications</h3>
-                  <div className="space-y-2 text-sm">
-                    <div className="p-2 bg-blue-50 rounded">
-                      <p className="font-medium">New article in Technology</p>
-                      <p className="text-gray-600 text-xs">2 hours ago</p>
-                    </div>
-                    <div className="p-2 bg-green-50 rounded">
-                      <p className="font-medium">Weekly digest available</p>
-                      <p className="text-gray-600 text-xs">1 day ago</p>
-                    </div>
-                  </div>
-                </div>
-              </DropdownMenuContent>
-            </DropdownMenu>
 
             {/* Sign In Button */}
             <Button variant="outline" size="sm" asChild>
@@ -178,14 +138,6 @@ export function Header() {
                 </Link>
               ))}
             </div>
-            
-            <Link 
-              to="/business-directory" 
-              className="block text-sm font-medium text-gray-700 hover:text-blue-600"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Directory
-            </Link>
             
             <div className="pt-4 border-t">
               <Link 
