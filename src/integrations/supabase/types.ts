@@ -105,59 +105,83 @@ export type Database = {
         Row: {
           author_id: string | null
           category_id: string | null
+          comments_count: number | null
           content: string
           created_at: string | null
           excerpt: string | null
           featured_image: string | null
           id: string
+          is_featured: boolean | null
+          likes_count: number | null
           meta_description: string | null
           meta_title: string | null
           published_at: string | null
           reading_time: string | null
+          scheduled_at: string | null
+          seo_keywords: string[] | null
+          shares_count: number | null
           slug: string
           status: string | null
           tags: string[] | null
           title: string
           updated_at: string | null
+          video_url: string | null
           view_count: number | null
+          visibility: string | null
         }
         Insert: {
           author_id?: string | null
           category_id?: string | null
+          comments_count?: number | null
           content: string
           created_at?: string | null
           excerpt?: string | null
           featured_image?: string | null
           id?: string
+          is_featured?: boolean | null
+          likes_count?: number | null
           meta_description?: string | null
           meta_title?: string | null
           published_at?: string | null
           reading_time?: string | null
+          scheduled_at?: string | null
+          seo_keywords?: string[] | null
+          shares_count?: number | null
           slug: string
           status?: string | null
           tags?: string[] | null
           title: string
           updated_at?: string | null
+          video_url?: string | null
           view_count?: number | null
+          visibility?: string | null
         }
         Update: {
           author_id?: string | null
           category_id?: string | null
+          comments_count?: number | null
           content?: string
           created_at?: string | null
           excerpt?: string | null
           featured_image?: string | null
           id?: string
+          is_featured?: boolean | null
+          likes_count?: number | null
           meta_description?: string | null
           meta_title?: string | null
           published_at?: string | null
           reading_time?: string | null
+          scheduled_at?: string | null
+          seo_keywords?: string[] | null
+          shares_count?: number | null
           slug?: string
           status?: string | null
           tags?: string[] | null
           title?: string
           updated_at?: string | null
+          video_url?: string | null
           view_count?: number | null
+          visibility?: string | null
         }
         Relationships: [
           {
