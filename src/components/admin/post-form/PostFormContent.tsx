@@ -29,9 +29,10 @@ const PREDEFINED_CATEGORIES = [
   { name: 'Tech', slug: 'tech' },
   { name: 'Auto', slug: 'auto' },
   { name: 'Health', slug: 'health' },
-  { name: 'Entertainment', slug: 'entertainment' },
-  { name: 'Business', slug: 'business' },
+  { name: 'Entertainment', slug: 'ent' },
+  { name: 'Business', slug: 'bus' },
   { name: 'Sports', slug: 'sports' },
+  { name: 'Lifestyle', slug: 'lifestyle' },
 ];
 
 export function PostFormContent({
@@ -57,23 +58,7 @@ export function PostFormContent({
         />
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="author" className={errors.author ? "text-destructive" : ""}>
-            Author {errors.author && <span className="text-xs">({errors.author})</span>}
-          </Label>
-          <Input
-            id="author"
-            value={author}
-            onChange={(e) => {
-              setAuthor(e.target.value);
-              if (errors.author) setErrors({ ...errors, author: undefined });
-            }}
-            placeholder="Author name"
-            className={errors.author ? "border-destructive" : ""}
-          />
-        </div>
-        
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
         <div>
           <Label htmlFor="category">Category</Label>
           <Select value={category} onValueChange={(value) => setCategory(value as PostCategory)}>
@@ -89,6 +74,12 @@ export function PostFormContent({
             </SelectContent>
           </Select>
         </div>
+      </div>
+      
+      <div className="bg-muted/50 p-3 rounded-lg">
+        <p className="text-sm text-muted-foreground">
+          <strong>Note:</strong> The author will be automatically set to your profile when the post is created.
+        </p>
       </div>
       
       <div>

@@ -17,8 +17,11 @@ export function usePostSubmission(
   const handleSubmit = async (e: React.FormEvent, asDraft = false) => {
     e.preventDefault();
     
+    console.log("Form submission started...");
+    
     if (!validate()) {
       toast.error("Please correct the errors below");
+      console.log("Validation failed");
       return;
     }
     
@@ -26,14 +29,19 @@ export function usePostSubmission(
     
     try {
       const formData = getFormData();
+      console.log("Form data:", formData);
       
       if (!isEditing) {
         formData.publishedAt = asDraft ? "" : new Date().toISOString();
       }
       
+      console.log("About to save post:", { isEditing, asDraft, formData });
+      
       if (isEditing && post) {
+        console.log("Updating existing post...");
         await supabasePosts.updatePost(String(post.id), formData);
       } else {
+        console.log("Creating new post...");
         await supabasePosts.createPost(formData as Omit<Post, 'id' | 'created_at' | 'updated_at'>);
       }
       
@@ -48,7 +56,7 @@ export function usePostSubmission(
       navigate("/admin");
     } catch (error) {
       console.error('Error saving post:', error);
-      toast.error("Failed to save post");
+      toast.error(`Failed to save post: ${error.message || 'Unknown error'}`);
     } finally {
       setLoading(false);
     }

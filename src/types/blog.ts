@@ -1,5 +1,5 @@
 
-export type PostCategory = 'tech' | 'auto' | 'health' | 'entertainment' | 'news' | 'business' | 'sports' | 'lifestyle';
+export type PostCategory = 'tech' | 'auto' | 'health' | 'ent' | 'news' | 'bus' | 'sports' | 'lifestyle';
 
 export interface Post {
   id: string;

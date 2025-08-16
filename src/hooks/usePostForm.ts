@@ -34,8 +34,8 @@ export function usePostForm(post?: Post) {
     if (!title.trim()) newErrors.title = "Title is required";
     if (!content.trim()) newErrors.content = "Content is required";
     if (!excerpt.trim()) newErrors.excerpt = "Excerpt is required";
-    if (!coverImage.trim()) newErrors.coverImage = "Cover image is required";
-    if (!author.trim()) newErrors.author = "Author is required";
+    // Remove coverImage and author validation as they're optional
+    // The author will be automatically set to the authenticated user
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

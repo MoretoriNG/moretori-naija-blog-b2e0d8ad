@@ -77,6 +77,26 @@ export const supabasePosts = {
 
   // Create new post
   async createPost(post: Omit<Post, 'id' | 'created_at' | 'updated_at'>) {
+    // Get current user
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      throw new Error('User must be authenticated to create posts');
+    }
+
+    // Get category UUID from slug
+    let categoryId = null;
+    if (post.category) {
+      const { data: categoryData, error: categoryError } = await supabase
+        .from('categories')
+        .select('id')
+        .eq('slug', post.category)
+        .single();
+      
+      if (!categoryError && categoryData) {
+        categoryId = categoryData.id;
+      }
+    }
+
     const { data, error } = await supabase
       .from('posts')
       .insert({
@@ -85,8 +105,8 @@ export const supabasePosts = {
         excerpt: post.excerpt,
         content: post.content,
         featured_image: post.coverImage,
-        category_id: post.category,
-        author_id: post.author,
+        category_id: categoryId,
+        author_id: user.id, // Use authenticated user's ID
         status: post.publishedAt ? 'published' : 'draft',
         published_at: post.publishedAt || null,
         tags: post.tags || []
@@ -100,21 +120,46 @@ export const supabasePosts = {
 
   // Update post
   async updatePost(id: string, post: Partial<Post>) {
+    // Get current user
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      throw new Error('User must be authenticated to update posts');
+    }
+
+    // Get category UUID from slug if category is provided
+    let categoryId = null;
+    if (post.category) {
+      const { data: categoryData, error: categoryError } = await supabase
+        .from('categories')
+        .select('id')
+        .eq('slug', post.category)
+        .single();
+      
+      if (!categoryError && categoryData) {
+        categoryId = categoryData.id;
+      }
+    }
+
+    const updateData: any = {
+      updated_at: new Date().toISOString()
+    };
+
+    // Only update fields that are provided
+    if (post.title !== undefined) updateData.title = post.title;
+    if (post.slug !== undefined) updateData.slug = post.slug;
+    if (post.excerpt !== undefined) updateData.excerpt = post.excerpt;
+    if (post.content !== undefined) updateData.content = post.content;
+    if (post.coverImage !== undefined) updateData.featured_image = post.coverImage;
+    if (categoryId !== null) updateData.category_id = categoryId;
+    if (post.publishedAt !== undefined) {
+      updateData.status = post.publishedAt ? 'published' : 'draft';
+      updateData.published_at = post.publishedAt || null;
+    }
+    if (post.tags !== undefined) updateData.tags = post.tags;
+
     const { data, error } = await supabase
       .from('posts')
-      .update({
-        title: post.title,
-        slug: post.slug,
-        excerpt: post.excerpt,
-        content: post.content,
-        featured_image: post.coverImage,
-        category_id: post.category,
-        author_id: post.author,
-        status: post.publishedAt ? 'published' : 'draft',
-        published_at: post.publishedAt || null,
-        tags: post.tags,
-        updated_at: new Date().toISOString()
-      })
+      .update(updateData)
       .eq('id', id)
       .select()
       .single();

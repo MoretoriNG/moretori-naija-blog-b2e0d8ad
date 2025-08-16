@@ -54,7 +54,7 @@ export function HeroSlider({ posts }: HeroSliderProps) {
     setIsLoaded(true);
     
     // Get posts by category from the props
-    const categories: PostCategory[] = ['tech', 'health', 'entertainment', 'business', 'sports', 'auto'];
+    const categories: PostCategory[] = ['tech', 'health', 'ent', 'bus', 'sports', 'auto'];
     const playlists: {[key: string]: Post[]} = {};
     
     categories.forEach(category => {

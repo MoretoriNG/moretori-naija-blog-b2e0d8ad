@@ -22,7 +22,7 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
   const [savedPosts, setSavedPosts] = useState<string[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  const categories: PostCategory[] = ['tech', 'auto', 'health', 'entertainment', 'business', 'sports'];
+  const categories: PostCategory[] = ['tech', 'auto', 'health', 'ent', 'bus', 'sports'];
   
   // Show loading effect when changing categories
   useEffect(() => {
@@ -66,15 +66,17 @@ export function CategoryPosts({ initialCategory }: CategoryPostsProps) {
   };
   
   const getCategoryTitle = (category: PostCategory): string => {
-    const titles: Record<string, string> = {
+    const categoryNames: Record<PostCategory, string> = {
       tech: "Technology",
       auto: "Automotive", 
-      health: "Health & Wellness",
-      entertainment: "Entertainment",
-      business: "Business",
-      sports: "Sports"
+      health: "Health",
+      ent: "Entertainment",
+      bus: "Business",
+      sports: "Sports",
+      news: "News",
+      lifestyle: "Lifestyle"
     };
-    return titles[category] || category.charAt(0).toUpperCase() + category.slice(1);
+    return categoryNames[category] || category.charAt(0).toUpperCase() + category.slice(1);
   };
   
   return (

@@ -25,7 +25,7 @@ export default function CategoryPage() {
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const categories: PostCategory[] = ['tech', 'auto', 'health', 'entertainment', 'business', 'sports'];
+  const categories: PostCategory[] = ['tech', 'auto', 'health', 'ent', 'bus', 'sports'];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -108,8 +108,8 @@ export default function CategoryPage() {
       tech: 'Technology',
       auto: 'Automotive',
       health: 'Health',
-      entertainment: 'Entertainment',
-      business: 'Business',
+      ent: 'Entertainment',
+      bus: 'Business',
       sports: 'Sports',
       news: 'News',
       lifestyle: 'Lifestyle'
