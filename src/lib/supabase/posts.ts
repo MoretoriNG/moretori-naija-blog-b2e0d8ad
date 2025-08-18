@@ -12,12 +12,12 @@ function transformPost(dbPost: any): Post {
     content: dbPost.content,
     coverImage: dbPost.featured_image,
     image_url: dbPost.featured_image, // Support both formats
-    category: dbPost.category_id,
+    category: dbPost.categories?.name || dbPost.category_name || 'Uncategorized',
     category_id: dbPost.category_id, // Support both formats
-    author: dbPost.author_id,
-    publishedAt: dbPost.published_at,
-    published_at: dbPost.published_at, // Support both formats
-    featured: dbPost.status === 'published',
+    author: dbPost.authors?.name || dbPost.author_name || 'Admin',
+    publishedAt: dbPost.published_at || dbPost.created_at,
+    published_at: dbPost.published_at || dbPost.created_at, // Support both formats
+    featured: dbPost.status === 'published' || dbPost.is_featured || false,
     video: dbPost.video_url,
     videoUrl: dbPost.video_url, // Enhanced video support
     tags: dbPost.tags || [],
@@ -40,7 +40,11 @@ export const supabasePosts = {
   async getAllPosts(filters?: { category?: string; featured?: boolean; published?: boolean }) {
     let query = supabase
       .from('posts')
-      .select('*')
+      .select(`
+        *,
+        categories(name, slug),
+        authors(name, email)
+      `)
       .order('created_at', { ascending: false });
 
     if (filters?.category) {
@@ -66,9 +70,12 @@ export const supabasePosts = {
   async getPostBySlug(slug: string) {
     const { data, error } = await supabase
       .from('posts')
-      .select('*')
+      .select(`
+        *,
+        categories(name, slug),
+        authors(name, email)
+      `)
       .eq('slug', slug)
-      .eq('status', 'published')
       .single();
 
     if (error) throw error;
@@ -79,7 +86,11 @@ export const supabasePosts = {
   async getPostById(id: string) {
     const { data, error } = await supabase
       .from('posts')
-      .select('*')
+      .select(`
+        *,
+        categories(name, slug),
+        authors(name, email)
+      `)
       .eq('id', id)
       .single();
 
