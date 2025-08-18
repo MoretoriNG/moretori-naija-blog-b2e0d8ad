@@ -53,6 +53,20 @@ export function PostForm({ post, onSubmit }: PostFormProps) {
             setFeatured={formState.setFeatured}
             errors={formState.errors}
             setErrors={formState.setErrors}
+            metaTitle={formState.metaTitle}
+            setMetaTitle={formState.setMetaTitle}
+            metaDescription={formState.metaDescription}
+            setMetaDescription={formState.setMetaDescription}
+            seoKeywords={formState.seoKeywords}
+            setSeoKeywords={formState.setSeoKeywords}
+            videoUrl={formState.videoUrl}
+            setVideoUrl={formState.setVideoUrl}
+            visibility={formState.visibility}
+            setVisibility={formState.setVisibility}
+            scheduledAt={formState.scheduledAt}
+            setScheduledAt={formState.setScheduledAt}
+            isFeatured={formState.isFeatured}
+            setIsFeatured={formState.setIsFeatured}
           />
         </TabsContent>
         

@@ -19,7 +19,19 @@ function transformPost(dbPost: any): Post {
     published_at: dbPost.published_at, // Support both formats
     featured: dbPost.status === 'published',
     video: dbPost.video_url,
-    tags: dbPost.tags || []
+    videoUrl: dbPost.video_url, // Enhanced video support
+    tags: dbPost.tags || [],
+    // Advanced features
+    seoKeywords: dbPost.seo_keywords || [],
+    metaTitle: dbPost.meta_title,
+    metaDescription: dbPost.meta_description,
+    readingTime: dbPost.reading_time,
+    isFeatured: dbPost.is_featured || false,
+    visibility: dbPost.visibility || 'public',
+    scheduledAt: dbPost.scheduled_at,
+    likesCount: dbPost.likes_count || 0,
+    commentsCount: dbPost.comments_count || 0,
+    sharesCount: dbPost.shares_count || 0,
   };
 }
 
@@ -109,7 +121,18 @@ export const supabasePosts = {
         author_id: user.id, // Use authenticated user's ID
         status: post.publishedAt ? 'published' : 'draft',
         published_at: post.publishedAt || null,
-        tags: post.tags || []
+        tags: post.tags || [],
+        // Advanced features
+        video_url: post.videoUrl || post.video,
+        seo_keywords: post.seoKeywords || [],
+        meta_title: post.metaTitle,
+        meta_description: post.metaDescription,
+        is_featured: post.isFeatured || false,
+        visibility: post.visibility || 'public',
+        scheduled_at: post.scheduledAt || null,
+        likes_count: 0,
+        comments_count: 0,
+        shares_count: 0
       })
       .select()
       .single();
@@ -156,6 +179,17 @@ export const supabasePosts = {
       updateData.published_at = post.publishedAt || null;
     }
     if (post.tags !== undefined) updateData.tags = post.tags;
+
+    // Advanced features
+    if (post.videoUrl !== undefined || post.video !== undefined) {
+      updateData.video_url = post.videoUrl || post.video;
+    }
+    if (post.seoKeywords !== undefined) updateData.seo_keywords = post.seoKeywords;
+    if (post.metaTitle !== undefined) updateData.meta_title = post.metaTitle;
+    if (post.metaDescription !== undefined) updateData.meta_description = post.metaDescription;
+    if (post.isFeatured !== undefined) updateData.is_featured = post.isFeatured;
+    if (post.visibility !== undefined) updateData.visibility = post.visibility;
+    if (post.scheduledAt !== undefined) updateData.scheduled_at = post.scheduledAt || null;
 
     const { data, error } = await supabase
       .from('posts')

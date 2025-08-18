@@ -14,6 +14,15 @@ export function usePostForm(post?: Post) {
   const [previewImage, setPreviewImage] = useState<string | null>(post?.coverImage || null);
   const [activeTab, setActiveTab] = useState("content");
 
+  // Advanced fields
+  const [metaTitle, setMetaTitle] = useState(post?.metaTitle || "");
+  const [metaDescription, setMetaDescription] = useState(post?.metaDescription || "");
+  const [seoKeywords, setSeoKeywords] = useState<string[]>(post?.seoKeywords || []);
+  const [videoUrl, setVideoUrl] = useState(post?.videoUrl || post?.video || "");
+  const [visibility, setVisibility] = useState<'public' | 'private' | 'scheduled'>(post?.visibility || 'public');
+  const [scheduledAt, setScheduledAt] = useState(post?.scheduledAt || "");
+  const [isFeatured, setIsFeatured] = useState(post?.isFeatured || post?.featured || false);
+
   const [errors, setErrors] = useState<{
     title?: string;
     content?: string;
@@ -58,6 +67,14 @@ export function usePostForm(post?: Post) {
       featured,
       tags: tags.split(',').map(tag => tag.trim()).filter(tag => tag),
       ...(video && { video }),
+      // Advanced fields
+      metaTitle: metaTitle || title, // Use title as fallback
+      metaDescription: metaDescription || excerpt, // Use excerpt as fallback
+      seoKeywords,
+      videoUrl: videoUrl || video, // Support both formats
+      visibility,
+      scheduledAt: scheduledAt || undefined,
+      isFeatured,
     };
   };
 
@@ -82,6 +99,15 @@ export function usePostForm(post?: Post) {
     previewImage, setPreviewImage,
     activeTab, setActiveTab,
     errors, setErrors,
+    
+    // Advanced fields
+    metaTitle, setMetaTitle,
+    metaDescription, setMetaDescription,
+    seoKeywords, setSeoKeywords,
+    videoUrl, setVideoUrl,
+    visibility, setVisibility,
+    scheduledAt, setScheduledAt,
+    isFeatured, setIsFeatured,
     
     // Form actions
     validate,

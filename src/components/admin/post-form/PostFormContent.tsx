@@ -5,6 +5,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { PostCategory } from "@/types/blog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AdvancedPostFields } from "./AdvancedPostFields";
 
 interface PostFormContentProps {
   title: string;
@@ -23,6 +25,21 @@ interface PostFormContentProps {
   setFeatured: (featured: boolean) => void;
   errors: any;
   setErrors: (errors: any) => void;
+  // Advanced fields
+  metaTitle: string;
+  setMetaTitle: (value: string) => void;
+  metaDescription: string;
+  setMetaDescription: (value: string) => void;
+  seoKeywords: string[];
+  setSeoKeywords: (keywords: string[]) => void;
+  videoUrl: string;
+  setVideoUrl: (url: string) => void;
+  visibility: 'public' | 'private' | 'scheduled';
+  setVisibility: (visibility: 'public' | 'private' | 'scheduled') => void;
+  scheduledAt: string;
+  setScheduledAt: (date: string) => void;
+  isFeatured: boolean;
+  setIsFeatured: (featured: boolean) => void;
 }
 
 const PREDEFINED_CATEGORIES = [
@@ -38,103 +55,133 @@ const PREDEFINED_CATEGORIES = [
 export function PostFormContent({
   title, setTitle, author, setAuthor, category, setCategory,
   excerpt, setExcerpt, tags, setTags, content, setContent,
-  featured, setFeatured, errors, setErrors
+  featured, setFeatured, errors, setErrors,
+  metaTitle, setMetaTitle, metaDescription, setMetaDescription,
+  seoKeywords, setSeoKeywords, videoUrl, setVideoUrl,
+  visibility, setVisibility, scheduledAt, setScheduledAt,
+  isFeatured, setIsFeatured
 }: PostFormContentProps) {
   return (
-    <div className="space-y-4">
-      <div>
-        <Label htmlFor="title" className={errors.title ? "text-destructive" : ""}>
-          Title {errors.title && <span className="text-xs">({errors.title})</span>}
-        </Label>
-        <Input
-          id="title"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-            if (errors.title) setErrors({ ...errors, title: undefined });
-          }}
-          placeholder="Enter post title"
-          className={errors.title ? "border-destructive" : ""}
-        />
-      </div>
+    <Tabs defaultValue="basic" className="w-full">
+      <TabsList className="grid w-full grid-cols-2">
+        <TabsTrigger value="basic">Basic Information</TabsTrigger>
+        <TabsTrigger value="advanced">Advanced Settings</TabsTrigger>
+      </TabsList>
       
-      <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+      <TabsContent value="basic" className="space-y-4 mt-6">
         <div>
-          <Label htmlFor="category">Category</Label>
-          <Select value={category} onValueChange={(value) => setCategory(value as PostCategory)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select a category" />
-            </SelectTrigger>
-            <SelectContent>
-              {PREDEFINED_CATEGORIES.map((cat) => (
-                <SelectItem key={cat.slug} value={cat.slug}>
-                  {cat.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Label htmlFor="title" className={errors.title ? "text-destructive" : ""}>
+            Title {errors.title && <span className="text-xs">({errors.title})</span>}
+          </Label>
+          <Input
+            id="title"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              if (errors.title) setErrors({ ...errors, title: undefined });
+            }}
+            placeholder="Enter post title"
+            className={errors.title ? "border-destructive" : ""}
+          />
         </div>
-      </div>
-      
-      <div className="bg-muted/50 p-3 rounded-lg">
-        <p className="text-sm text-muted-foreground">
-          <strong>Note:</strong> The author will be automatically set to your profile when the post is created.
-        </p>
-      </div>
-      
-      <div>
-        <Label htmlFor="excerpt" className={errors.excerpt ? "text-destructive" : ""}>
-          Excerpt {errors.excerpt && <span className="text-xs">({errors.excerpt})</span>}
-        </Label>
-        <Textarea
-          id="excerpt"
-          value={excerpt}
-          onChange={(e) => {
-            setExcerpt(e.target.value);
-            if (errors.excerpt) setErrors({ ...errors, excerpt: undefined });
-          }}
-          placeholder="Brief summary of the post"
-          rows={3}
-          className={errors.excerpt ? "border-destructive" : ""}
-        />
-      </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+          <div>
+            <Label htmlFor="category">Category</Label>
+            <Select value={category} onValueChange={(value) => setCategory(value as PostCategory)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                {PREDEFINED_CATEGORIES.map((cat) => (
+                  <SelectItem key={cat.slug} value={cat.slug}>
+                    {cat.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        
+        <div className="bg-muted/50 p-3 rounded-lg">
+          <p className="text-sm text-muted-foreground">
+            <strong>Note:</strong> The author will be automatically set to your profile when the post is created.
+          </p>
+        </div>
+        
+        <div>
+          <Label htmlFor="excerpt" className={errors.excerpt ? "text-destructive" : ""}>
+            Excerpt {errors.excerpt && <span className="text-xs">({errors.excerpt})</span>}
+          </Label>
+          <Textarea
+            id="excerpt"
+            value={excerpt}
+            onChange={(e) => {
+              setExcerpt(e.target.value);
+              if (errors.excerpt) setErrors({ ...errors, excerpt: undefined });
+            }}
+            placeholder="Brief summary of the post"
+            rows={3}
+            className={errors.excerpt ? "border-destructive" : ""}
+          />
+        </div>
 
-      <div>
-        <Label htmlFor="tags">Tags (comma-separated)</Label>
-        <Input
-          id="tags"
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
-          placeholder="tech, review, cars, etc."
-        />
-      </div>
+        <div>
+          <Label htmlFor="tags">Tags (comma-separated)</Label>
+          <Input
+            id="tags"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            placeholder="tech, review, cars, etc."
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="content" className={errors.content ? "text-destructive" : ""}>
+            Content {errors.content && <span className="text-xs">({errors.content})</span>}
+          </Label>
+          <Textarea
+            id="content"
+            value={content}
+            onChange={(e) => {
+              setContent(e.target.value);
+              if (errors.content) setErrors({ ...errors, content: undefined });
+            }}
+            placeholder="Full content with HTML support"
+            rows={15}
+            className={errors.content ? "border-destructive" : ""}
+          />
+          <p className="text-xs text-muted-foreground mt-1">HTML formatting is supported</p>
+        </div>
+        
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="featured"
+            checked={featured}
+            onCheckedChange={setFeatured}
+          />
+          <Label htmlFor="featured">Featured Post (Legacy)</Label>
+        </div>
+      </TabsContent>
       
-      <div>
-        <Label htmlFor="content" className={errors.content ? "text-destructive" : ""}>
-          Content {errors.content && <span className="text-xs">({errors.content})</span>}
-        </Label>
-        <Textarea
-          id="content"
-          value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-            if (errors.content) setErrors({ ...errors, content: undefined });
-          }}
-          placeholder="Full content with HTML support"
-          rows={15}
-          className={errors.content ? "border-destructive" : ""}
+      <TabsContent value="advanced" className="mt-6">
+        <AdvancedPostFields
+          metaTitle={metaTitle}
+          setMetaTitle={setMetaTitle}
+          metaDescription={metaDescription}
+          setMetaDescription={setMetaDescription}
+          seoKeywords={seoKeywords}
+          setSeoKeywords={setSeoKeywords}
+          videoUrl={videoUrl}
+          setVideoUrl={setVideoUrl}
+          visibility={visibility}
+          setVisibility={setVisibility}
+          scheduledAt={scheduledAt}
+          setScheduledAt={setScheduledAt}
+          isFeatured={isFeatured}
+          setIsFeatured={setIsFeatured}
         />
-        <p className="text-xs text-muted-foreground mt-1">HTML formatting is supported</p>
-      </div>
-      
-      <div className="flex items-center space-x-2">
-        <Switch
-          id="featured"
-          checked={featured}
-          onCheckedChange={setFeatured}
-        />
-        <Label htmlFor="featured">Featured Post</Label>
-      </div>
-    </div>
+      </TabsContent>
+    </Tabs>
   );
 }

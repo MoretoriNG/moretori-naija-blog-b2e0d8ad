@@ -16,5 +16,17 @@ export interface Post {
   published_at?: string; // Support both formats
   featured?: boolean;
   video?: string;
+  videoUrl?: string; // Enhanced video support
   tags?: string[];
+  // Advanced features
+  seoKeywords?: string[];
+  metaTitle?: string;
+  metaDescription?: string;
+  readingTime?: string;
+  isFeatured?: boolean;
+  visibility?: 'public' | 'private' | 'scheduled';
+  scheduledAt?: string;
+  likesCount?: number;
+  commentsCount?: number;
+  sharesCount?: number;
 }
