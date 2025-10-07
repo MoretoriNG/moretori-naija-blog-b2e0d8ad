@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { Post } from "@/types/blog";
 import { supabasePosts } from "@/lib/supabase/posts";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUserRole } from "@/hooks/useUserRole";
 
 interface DashboardStats {
   totalPosts: number;
@@ -30,7 +31,8 @@ export function useDashboardData() {
     growthRate: 0
   });
   
-  const { user, profile } = useAuth();
+  const { user } = useAuth();
+  const { isAdmin } = useUserRole();
 
   const loadDashboardData = async () => {
     try {
@@ -83,10 +85,10 @@ export function useDashboardData() {
   };
 
   useEffect(() => {
-    if (user && (profile?.role === 'admin' || user?.user_metadata?.role === 'admin')) {
+    if (user && isAdmin) {
       loadDashboardData();
     }
-  }, [user, profile]);
+  }, [user, isAdmin]);
 
   return {
     posts,

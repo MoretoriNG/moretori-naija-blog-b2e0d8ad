@@ -9,21 +9,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LogIn, LogOut, User, UserPlus, Shield, BookOpen } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useUserRole } from '@/hooks/useUserRole';
 
 interface UserMenuProps {
   onMenuItemClick?: () => void;
 }
 
 export function UserMenu({ onMenuItemClick }: UserMenuProps) {
-  const { user, signOut, profile } = useAuth();
+  const { user, signOut } = useAuth();
+  const { isAdmin } = useUserRole();
   
   const handleSignOut = () => {
     signOut();
     if (onMenuItemClick) onMenuItemClick();
   };
-  
-  // Check if user is admin
-  const isAdmin = profile?.role === 'admin' || user?.user_metadata?.role === 'admin';
   
   return (
     <div className="flex items-center gap-2">
@@ -78,15 +77,13 @@ export function UserMenu({ onMenuItemClick }: UserMenuProps) {
 }
 
 export function MobileUserMenu({ onMenuItemClick }: UserMenuProps) {
-  const { user, signOut, profile } = useAuth();
+  const { user, signOut } = useAuth();
+  const { isAdmin } = useUserRole();
   
   const handleSignOut = () => {
     signOut();
     if (onMenuItemClick) onMenuItemClick();
   };
-  
-  // Check if user is admin
-  const isAdmin = profile?.role === 'admin' || user?.user_metadata?.role === 'admin';
   
   return (
     <div className="pt-2 flex gap-2">

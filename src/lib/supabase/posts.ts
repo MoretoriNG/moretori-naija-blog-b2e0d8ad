@@ -37,31 +37,11 @@ function transformPost(dbPost: any): Post {
 
 export const supabasePosts = {
   // Get all posts with optional filtering
-  async getAllPosts(filters?: { category?: string; featured?: boolean; published?: boolean }) {
-    let query = supabase
+  async getAllPosts(filters?: { category?: string; featured?: boolean; published?: boolean }): Promise<Post[]> {
+    const { data, error } = await supabase
       .from('posts')
-      .select(`
-        *,
-        categories(name, slug),
-        authors(name, email)
-      `)
+      .select('*, categories(name, slug), authors(name)')
       .order('created_at', { ascending: false });
-
-    if (filters?.category) {
-      query = query.eq('category_id', filters.category);
-    }
-    if (filters?.featured !== undefined) {
-      query = query.eq('status', 'published');
-    }
-    if (filters?.published !== undefined) {
-      if (filters.published) {
-        query = query.eq('status', 'published');
-      } else {
-        query = query.eq('status', 'draft');
-      }
-    }
-
-    const { data, error } = await query;
     if (error) throw error;
     return (data || []).map(transformPost);
   },
@@ -73,7 +53,7 @@ export const supabasePosts = {
       .select(`
         *,
         categories(name, slug),
-        authors(name, email)
+        authors(name)
       `)
       .eq('slug', slug)
       .single();
@@ -89,7 +69,7 @@ export const supabasePosts = {
       .select(`
         *,
         categories(name, slug),
-        authors(name, email)
+        authors(name)
       `)
       .eq('id', id)
       .single();

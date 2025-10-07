@@ -1,17 +1,18 @@
 
-import { useState, useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AdminNav } from "@/components/admin/AdminNav";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUserRole } from "@/hooks/useUserRole";
 import { Toaster } from "@/components/ui/sonner";
 
 export default function AdminLayout() {
-  const { user, profile, isLoading } = useAuth();
+  const { user } = useAuth();
+  const { isAdmin, isLoading: roleLoading } = useUserRole();
 
-  if (isLoading) {
+  if (roleLoading) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
         <div className="flex flex-col items-center space-y-4">
@@ -21,9 +22,6 @@ export default function AdminLayout() {
       </div>
     );
   }
-
-  // Check if user is admin
-  const isAdmin = profile?.role === 'admin' || user?.user_metadata?.role === 'admin';
 
   if (!user || !isAdmin) {
     return <Navigate to="/auth/admin" replace />;

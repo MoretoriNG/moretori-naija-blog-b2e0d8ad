@@ -1,9 +1,10 @@
 
 import { BookmarkIcon, Heart, MessageSquareIcon, ShareIcon } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
 import { toast } from "sonner";
+import DOMPurify from 'dompurify';
 
 interface PostContentProps {
   content: string;
@@ -36,28 +37,39 @@ export function PostContent({
     toast.success('You liked this article');
   };
 
-  // Create content with embedded images
-  const enhancedContent = content.replace(
-    /<p>(.*?)<\/p>/g, 
-    (match, p1, offset) => {
-      // Every third paragraph, add an image
-      if (offset > 300 && (offset % 700) < 200) {
-        const placeholderImages = [
-          "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
-          "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80",
-          "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?auto=format&fit=crop&w=800&q=80",
-        ];
-        const randomImgIndex = Math.floor(Math.random() * placeholderImages.length);
-        return `<figure class="my-8">
-          <img src="${placeholderImages[randomImgIndex]}" alt="Article illustration" class="w-full h-auto max-h-[400px] object-cover rounded-lg shadow-md" />
-          <figcaption class="text-center text-sm text-muted-foreground mt-2">Article illustration</figcaption>
-        </figure>
-        ${match}`;
+  // Sanitize and enhance content with embedded images
+  const enhancedContent = useMemo(() => {
+    // First sanitize the content
+    const sanitized = DOMPurify.sanitize(content, {
+      ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 
+                     'ul', 'ol', 'li', 'a', 'img', 'blockquote', 'code', 'pre', 'figure', 'figcaption'],
+      ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'target', 'rel'],
+      ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
+    });
+    
+    // Then add embedded images
+    return sanitized.replace(
+      /<p>(.*?)<\/p>/g, 
+      (match, p1, offset) => {
+        // Every third paragraph, add an image
+        if (offset > 300 && (offset % 700) < 200) {
+          const placeholderImages = [
+            "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?auto=format&fit=crop&w=800&q=80",
+          ];
+          const randomImgIndex = Math.floor(Math.random() * placeholderImages.length);
+          return `<figure class="my-8">
+            <img src="${placeholderImages[randomImgIndex]}" alt="Article illustration" class="w-full h-auto max-h-[400px] object-cover rounded-lg shadow-md" />
+            <figcaption class="text-center text-sm text-muted-foreground mt-2">Article illustration</figcaption>
+          </figure>
+          ${match}`;
+        }
+        return match;
       }
-      return match;
-    }
-  );
+    );
+  }, [content]);
 
   return (
     <div className="flex-1">
